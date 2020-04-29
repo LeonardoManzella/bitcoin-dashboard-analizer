@@ -10,11 +10,72 @@
     <meta name="author" content="SitePoint" />
 
     <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui/augmented.css">
   </head>
+
+  <style type="text/css">
+    div.bitcoin-tradingview {
+      --aug-border: 5px;
+      /* padding: 10px;  mind the gap */
+      text-align: center;
+      --aug-border-bg: #131722;
+      --aug-inset-bg: #131722;
+      --aug-bl: 30px;
+      --aug-br: 30px;
+      --aug-b-height: 30px;
+      --aug-b-width: 20%;
+    }
+    div.google-trends{
+      --aug-border: 5px;
+      text-align: center;
+      --aug-border-bg: #F7F7F7;
+      --aug-inset-bg: #F7F7F7;
+      --aug-bl: 25px;
+      --aug-bl-width: 40%;
+      --aug-br: 25px;
+      --aug-br-width: 40%;
+    }
+    div.bitcoin-technical-analysis{
+      margin-left: 10px;
+      width: fit-content;
+      padding: 30px; /* mind the gap */
+      --aug-inset: 7px;
+      --aug-inset-bg: lightgrey;
+      --aug-border: 5px;
+      --aug-border-bg:lightgrey ;
+      --aug-border-opacity: 0.5;
+      --aug-l-offset: 0px;
+      --aug-b-offset: 0px;
+      --aug-tl: 10px;
+      --aug-tl-height: 0px;
+      --aug-tl-width: 0px;
+      --aug-tr: 20px;
+      --aug-tr-height: 20px;
+      --aug-tr-width: 160px;
+      --aug-br: 20px;
+      --aug-br-height: 0px;
+      --aug-br-width: 0px;
+      --aug-bl: 30px;
+      --aug-bl-height: 30px;
+      --aug-bl-width: 30px;
+      --aug-t: 0px;
+      --aug-t-height: 0px;
+      --aug-t-width: 0px;
+      --aug-r: 0px;
+      --aug-r-height: 0px;
+      --aug-r-width: 0px;
+      --aug-b: 15px;
+      --aug-b-height: 15px;
+      --aug-b-width: 120px;
+      --aug-l: 20px;
+      --aug-l-height: 210px;
+      --aug-l-width: 20px;
+    }
+  </style>
 
   <body style="background-color: black; margin: 0;">
     <!-- TradingView Widget BEGIN -->
-    <div style="z-index: 1000;">
+    <div class="bitcoin-tradingview" augmented-ui="br-clip b-clip-x bl-clip exe" style="z-index: 1000;">
       <div class="tradingview-widget-container">
         <div id="tradingview_4699e"></div>
         <div class="tradingview-widget-copyright">
@@ -53,7 +114,7 @@
     <!-- TradingView Widget END -->
 
     <!-- Bitcoin Global Trends Widget BEGIN -->
-    <div style="margin-top: -6rem; z-index: 10;">
+    <div class="google-trends" augmented-ui="bl-clip-x br-clip-x exe" style="margin-top: -6rem; z-index: 10;">
       <iframe
         id="trends-widget-1"
         src="https://trends.google.com/trends/explore?date=now%207-d&gprop=news&q=%2Fm%2F05p0rrx"
@@ -66,7 +127,7 @@
     <!-- Bitcoin Global Trends Widget END -->
 
     <!-- TradingView Widget BEGIN -->
-    <div>
+    <div class="bitcoin-technical-analysis" augmented-ui="tr-clip-x l-clip-y bl-clip tl-round br-round b-clip-x exe">
       <div class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
         <div class="tradingview-widget-copyright">
@@ -86,7 +147,7 @@
           {
             "interval": "4h",
             "width": "425",
-            "isTransparent": false,
+            "isTransparent": true,
             "height": "450",
             "symbol": "BITSTAMP:BTCUSD",
             "showIntervalTabs": true,
