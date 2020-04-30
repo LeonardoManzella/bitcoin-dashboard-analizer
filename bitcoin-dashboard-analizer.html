@@ -54,9 +54,10 @@
       --aug-br-width: 40%;
     }
     div.bitcoin-technical-analysis{
+      /* TODO change top right to look like bottom lleft angle */
       margin-left: 10px;
       width: fit-content;
-      padding: 30px; /* mind the gap */
+      padding: 0 30px 30px 30px; /* mind the gap */
       --aug-inset: 7px;
       --aug-inset-bg: lightgrey;
       --aug-border: 5px;
@@ -67,9 +68,9 @@
       --aug-tl: 10px;
       --aug-tl-height: 0px;
       --aug-tl-width: 0px;
-      --aug-tr: 20px;
-      --aug-tr-height: 20px;
-      --aug-tr-width: 160px;
+      --aug-tr: 30px;
+      --aug-tr-height: 30px;
+      --aug-tr-width: 30px;
       --aug-br: 20px;
       --aug-br-height: 0px;
       --aug-br-width: 0px;
@@ -79,9 +80,6 @@
       --aug-t: 0px;
       --aug-t-height: 0px;
       --aug-t-width: 0px;
-      --aug-r: 0px;
-      --aug-r-height: 0px;
-      --aug-r-width: 0px;
       --aug-b: 15px;
       --aug-b-height: 15px;
       --aug-b-width: 120px;
@@ -144,8 +142,9 @@
     </div>
     <!-- Bitcoin Global Trends Widget END -->
 
+    
     <!-- TradingView Widget BEGIN -->
-    <div class="bitcoin-technical-analysis" augmented-ui="tr-clip-x l-clip-y bl-clip tl-round br-round b-clip-x exe">
+    <div class="bitcoin-technical-analysis" augmented-ui="tr-clip l-clip-y bl-clip tl-round br-round b-clip-x exe">
       <div class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
         <div class="tradingview-widget-copyright">
@@ -177,8 +176,11 @@
     </div>
     <!-- TradingView Widget END -->
 
-    <!-- Ambito Financiero Dolar Widget BEGIN -->
+    <!-- TODO Ambito Financiero Dolar Widget BEGIN -->
     <!-- Ambito Financiero Dolar Widget END -->
+
+    <!-- TODO Interesting News Widget BEGIN -->
+    <!-- Interesting News Widget END -->
 
     <!-- <script src="js/scripts.js"></script> -->
   </body>
