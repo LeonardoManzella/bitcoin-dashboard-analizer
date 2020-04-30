@@ -31,7 +31,19 @@
   </head>
 
   <style type="text/css">
-    /* TODO custom scrollbar like cyberpunk 2077 some interface video or web page https://css-tricks.com/the-current-state-of-styling-scrollbars/ */
+    ::-webkit-scrollbar {
+        width: 0.3rem;
+    } 
+    ::-webkit-scrollbar-track {
+      background-color: #f7f7f7;
+    } 
+    ::-webkit-scrollbar-thumb { 
+      background-color: #4285F4;
+      border-top-right-radius: 4px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+    }
+    
     div.bitcoin-tradingview {
       --aug-border: 5px;
       /* padding: 10px;  mind the gap */
