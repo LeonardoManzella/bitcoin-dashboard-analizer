@@ -132,6 +132,14 @@
       text-transform: uppercase;
       letter-spacing: 0.4px;
       font-family: Trebuchet MS, roboto, ubuntu, sans-serif;
+      --aug-tl: 30px;
+      --aug-tl-height: 30px;
+      --aug-tl-width: 30px;
+      --aug-br: 30px;
+      --aug-br-height: 30px;
+      --aug-br-width: 30px;
+      --aug-border: 0.1px;
+      --aug-border-bg: black;
     }
     .dolar-table-top-row {
       font-weight: 700;
@@ -144,11 +152,11 @@
     }
     .dolar-table-top-row-difference {
       width: 50%;
-      font-size: 230%;
+      font-size: 240%;
     }
     .dolar-table-values-row {
       font-weight: 700;
-      font-size: 130%;
+      font-size: 170%;
     }
   </style>
 
@@ -255,11 +263,13 @@
         </div>
       </div>
       <!-- TradingView Widget END -->
+
+      <!-- Ambito Financiero Dolar Widget BEGIN -->
       <div
         class="dolar-widget"
         augmented-ui="tl-clip r-clip-y br-clip tr-round bl-round b-clip-x exe"
       >
-        <table class="dolar-table">
+        <table class="dolar-table" augmented-ui="tl-clip exe">
           <tr class="dolar-table-top-row">
             <td class="dolar-table-top-row-title" style="font-size: 120%;">
               Contado con liquidacion
@@ -290,7 +300,8 @@
             <td>Venta</td>
           </tr>
         </table>
-        <table class="dolar-table">
+
+        <table class="dolar-table" augmented-ui="br-clip exe">
           <tr class="dolar-table-top-row">
             <td class="dolar-table-top-row-title">
               Oficial
@@ -307,10 +318,8 @@
           </tr>
         </table>
       </div>
+      <!-- Ambito Financiero Dolar Widget END -->
     </div>
-
-    <!-- TODO Ambito Financiero Dolar Widget BEGIN -->
-    <!-- Ambito Financiero Dolar Widget END -->
 
     <!-- TODO Interesting News Widget BEGIN -->
     <!-- Interesting News Widget END -->
@@ -341,6 +350,8 @@
             const value = valueArray[index];
             //TODO jquery update html and classes
           }
+
+          //TODO jquery update html and classes
         };
         
         fetchData(URL_OFICIAL)
