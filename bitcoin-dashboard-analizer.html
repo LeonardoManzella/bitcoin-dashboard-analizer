@@ -158,6 +158,15 @@
       font-weight: 700;
       font-size: 170%;
     }
+    .up {
+      color: green;
+    }
+    .down {
+      color: red;
+    }
+    .equal {
+      color: blue;
+    }
   </style>
 
   <body style="background-color: black; margin: 0;">
@@ -274,10 +283,12 @@
             <td class="dolar-table-top-row-title" style="font-size: 120%;">
               Contado con liquidacion
             </td>
-            <td class="dolar-table-top-row-difference">1 0.14%</td>
+            <td class="dolar-table-top-row-difference" id="dolar-cl-diff">
+              ⌛
+            </td>
           </tr>
           <tr class="dolar-table-values-row">
-            <td>111,00</td>
+            <td id="dolar-cl-value">⌛</td>
           </tr>
           <tr>
             <td>Referencia</td>
@@ -289,11 +300,13 @@
             <td class="dolar-table-top-row-title">
               Blue
             </td>
-            <td class="dolar-table-top-row-difference">1 0.14%</td>
+            <td class="dolar-table-top-row-difference" id="dolar-blue-diff">
+              ⌛
+            </td>
           </tr>
           <tr class="dolar-table-values-row">
-            <td>111,00</td>
-            <td>121.00</td>
+            <td id="dolar-blue-buy">⌛</td>
+            <td id="dolar-blue-sell">⌛</td>
           </tr>
           <tr>
             <td>Compra</td>
@@ -306,11 +319,13 @@
             <td class="dolar-table-top-row-title">
               Oficial
             </td>
-            <td class="dolar-table-top-row-difference">1 0.14%</td>
+            <td class="dolar-table-top-row-difference" id="dolar-of-diff">
+              ⌛
+            </td>
           </tr>
           <tr class="dolar-table-values-row">
-            <td>111,00</td>
-            <td>121.00</td>
+            <td id="dolar-of-buy">⌛</td>
+            <td id="dolar-of-sell">⌛</td>
           </tr>
           <tr>
             <td>Compra</td>
@@ -324,45 +339,103 @@
     <!-- TODO Interesting News Widget BEGIN -->
     <!-- Interesting News Widget END -->
 
-    <!-- <script src="js/scripts.js"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+
     <script type="text/javascript">
-      const URL_OFICIAL = "https://mercados.ambito.com//dolar/oficial/variacion";
+      const URL_OFICIAL =
+        "https://mercados.ambito.com//dolar/oficial/variacion";
       const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
       const URL_LIQUI = "https://mercados.ambito.com//dolar/cl/variacion";
 
       const updateDolarIndicators = () => {
-        console.group('updateDolarIndicators');
+        console.group("updateDolarIndicators");
 
         const fetchData = (url) => {
           return fetch(url)
-          .then(response => response.json())
-          .catch( (error) => {
-            console.error("-- Error al fetchear indicadores dolar ---");
-            console.error(error);
-            console.trace();
-          });
+            .then((response) => response.json())
+            .catch((error) => {
+              console.error("-- Error al fetchear indicadores dolar ---");
+              console.error(error);
+              console.trace();
+            });
         };
 
-        const updateElements = (idArray, valueArray, idDiff, classDiff, difference) => {
+        const updateElements = (
+          idArray,
+          valueArray,
+          idDiff,
+          classDiff,
+          difference
+        ) => {
+          let element = null;
           for (let index = 0; index < idArray.length; index++) {
             const id = idArray[index];
             const value = valueArray[index];
-            //TODO jquery update html and classes
-          }
+            element = document.getElementById(id);
+            element.innerText = value;
 
-          //TODO jquery update html and classes
+            //Update official dolar tax
+            if(id==="dolar-of-sell") element.innerText = `${element.innerText} (${parseInt(element.innerText) * 1.3})`
+          }
+          element = document.getElementById(idDiff);
+          element.classList.add(classDiff);
+          element.innerText = addSymbol(classDiff) + difference;
         };
-        
-        fetchData(URL_OFICIAL)
-        .then(data => console.log(data))
-        .then(data => updateElements([], [data.compra, data.venta], 'idDiff', data.class-variacion, data.variacion) );
+
+        const addSymbol = (classDiff) => {
+          switch (classDiff) {
+            case "up":
+              return "+";
+
+            case "down":
+              return "";
+
+            default:
+              return "=";
+          }
+        };
+
+        fetchData(URL_OFICIAL).then((data) => {
+          console.log(data);
+          updateElements(
+            ["dolar-of-buy", "dolar-of-sell"],
+            [data.compra, data.venta],
+            "dolar-of-diff",
+            data['class-variacion'],
+            data.variacion
+          );
+        });
+
+        fetchData(URL_LIQUI).then((data) => {
+          console.log(data);
+          updateElements(
+            ["dolar-cl-value"],
+            [data.compra],
+            "dolar-cl-diff",
+            data['class-variacion'],
+            data.variacion
+          );
+        });
+
+        fetchData(URL_BLUE).then((data) => {
+          console.log(data);
+          updateElements(
+            ["dolar-blue-buy", "dolar-blue-sell"],
+            [data.compra, data.venta],
+            "dolar-blue-diff",
+            data['class-variacion'],
+            data.variacion
+          );
+        });
 
         console.groupEnd();
       };
 
       updateDolarIndicators();
-      //TODO use setInterval
+
+      window.setInterval(() => {
+        updateDolarIndicators();
+      }, 5 * 60 * 1000);
     </script>
   </body>
 </html>
