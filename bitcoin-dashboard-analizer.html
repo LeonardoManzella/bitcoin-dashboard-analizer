@@ -43,17 +43,17 @@
       --aug-b-height: 30px;
       --aug-b-width: 20%;
     }
-    div.google-trends{
+    div.google-trends {
       --aug-border: 5px;
       text-align: center;
-      --aug-border-bg: #F7F7F7;
-      --aug-inset-bg: #F7F7F7;
+      --aug-border-bg: #f7f7f7;
+      --aug-inset-bg: #f7f7f7;
       --aug-bl: 25px;
       --aug-bl-width: 40%;
       --aug-br: 25px;
       --aug-br-width: 40%;
     }
-    div.bitcoin-technical-analysis{
+    div.bitcoin-technical-analysis {
       /* TODO change top right to look like bottom lleft angle */
       margin-left: 10px;
       width: fit-content;
@@ -61,7 +61,7 @@
       --aug-inset: 7px;
       --aug-inset-bg: lightgrey;
       --aug-border: 5px;
-      --aug-border-bg:lightgrey ;
+      --aug-border-bg: lightgrey;
       --aug-border-opacity: 0.5;
       --aug-l-offset: 0px;
       --aug-b-offset: 0px;
@@ -91,7 +91,11 @@
 
   <body style="background-color: black; margin: 0;">
     <!-- TradingView Widget BEGIN -->
-    <div class="bitcoin-tradingview" augmented-ui="br-clip b-clip-x bl-clip exe" style="z-index: 1000;">
+    <div
+      class="bitcoin-tradingview"
+      augmented-ui="br-clip b-clip-x bl-clip exe"
+      style="z-index: 1000;"
+    >
       <div class="tradingview-widget-container">
         <div id="tradingview_4699e"></div>
         <div class="tradingview-widget-copyright">
@@ -130,7 +134,11 @@
     <!-- TradingView Widget END -->
 
     <!-- Bitcoin Global Trends Widget BEGIN -->
-    <div class="google-trends" augmented-ui="bl-clip-x br-clip-x exe" style="margin-top: -6rem; z-index: 10;">
+    <div
+      class="google-trends"
+      augmented-ui="bl-clip-x br-clip-x exe"
+      style="margin-top: -6rem; z-index: 10;"
+    >
       <iframe
         id="trends-widget-1"
         src="https://trends.google.com/trends/explore?date=now%207-d&gprop=news&q=%2Fm%2F05p0rrx"
@@ -142,39 +150,78 @@
     </div>
     <!-- Bitcoin Global Trends Widget END -->
 
-    
-    <!-- TradingView Widget BEGIN -->
-    <div class="bitcoin-technical-analysis" augmented-ui="tr-clip l-clip-y bl-clip tl-round br-round b-clip-x exe">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <div class="tradingview-widget-copyright">
-          <a
-            href="https://es.tradingview.com/symbols/BITSTAMP-BTCUSD/technicals/"
-            rel="noopener"
-            target="_blank"
-            ><span class="blue-text">Análisis técnico de BTCUSD</span></a
+    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+      <!-- TradingView Widget BEGIN -->
+      <div
+        class="bitcoin-technical-analysis"
+        augmented-ui="tr-clip l-clip-y bl-clip tl-round br-round b-clip-x exe"
+      >
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <div class="tradingview-widget-copyright">
+            <a
+              href="https://es.tradingview.com/symbols/BITSTAMP-BTCUSD/technicals/"
+              rel="noopener"
+              target="_blank"
+              ><span class="blue-text">Análisis técnico de BTCUSD</span></a
+            >
+            por TradingView
+          </div>
+          <script
+            type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js"
+            async
           >
-          por TradingView
+            {
+              "interval": "4h",
+              "width": "425",
+              "isTransparent": true,
+              "height": "450",
+              "symbol": "BITSTAMP:BTCUSD",
+              "showIntervalTabs": true,
+              "locale": "es",
+              "colorTheme": "light"
+            }
+          </script>
         </div>
-        <script
-          type="text/javascript"
-          src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js"
-          async
-        >
-          {
-            "interval": "4h",
-            "width": "425",
-            "isTransparent": true,
-            "height": "450",
-            "symbol": "BITSTAMP:BTCUSD",
-            "showIntervalTabs": true,
-            "locale": "es",
-            "colorTheme": "light"
-          }
-        </script>
       </div>
+      <!-- TradingView Widget END -->
+      <!-- TradingView Widget BEGIN -->
+      <div
+        class="bitcoin-technical-analysis"
+        augmented-ui="tr-clip l-clip-y bl-clip tl-round br-round b-clip-x exe"
+      >
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <div class="tradingview-widget-copyright">
+            <a
+              href="https://es.tradingview.com/symbols/BITSTAMP-BTCUSD/technicals/"
+              rel="noopener"
+              target="_blank"
+              ><span class="blue-text">Análisis técnico de BTCUSD</span></a
+            >
+            por TradingView
+          </div>
+          <script
+            type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js"
+            async
+          >
+            {
+              "interval": "4h",
+              "width": "425",
+              "isTransparent": true,
+              "height": "450",
+              "symbol": "BITSTAMP:BTCUSD",
+              "showIntervalTabs": true,
+              "locale": "es",
+              "colorTheme": "light"
+            }
+          </script>
+        </div>
+      </div>
+      <!-- TradingView Widget END -->
     </div>
-    <!-- TradingView Widget END -->
 
     <!-- TODO Ambito Financiero Dolar Widget BEGIN -->
     <!-- Ambito Financiero Dolar Widget END -->
