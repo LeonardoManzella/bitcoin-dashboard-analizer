@@ -4,8 +4,7 @@
   <head>
     <meta charset="utf-8" />
 
-    <!-- TODO Obtain latest Bitcoin price to put as title -->
-    <title>(8000 USD) Bitcoin Dashboard Analizer</title>
+    <title>Bitcoin Dashboard Analizer</title>
     <meta name="description" content="Bitcoin Dashboard Analizer" />
     <link
       rel="icon"
@@ -449,5 +448,39 @@
         updateDolarIndicators();
       }, 5 * 60 * 1000);
     </script>
+
+  <script type="text/javascript">
+    const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+    const BITCOIN_PRICE_URL = "https://www.google.com/async/currency_v2_update?vet=12ahUKEwjT_e-hkJHpAhVtCrkGHZoHCwIQ_sIDMAB6BAgVEAE..i&ei=iEerXtOZBO2U5OUPmo-sEA&yv=3&async=source_amount:1,source_currency:%2Fm%2F05p0rrx,target_currency:%2Fm%2F09nqf,lang:es-419,country:ar,disclaimer_url:https%3A%2F%2Fwww.google.com%2Fintl%2Fes%2Fgooglefinance%2Fdisclaimer%2F,period:1M,interval:86400,_id:currency-v2-updatable_85,_pms:s,_fmt:pc";
+
+    const fetchData =  () => {
+      return fetch(PROXY_URL + BITCOIN_PRICE_URL)
+      .then(response => response.text())
+      // .then( data => console.log(data) && data)
+      .catch((error) => {
+        console.error("-- Error al fetchear precio del bitcoin ---");
+        console.error(error);
+        console.trace();
+      });
+    };
+
+    const updateBitcoinPrice = () => {
+      fetchData()
+      .then( fetchedData => {
+        // console.log("fetchedData: ", fetchedData);
+        const textFrom = 'data-exchange-rate=\"';
+        const FROM = fetchedData.indexOf(textFrom) + textFrom.length;
+        const UNTIL = fetchedData.indexOf('\"><div class=\"vk_sh c8Zgcf\"><span class=\"DFlfde eNFL1\">');
+        const bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
+        document.title = `(${bitcoinPriceUSD} USD) Bitcoin Dashboard Analizer`;
+      });
+    };
+
+    updateBitcoinPrice();
+
+    window.setInterval(() => {
+      updateBitcoinPrice();
+    }, 2*1000);
+  </script>
   </body>
 </html>
