@@ -54,8 +54,7 @@
       --aug-br-width: 40%;
     }
     div.bitcoin-technical-analysis {
-      /* TODO change top right to look like bottom lleft angle */
-      margin-left: 10px;
+      margin-left: 0.5rem;
       width: fit-content;
       padding: 0 30px 30px 30px; /* mind the gap */
       --aug-inset: 7px;
@@ -86,6 +85,70 @@
       --aug-l: 20px;
       --aug-l-height: 210px;
       --aug-l-width: 20px;
+    }
+
+    div.dolar-widget {
+      margin-right: 4rem;
+      width: fit-content;
+      padding: 0 50px 30px 30px; /* mind the gap */
+      --aug-inset: 7px;
+      --aug-inset-bg: lightgrey;
+      --aug-border: 5px;
+      --aug-border-bg: lightgrey;
+      --aug-border-opacity: 0.5;
+      --aug-r-offset: 0px;
+      --aug-b-offset: 0px;
+      --aug-tr: 10px;
+      --aug-tr-height: 0px;
+      --aug-tr-width: 0px;
+      --aug-tl: 30px;
+      --aug-tl-height: 30px;
+      --aug-tl-width: 30px;
+      --aug-bl: 20px;
+      --aug-bl-height: 0px;
+      --aug-bl-width: 0px;
+      --aug-br: 30px;
+      --aug-br-height: 30px;
+      --aug-br-width: 30px;
+      --aug-t: 0px;
+      --aug-t-height: 0px;
+      --aug-t-width: 0px;
+      --aug-b: 15px;
+      --aug-b-height: 15px;
+      --aug-b-width: 120px;
+      --aug-r: 20px;
+      --aug-r-height: 210px;
+      --aug-r-width: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+    .dolar-table {
+      min-width: 20rem;
+      min-height: 4rem;
+      text-align: center;
+      border: 1px solid black;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-family: Trebuchet MS, roboto, ubuntu, sans-serif;
+    }
+    .dolar-table-top-row {
+      font-weight: 700;
+      height: 3rem;
+      vertical-align: top;
+    }
+    .dolar-table-top-row-title {
+      width: 50%;
+      font-size: 160%;
+    }
+    .dolar-table-top-row-difference {
+      width: 50%;
+      font-size: 230%;
+    }
+    .dolar-table-values-row {
+      font-weight: 700;
+      font-size: 130%;
     }
   </style>
 
@@ -150,7 +213,13 @@
     </div>
     <!-- Bitcoin Global Trends Widget END -->
 
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      "
+    >
       <!-- TradingView Widget BEGIN -->
       <div
         class="bitcoin-technical-analysis"
@@ -186,7 +255,58 @@
         </div>
       </div>
       <!-- TradingView Widget END -->
-      
+      <div
+        class="dolar-widget"
+        augmented-ui="tl-clip r-clip-y br-clip tr-round bl-round b-clip-x exe"
+      >
+        <table class="dolar-table">
+          <tr class="dolar-table-top-row">
+            <td class="dolar-table-top-row-title" style="font-size: 120%;">
+              Contado con liquidacion
+            </td>
+            <td class="dolar-table-top-row-difference">1 0.14%</td>
+          </tr>
+          <tr class="dolar-table-values-row">
+            <td>111,00</td>
+          </tr>
+          <tr>
+            <td>Referencia</td>
+          </tr>
+        </table>
+
+        <table class="dolar-table">
+          <tr class="dolar-table-top-row">
+            <td class="dolar-table-top-row-title">
+              Blue
+            </td>
+            <td class="dolar-table-top-row-difference">1 0.14%</td>
+          </tr>
+          <tr class="dolar-table-values-row">
+            <td>111,00</td>
+            <td>121.00</td>
+          </tr>
+          <tr>
+            <td>Compra</td>
+            <td>Venta</td>
+          </tr>
+        </table>
+        <table class="dolar-table">
+          <tr class="dolar-table-top-row">
+            <td class="dolar-table-top-row-title">
+              Oficial
+            </td>
+            <td class="dolar-table-top-row-difference">1 0.14%</td>
+          </tr>
+          <tr class="dolar-table-values-row">
+            <td>111,00</td>
+            <td>121.00</td>
+          </tr>
+          <tr>
+            <td>Compra</td>
+            <td>Venta</td>
+          </tr>
+        </table>
+      </div>
     </div>
 
     <!-- TODO Ambito Financiero Dolar Widget BEGIN -->
@@ -196,5 +316,42 @@
     <!-- Interesting News Widget END -->
 
     <!-- <script src="js/scripts.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      const URL_OFICIAL = "https://mercados.ambito.com//dolar/oficial/variacion";
+      const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
+      const URL_LIQUI = "https://mercados.ambito.com//dolar/cl/variacion";
+
+      const updateDolarIndicators = () => {
+        console.group('updateDolarIndicators');
+
+        const fetchData = (url) => {
+          return fetch(url)
+          .then(response => response.json())
+          .catch( (error) => {
+            console.error("-- Error al fetchear indicadores dolar ---");
+            console.error(error);
+            console.trace();
+          });
+        };
+
+        const updateElements = (idArray, valueArray, idDiff, classDiff, difference) => {
+          for (let index = 0; index < idArray.length; index++) {
+            const id = idArray[index];
+            const value = valueArray[index];
+            //TODO jquery update html and classes
+          }
+        };
+        
+        fetchData(URL_OFICIAL)
+        .then(data => console.log(data))
+        .then(data => updateElements([], [data.compra, data.venta], 'idDiff', data.class-variacion, data.variacion) );
+
+        console.groupEnd();
+      };
+
+      updateDolarIndicators();
+      //TODO use setInterval
+    </script>
   </body>
 </html>
