@@ -4,16 +4,45 @@
   <head>
     <meta charset="utf-8" />
 
-    <!-- TODO Obtain latest Bitcoin price to put as title -->
-    <title>(8000 USD) Bitcoin Dashboard Analizer</title>
+    <title>Bitcoin Dashboard Analizer</title>
     <meta name="description" content="Bitcoin Dashboard Analizer" />
-    <meta name="author" content="SitePoint" />
+    <link
+      rel="icon"
+      href="https://bitcoinist.com/wp-content/uploads/2018/06/cropped-Icon-32x32.png"
+      sizes="32x32"
+    />
+    <link
+      rel="icon"
+      href="https://bitcoinist.com/wp-content/uploads/2018/06/cropped-Icon-192x192.png"
+      sizes="192x192"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="https://bitcoinist.com/wp-content/uploads/2018/06/cropped-Icon-180x180.png"
+    />
 
     <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/augmented-ui/augmented.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/augmented-ui/augmented.css"
+    />
   </head>
 
   <style type="text/css">
+    ::-webkit-scrollbar {
+        width: 0.3rem;
+    } 
+    ::-webkit-scrollbar-track {
+      background-color: #f7f7f7;
+    } 
+    ::-webkit-scrollbar-thumb { 
+      background-color: #4285F4;
+      border-top-right-radius: 4px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+    }
+    
     div.bitcoin-tradingview {
       --aug-border: 5px;
       /* padding: 10px;  mind the gap */
@@ -25,33 +54,33 @@
       --aug-b-height: 30px;
       --aug-b-width: 20%;
     }
-    div.google-trends{
+    div.google-trends {
       --aug-border: 5px;
       text-align: center;
-      --aug-border-bg: #F7F7F7;
-      --aug-inset-bg: #F7F7F7;
+      --aug-border-bg: #f7f7f7;
+      --aug-inset-bg: #f7f7f7;
       --aug-bl: 25px;
       --aug-bl-width: 40%;
       --aug-br: 25px;
       --aug-br-width: 40%;
     }
-    div.bitcoin-technical-analysis{
-      margin-left: 10px;
+    div.bitcoin-technical-analysis {
+      margin-left: 0.5rem;
       width: fit-content;
-      padding: 30px; /* mind the gap */
+      padding: 0 30px 30px 30px; /* mind the gap */
       --aug-inset: 7px;
       --aug-inset-bg: lightgrey;
       --aug-border: 5px;
-      --aug-border-bg:lightgrey ;
+      --aug-border-bg: lightgrey;
       --aug-border-opacity: 0.5;
       --aug-l-offset: 0px;
       --aug-b-offset: 0px;
       --aug-tl: 10px;
       --aug-tl-height: 0px;
       --aug-tl-width: 0px;
-      --aug-tr: 20px;
-      --aug-tr-height: 20px;
-      --aug-tr-width: 160px;
+      --aug-tr: 30px;
+      --aug-tr-height: 30px;
+      --aug-tr-width: 30px;
       --aug-br: 20px;
       --aug-br-height: 0px;
       --aug-br-width: 0px;
@@ -61,9 +90,6 @@
       --aug-t: 0px;
       --aug-t-height: 0px;
       --aug-t-width: 0px;
-      --aug-r: 0px;
-      --aug-r-height: 0px;
-      --aug-r-width: 0px;
       --aug-b: 15px;
       --aug-b-height: 15px;
       --aug-b-width: 120px;
@@ -71,11 +97,96 @@
       --aug-l-height: 210px;
       --aug-l-width: 20px;
     }
+
+    div.dolar-widget {
+      margin-right: 4rem;
+      width: fit-content;
+      padding: 0 50px 30px 30px; /* mind the gap */
+      --aug-inset: 7px;
+      --aug-inset-bg: lightgrey;
+      --aug-border: 5px;
+      --aug-border-bg: lightgrey;
+      --aug-border-opacity: 0.5;
+      --aug-r-offset: 0px;
+      --aug-b-offset: 0px;
+      --aug-tr: 10px;
+      --aug-tr-height: 0px;
+      --aug-tr-width: 0px;
+      --aug-tl: 30px;
+      --aug-tl-height: 30px;
+      --aug-tl-width: 30px;
+      --aug-bl: 20px;
+      --aug-bl-height: 0px;
+      --aug-bl-width: 0px;
+      --aug-br: 30px;
+      --aug-br-height: 30px;
+      --aug-br-width: 30px;
+      --aug-t: 0px;
+      --aug-t-height: 0px;
+      --aug-t-width: 0px;
+      --aug-b: 15px;
+      --aug-b-height: 15px;
+      --aug-b-width: 120px;
+      --aug-r: 20px;
+      --aug-r-height: 210px;
+      --aug-r-width: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+    .dolar-table {
+      min-width: 20rem;
+      min-height: 4rem;
+      text-align: center;
+      border: 1px solid black;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-family: Trebuchet MS, roboto, ubuntu, sans-serif;
+      --aug-tl: 30px;
+      --aug-tl-height: 30px;
+      --aug-tl-width: 30px;
+      --aug-br: 30px;
+      --aug-br-height: 30px;
+      --aug-br-width: 30px;
+      --aug-border: 0.1px;
+      --aug-border-bg: black;
+    }
+    .dolar-table-top-row {
+      font-weight: 700;
+      height: 3rem;
+      vertical-align: top;
+    }
+    .dolar-table-top-row-title {
+      width: 50%;
+      font-size: 160%;
+    }
+    .dolar-table-top-row-difference {
+      width: 50%;
+      font-size: 240%;
+    }
+    .dolar-table-values-row {
+      font-weight: 700;
+      font-size: 170%;
+    }
+    .up {
+      color: green;
+    }
+    .down {
+      color: red;
+    }
+    .equal {
+      color: blue;
+    }
   </style>
 
   <body style="background-color: black; margin: 0;">
     <!-- TradingView Widget BEGIN -->
-    <div class="bitcoin-tradingview" augmented-ui="br-clip b-clip-x bl-clip exe" style="z-index: 1000;">
+    <div
+      class="bitcoin-tradingview"
+      augmented-ui="br-clip b-clip-x bl-clip exe"
+      style="z-index: 1000;"
+    >
       <div class="tradingview-widget-container">
         <div id="tradingview_4699e"></div>
         <div class="tradingview-widget-copyright">
@@ -114,7 +225,11 @@
     <!-- TradingView Widget END -->
 
     <!-- Bitcoin Global Trends Widget BEGIN -->
-    <div class="google-trends" augmented-ui="bl-clip-x br-clip-x exe" style="margin-top: -6rem; z-index: 10;">
+    <div
+      class="google-trends"
+      augmented-ui="bl-clip-x br-clip-x exe"
+      style="margin-top: -6rem; z-index: 10;"
+    >
       <iframe
         id="trends-widget-1"
         src="https://trends.google.com/trends/explore?date=now%207-d&gprop=news&q=%2Fm%2F05p0rrx"
@@ -126,42 +241,246 @@
     </div>
     <!-- Bitcoin Global Trends Widget END -->
 
-    <!-- TradingView Widget BEGIN -->
-    <div class="bitcoin-technical-analysis" augmented-ui="tr-clip-x l-clip-y bl-clip tl-round br-round b-clip-x exe">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <div class="tradingview-widget-copyright">
-          <a
-            href="https://es.tradingview.com/symbols/BITSTAMP-BTCUSD/technicals/"
-            rel="noopener"
-            target="_blank"
-            ><span class="blue-text">Análisis técnico de BTCUSD</span></a
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      "
+    >
+      <!-- TradingView Widget BEGIN -->
+      <div
+        class="bitcoin-technical-analysis"
+        augmented-ui="tr-clip l-clip-y bl-clip tl-round br-round b-clip-x exe"
+      >
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <div class="tradingview-widget-copyright">
+            <a
+              href="https://es.tradingview.com/symbols/BITSTAMP-BTCUSD/technicals/"
+              rel="noopener"
+              target="_blank"
+              ><span class="blue-text">Análisis técnico de BTCUSD</span></a
+            >
+            por TradingView
+          </div>
+          <script
+            type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js"
+            async
           >
-          por TradingView
+            {
+              "interval": "4h",
+              "width": "425",
+              "isTransparent": true,
+              "height": "450",
+              "symbol": "BITSTAMP:BTCUSD",
+              "showIntervalTabs": true,
+              "locale": "es",
+              "colorTheme": "light"
+            }
+          </script>
         </div>
-        <script
-          type="text/javascript"
-          src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js"
-          async
-        >
-          {
-            "interval": "4h",
-            "width": "425",
-            "isTransparent": true,
-            "height": "450",
-            "symbol": "BITSTAMP:BTCUSD",
-            "showIntervalTabs": true,
-            "locale": "es",
-            "colorTheme": "light"
-          }
-        </script>
       </div>
+      <!-- TradingView Widget END -->
+
+      <!-- Ambito Financiero Dolar Widget BEGIN -->
+      <div
+        class="dolar-widget"
+        augmented-ui="tl-clip r-clip-y br-clip tr-round bl-round b-clip-x exe"
+      >
+        <table class="dolar-table" augmented-ui="tl-clip exe">
+          <tr class="dolar-table-top-row">
+            <td class="dolar-table-top-row-title" style="font-size: 120%;">
+              Contado con liquidacion
+            </td>
+            <td class="dolar-table-top-row-difference" id="dolar-cl-diff">
+              ⌛
+            </td>
+          </tr>
+          <tr class="dolar-table-values-row">
+            <td id="dolar-cl-value">⌛</td>
+          </tr>
+          <tr>
+            <td>Referencia</td>
+          </tr>
+        </table>
+
+        <table class="dolar-table">
+          <tr class="dolar-table-top-row">
+            <td class="dolar-table-top-row-title">
+              Blue
+            </td>
+            <td class="dolar-table-top-row-difference" id="dolar-blue-diff">
+              ⌛
+            </td>
+          </tr>
+          <tr class="dolar-table-values-row">
+            <td id="dolar-blue-buy">⌛</td>
+            <td id="dolar-blue-sell">⌛</td>
+          </tr>
+          <tr>
+            <td>Compra</td>
+            <td>Venta</td>
+          </tr>
+        </table>
+
+        <table class="dolar-table" augmented-ui="br-clip exe">
+          <tr class="dolar-table-top-row">
+            <td class="dolar-table-top-row-title">
+              Oficial
+            </td>
+            <td class="dolar-table-top-row-difference" id="dolar-of-diff">
+              ⌛
+            </td>
+          </tr>
+          <tr class="dolar-table-values-row">
+            <td id="dolar-of-buy">⌛</td>
+            <td id="dolar-of-sell">⌛</td>
+          </tr>
+          <tr>
+            <td>Compra</td>
+            <td>Venta</td>
+          </tr>
+        </table>
+      </div>
+      <!-- Ambito Financiero Dolar Widget END -->
     </div>
-    <!-- TradingView Widget END -->
 
-    <!-- Ambito Financiero Dolar Widget BEGIN -->
-    <!-- Ambito Financiero Dolar Widget END -->
+    <!-- TODO Interesting News Widget BEGIN -->
+    <!-- Interesting News Widget END -->
 
-    <!-- <script src="js/scripts.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+
+    <script type="text/javascript">
+      const URL_OFICIAL =
+        "https://mercados.ambito.com//dolar/oficial/variacion";
+      const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
+      const URL_LIQUI = "https://mercados.ambito.com//dolar/cl/variacion";
+
+      const updateDolarIndicators = () => {
+        console.group("updateDolarIndicators");
+
+        const fetchData = (url) => {
+          return fetch(url)
+            .then((response) => response.json())
+            .catch((error) => {
+              console.error("-- Error al fetchear indicadores dolar ---");
+              console.error(error);
+              console.trace();
+            });
+        };
+
+        const updateElements = (
+          idArray,
+          valueArray,
+          idDiff,
+          classDiff,
+          difference
+        ) => {
+          let element = null;
+          for (let index = 0; index < idArray.length; index++) {
+            const id = idArray[index];
+            const value = valueArray[index];
+            element = document.getElementById(id);
+            element.innerText = value;
+
+            //Update official dolar tax
+            if(id==="dolar-of-sell") element.innerText = `${element.innerText} (${parseInt(element.innerText) * 1.3})`
+          }
+          element = document.getElementById(idDiff);
+          element.classList.add(classDiff);
+          element.innerText = addSymbol(classDiff) + difference;
+        };
+
+        const addSymbol = (classDiff) => {
+          switch (classDiff) {
+            case "up":
+              return "+";
+
+            case "down":
+              return "";
+
+            default:
+              return "=";
+          }
+        };
+
+        fetchData(URL_OFICIAL).then((data) => {
+          console.log(data);
+          updateElements(
+            ["dolar-of-buy", "dolar-of-sell"],
+            [data.compra, data.venta],
+            "dolar-of-diff",
+            data['class-variacion'],
+            data.variacion
+          );
+        });
+
+        fetchData(URL_LIQUI).then((data) => {
+          console.log(data);
+          updateElements(
+            ["dolar-cl-value"],
+            [data.compra],
+            "dolar-cl-diff",
+            data['class-variacion'],
+            data.variacion
+          );
+        });
+
+        fetchData(URL_BLUE).then((data) => {
+          console.log(data);
+          updateElements(
+            ["dolar-blue-buy", "dolar-blue-sell"],
+            [data.compra, data.venta],
+            "dolar-blue-diff",
+            data['class-variacion'],
+            data.variacion
+          );
+        });
+
+        console.groupEnd();
+      };
+
+      updateDolarIndicators();
+
+      window.setInterval(() => {
+        updateDolarIndicators();
+      }, 5 * 60 * 1000);
+    </script>
+
+  <script type="text/javascript">
+    const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+    const BITCOIN_PRICE_URL = "https://www.google.com/async/currency_v2_update?vet=12ahUKEwjT_e-hkJHpAhVtCrkGHZoHCwIQ_sIDMAB6BAgVEAE..i&ei=iEerXtOZBO2U5OUPmo-sEA&yv=3&async=source_amount:1,source_currency:%2Fm%2F05p0rrx,target_currency:%2Fm%2F09nqf,lang:es-419,country:ar,disclaimer_url:https%3A%2F%2Fwww.google.com%2Fintl%2Fes%2Fgooglefinance%2Fdisclaimer%2F,period:1M,interval:86400,_id:currency-v2-updatable_85,_pms:s,_fmt:pc";
+
+    const fetchData =  () => {
+      return fetch(PROXY_URL + BITCOIN_PRICE_URL)
+      .then(response => response.text())
+      // .then( data => console.log(data) && data)
+      .catch((error) => {
+        console.error("-- Error al fetchear precio del bitcoin ---");
+        console.error(error);
+        console.trace();
+      });
+    };
+
+    const updateBitcoinPrice = () => {
+      fetchData()
+      .then( fetchedData => {
+        // console.log("fetchedData: ", fetchedData);
+        const textFrom = 'data-exchange-rate=\"';
+        const FROM = fetchedData.indexOf(textFrom) + textFrom.length;
+        const UNTIL = fetchedData.indexOf('\"><div class=\"vk_sh c8Zgcf\"><span class=\"DFlfde eNFL1\">');
+        const bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
+        document.title = `(${bitcoinPriceUSD} USD) Bitcoin Dashboard Analizer`;
+      });
+    };
+
+    updateBitcoinPrice();
+
+    window.setInterval(() => {
+      updateBitcoinPrice();
+    }, 2*1000);
+  </script>
   </body>
 </html>
