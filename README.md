@@ -13,4 +13,5 @@ The project is possible thanks to the following technologies:
 * Fetch API
 * Cors-anywhere
 
-
+## Requeriments
+Install [Ignore X-Frame headers chrome extension](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe)(easy way) or deactivate them for this page in your browser (more difficult)
