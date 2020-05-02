@@ -403,6 +403,7 @@
 
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
+    <!-- Dolar prices updater -->
     <script type="text/javascript">
       const URL_OFICIAL =
         "https://mercados.ambito.com//dolar/oficial/variacion";
@@ -503,6 +504,7 @@
       }, 5 * 60 * 1000);
     </script>
 
+    <!-- Bitcoin price updated -->
     <script type="text/javascript">
       const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
       const BITCOIN_PRICE_URL =
@@ -539,6 +541,95 @@
       window.setInterval(() => {
         updateBitcoinPrice();
       }, 2 * 1000);
+    </script>
+
+    <!-- Argentinian dolar news updater -->
+    <script type="text/javascript">
+      const obtainGoogleNews = async (url) => {
+        console.group("Calling obtainGoogleNews");
+
+        const news = await fetch(PROXY_URL + url)
+          .then(function (response) {
+            return response.text();
+          })
+          .then(function (response) {
+            const JSON_DATA_START = 5;
+            const FIRST = 0;
+            response = response.substring(JSON_DATA_START);
+            // console.log("After substring oogle response: ", response);
+            response = JSON.parse(response).storySummaries.trendingStories;
+            console.log("Post send, google response: ", response);
+            return response;
+          })
+          .catch(function (error) {
+            console.error("--- Error Detected ---");
+            console.error(error);
+            console.trace();
+          });
+
+        console.groupEnd();
+        return news;
+      };
+
+      const generateArticleItem = (article) => {
+        return `
+          <div class="dolar-news-article ">${article.title}</div>
+        `
+      };
+
+      const addSectionNews = (senctionID, newsArray) => {
+        let element = null;
+        newsArray.forEach((article) => {
+          element = document.getElementById(senctionID);
+          element.innerText += generateArticleItem(article);
+        });
+      };
+
+      const transformNews = (newsArray, articleValidator) => {
+        const IMG_URL_START = 1;
+        return newsArray
+          .filter((news) => news.articles.some(articleValidator))
+          .map((news) => {
+            const articleSelected = news.articles.find(articleValidator);
+            return {
+              imageUrl: news.image.imgUrl.substring(IMG_URL_START),
+              title: articleSelected.articleTitle,
+              url: articleSelected.url,
+              source: articleSelected.source,
+              time: articleSelected.time,
+              snippet: articleSelected.snippet,
+              relatedTerms: news.entityNames,
+            };
+          });
+      };
+
+      const updateNews = async (sectionID, url, articleValidator) => {
+        console.group(`updateNews ${sectionID}`);
+        let news = await obtainGoogleNews(url);
+        news = transformNews(news, articleValidator);
+        console.log("newsTransformed: ", news);
+        addSectionNews(sectionID, news);
+        console.groupEnd();
+      };
+
+      const validateArticleHasTerms = (termsArray) => {
+        return (article) =>
+          termsArray.some((term) => {
+            return (
+              article.articleTitle.includes(term) ||
+              article.url.includes(term) ||
+              article.snippet.includes(term)
+            );
+          });
+      };
+
+      const ARG_DOLAR_NEWS =
+        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=AR&ri=300&rs=20&sort=0";
+      updateNews(
+        "dolar-news-section",
+        ARG_DOLAR_NEWS,
+        validateArticleHasTerms(["dolar", "dólar"])
+      );
     </script>
   </body>
 </html>
