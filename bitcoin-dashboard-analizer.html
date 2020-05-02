@@ -572,16 +572,17 @@
       };
 
       const generateArticleItem = (article) => {
-        return `
-          <div class="dolar-news-article ">${article.title}</div>
-        `
+        let newHtmlElement = document.createElement("div"); 
+        newHtmlElement.classList.add('dolar-news-article');
+        newHtmlElement.appendChild( document.createTextNode(article.title) )
+        return newHtmlElement;
       };
 
       const addSectionNews = (senctionID, newsArray) => {
         let element = null;
         newsArray.forEach((article) => {
           element = document.getElementById(senctionID);
-          element.innerText += generateArticleItem(article);
+          element.appendChild(generateArticleItem(article));
         });
       };
 
