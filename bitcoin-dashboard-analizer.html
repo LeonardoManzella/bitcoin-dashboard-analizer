@@ -285,6 +285,7 @@
       font-weight: 700;
       font-size: 110%;
       margin-right: 0.4rem;
+      padding-top: 0.2rem;
     }
     div.news-article-related-term {
       border: 1px solid #ffffff42;
@@ -297,6 +298,8 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-evenly;
+      font-size: 60%;
+      margin-top: 0.6rem;
     }
   </style>
 
@@ -718,6 +721,23 @@
           });
         }
 
+        if (article.searchs) {
+          let searchsElement = document.createElement("img");
+          searchsElement.appendChild(document.createTextNode(article.searchs));
+        }
+
+        let sourceElement = document.createElement("div");
+        sourceElement.appendChild(document.createTextNode(article.source));
+
+        let timeElement = document.createElement("div");
+        timeElement.appendChild(document.createTextNode(article.time));
+
+        let fourthRow = document.createElement("div");
+        fourthRow.classList.add("news-article-fourth-row");
+        if (article.searchs) fourthRow.appendChild(searchsElement);
+        fourthRow.appendChild(sourceElement);
+        fourthRow.appendChild(timeElement);
+
         let newHtmlElement = document.createElement("a");
         newHtmlElement.classList.add("news-article");
         newHtmlElement.setAttribute("augmented-ui", "tl-clip br-clip exe");
@@ -726,6 +746,7 @@
         newHtmlElement.appendChild(firstRow);
         newHtmlElement.appendChild(secondRow);
         thirdRow && newHtmlElement.appendChild(thirdRow);
+        newHtmlElement.appendChild(fourthRow);
         return newHtmlElement;
       };
 
@@ -751,6 +772,7 @@
               time: articleSelected.time,
               snippet: articleSelected.snippet,
               relatedTerms: news.entityNames,
+              searchs: news.searchs,
             };
           });
       };
