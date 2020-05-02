@@ -263,9 +263,40 @@
     div.news-article-title {
       font-weight: 700;
       font-size: 110%;
+      margin-left: 0.4rem;
     }
     img.news-article-image {
       max-height: 5rem;
+    }
+    div.news-article-second-row {
+      margin-top: 0.6rem;
+      text-align: center;
+    }
+    div.news-article-third-row {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      font-size: 80%;
+    }
+    div.news-article-related-searchs {
+      font-weight: 700;
+      font-size: 110%;
+      margin-right: 0.4rem;
+    }
+    div.news-article-related-term {
+      border: 1px solid #ffffff42;
+      padding: 0.2rem;
+      margin-right: 0.4rem;
+      margin-top: 0.2rem;
+    }
+    div.news-article-fourth-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
     }
   </style>
 
@@ -663,12 +694,38 @@
         firstRow.appendChild(imageElement);
         firstRow.appendChild(titleElement);
 
+        let secondRow = document.createElement("div");
+        secondRow.classList.add("news-article-second-row");
+        secondRow.appendChild(document.createTextNode(article.snippet));
+
+        let thirdRow = null;
+        if (article.relatedTerms && article.relatedTerms.length > 0) {
+          let relatedTermsElement = document.createElement("div");
+          relatedTermsElement.classList.add("news-article-related-searchs");
+          relatedTermsElement.appendChild(
+            document.createTextNode("Busquedas relacionadas")
+          );
+
+          thirdRow = document.createElement("div");
+          thirdRow.classList.add("news-article-third-row");
+          thirdRow.appendChild(relatedTermsElement);
+
+          article.relatedTerms.forEach((term) => {
+            let termElement = document.createElement("div");
+            termElement.classList.add("news-article-related-term");
+            termElement.appendChild(document.createTextNode(term));
+            thirdRow.appendChild(termElement);
+          });
+        }
+
         let newHtmlElement = document.createElement("a");
         newHtmlElement.classList.add("news-article");
         newHtmlElement.setAttribute("augmented-ui", "tl-clip br-clip exe");
         newHtmlElement.setAttribute("href", article.url);
         newHtmlElement.setAttribute("target", "_blank");
         newHtmlElement.appendChild(firstRow);
+        newHtmlElement.appendChild(secondRow);
+        thirdRow && newHtmlElement.appendChild(thirdRow);
         return newHtmlElement;
       };
 
