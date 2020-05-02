@@ -192,8 +192,10 @@
       --aug-b-width: 20%;
     }
     div.google-dolar-trends {
+      --aug-b-height: 30px;
+      --aug-b-width: 50%;
     }
-    div.dolar-news-section-title {
+    div.news-section-title {
       color: white;
       height: fit-content;
       text-align: center;
@@ -206,11 +208,11 @@
       flex-direction: column;
       align-items: center;
     }
-    div.dolar-news-section-title p {
-      margin-top: 0.5em;
+    div.news-section-title p {
+      margin-top: 0;
       margin-bottom: 0;
     }
-    div.dolar-news-section-title div {
+    div.news-section-title div {
       padding: 7px;
       --aug-inset-bg: #2f96f3;
       --aug-br: 50px;
@@ -219,7 +221,7 @@
       width: 32rem;
       margin-bottom: 2rem;
     }
-    div.dolar-news-section {
+    div.news-section {
       min-height: 2.5rem;
       height: fit-content;
       display: flex;
@@ -228,7 +230,7 @@
       align-items: center;
       justify-content: space-evenly;
     }
-    a.dolar-news-article {
+    a.news-article {
       text-decoration: none;
       font-family: BlenderProBold, sans-serif;
       font-weight: 500;
@@ -239,15 +241,31 @@
       height: fit-content;
       margin: 10px;
       --aug-border: 1px;
-      padding: 15px; /* mind the gap */
+      padding: 7px; /* mind the gap */
       text-align: center;
       --aug-border-bg: white;
       --aug-inset-bg: transparent;
+      flex-direction: column;
+      /* align-items: center;
+      justify-content: space-evenly; */
     }
-    a.dolar-news-article:hover {
+    a.news-article:hover {
       color: black;
       --aug-border-bg: transparent;
       --aug-inset-bg: white;
+    }
+    div.news-article-first-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    div.news-article-title {
+      font-weight: 700;
+      font-size: 110%;
+    }
+    img.news-article-image {
+      max-height: 5rem;
     }
   </style>
 
@@ -430,7 +448,11 @@
     <!-- Section Divider END -->
 
     <!-- Dolar Argentinian Trends Widget BEGIN -->
-    <div class="google-dolar-trends" style="margin-top: -6rem; z-index: 10;">
+    <div
+      class="google-dolar-trends"
+      style="margin-top: -6rem; z-index: 10;"
+      augmented-ui="b-clip-x exe"
+    >
       <iframe
         id="trends-widget-1"
         src="https://trends.google.com/trends/explore?date=now%207-d&geo=AR&q=dolar"
@@ -443,11 +465,11 @@
     <!-- Dolar Argentinian Trends Widget END -->
 
     <!-- Argentinian Dolar News Widget BEGIN -->
-    <div class="dolar-news-section-title">
+    <div class="news-section-title">
       <p>Noticias sobre el Dólar</p>
       <div augmented-ui="br-clip-x exe"></div>
     </div>
-    <div id="dolar-news-section" class="dolar-news-section"></div>
+    <div id="dolar-news-section" class="news-section"></div>
     <!-- Argentinian Dolar News Widget END -->
 
     <!-- TODO floating button go to Top using augmented to generate triangle in top and rounder in bottom like tl-clip tr-clip bl-round br-round -->
@@ -627,12 +649,26 @@
       };
 
       const generateArticleItem = (article) => {
+        let imageElement = document.createElement("img");
+        imageElement.classList.add("news-article-image");
+        imageElement.setAttribute("src", article.imageUrl);
+        imageElement.setAttribute("augmented-ui", "tl-clip br-clip exe");
+
+        let titleElement = document.createElement("div");
+        titleElement.classList.add("news-article-title");
+        titleElement.appendChild(document.createTextNode(article.title));
+
+        let firstRow = document.createElement("div");
+        firstRow.classList.add("news-article-first-row");
+        firstRow.appendChild(imageElement);
+        firstRow.appendChild(titleElement);
+
         let newHtmlElement = document.createElement("a");
-        newHtmlElement.classList.add("dolar-news-article");
+        newHtmlElement.classList.add("news-article");
         newHtmlElement.setAttribute("augmented-ui", "tl-clip br-clip exe");
         newHtmlElement.setAttribute("href", article.url);
         newHtmlElement.setAttribute("target", "_blank");
-        newHtmlElement.appendChild(document.createTextNode(article.title));
+        newHtmlElement.appendChild(firstRow);
         return newHtmlElement;
       };
 
@@ -645,13 +681,13 @@
       };
 
       const transformNews = (newsArray, articleValidator) => {
-        const IMG_URL_START = 1;
+        const IMG_URL_START = 2;
         return newsArray
           .filter((news) => news.articles.some(articleValidator))
           .map((news) => {
             const articleSelected = news.articles.find(articleValidator);
             return {
-              imageUrl: news.image.imgUrl.substring(IMG_URL_START),
+              imageUrl: "https://" + news.image.imgUrl.substring(IMG_URL_START),
               title: articleSelected.articleTitle,
               url: articleSelected.url,
               source: articleSelected.source,
