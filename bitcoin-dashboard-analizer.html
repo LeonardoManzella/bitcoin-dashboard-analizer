@@ -193,12 +193,61 @@
     }
     div.google-dolar-trends {
     }
+    div.dolar-news-section-title {
+      color: white;
+      height: fit-content;
+      text-align: center;
+      font-size: 34px;
+      letter-spacing: 2px;
+      font-family: BlenderProBold, sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    div.dolar-news-section-title p {
+      margin-top: 0.5em;
+      margin-bottom: 0;
+    }
+    div.dolar-news-section-title div {
+      padding: 7px;
+      --aug-inset-bg: white;
+      --aug-br: 50px;
+      --aug-br-height: 12px;
+      --aug-br-width: 25rem;
+      width: 32rem;
+      margin-bottom: 2rem;
+    }
     div.dolar-news-section {
       min-height: 2.5rem;
       height: fit-content;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
     }
-    div.dolar-news-article {
+    a.dolar-news-article {
+      text-decoration: none;
+      font-family: BlenderProBold, sans-serif;
+      font-weight: 500;
+      line-height: normal;
       color: white;
+      display: inline-block;
+      width: 29%;
+      height: fit-content;
+      margin: 10px;
+      --aug-border: 1px;
+      padding: 15px; /* mind the gap */
+      text-align: center;
+      --aug-border-bg: white;
+      --aug-inset-bg: transparent;
+    }
+    a.dolar-news-article:hover {
+      color: black;
+      --aug-border-bg: transparent;
+      --aug-inset-bg: white;
     }
   </style>
 
@@ -394,6 +443,10 @@
     <!-- Dolar Argentinian Trends Widget END -->
 
     <!-- Argentinian Dolar News Widget BEGIN -->
+    <div class="dolar-news-section-title">
+      <p>Noticias sobre el Dólar</p>
+      <div augmented-ui="br-clip-x exe"></div>
+    </div>
     <div id="dolar-news-section" class="dolar-news-section"></div>
     <!-- Argentinian Dolar News Widget END -->
 
@@ -525,6 +578,7 @@
 
       const updateBitcoinPrice = () => {
         fetchData().then((fetchedData) => {
+          if (!fetchedData) return;
           // console.log("fetchedData: ", fetchedData);
           const textFrom = 'data-exchange-rate="';
           const FROM = fetchedData.indexOf(textFrom) + textFrom.length;
@@ -572,9 +626,12 @@
       };
 
       const generateArticleItem = (article) => {
-        let newHtmlElement = document.createElement("div"); 
-        newHtmlElement.classList.add('dolar-news-article');
-        newHtmlElement.appendChild( document.createTextNode(article.title) )
+        let newHtmlElement = document.createElement("a");
+        newHtmlElement.classList.add("dolar-news-article");
+        newHtmlElement.setAttribute("augmented-ui", "tl-clip br-clip exe");
+        newHtmlElement.setAttribute("href", article.url);
+        newHtmlElement.setAttribute("target", "_blank");
+        newHtmlElement.appendChild(document.createTextNode(article.title));
         return newHtmlElement;
       };
 
@@ -607,10 +664,13 @@
       const updateNews = async (sectionID, url, articleValidator) => {
         console.group(`updateNews ${sectionID}`);
         let news = await obtainGoogleNews(url);
+        if (!news) {
+          console.groupEnd();
+          return;
+        }
         news = transformNews(news, articleValidator);
         console.log("newsTransformed: ", news);
         addSectionNews(sectionID, news);
-        console.groupEnd();
       };
 
       const validateArticleHasTerms = (termsArray) => {
