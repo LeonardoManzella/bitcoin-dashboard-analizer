@@ -470,7 +470,12 @@
       <!-- Ambito Financiero Dolar Widget END -->
     </div>
 
-    <!-- TODO Global Bitcoin News Widget BEGIN -->
+    <!-- Global Bitcoin News Widget BEGIN -->
+    <div class="news-section-title" style="margin-top: 2rem;">
+      <p>Noticias sobre el Bitcoin</p>
+      <div augmented-ui="br-clip-x exe" style="width: 33rem;"></div>
+    </div>
+    <div id="bitcoin-news-section" class="news-section"></div>
     <!-- Global Bitcoin News Widget END -->
 
     <!-- Section Divider BEGIN -->
@@ -800,12 +805,62 @@
           });
       };
 
-      const ARG_DOLAR_NEWS =
+      const ARG_BUSINESS_NEWS =
         "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=AR&ri=300&rs=20&sort=0";
       updateNews(
         "dolar-news-section",
-        ARG_DOLAR_NEWS,
+        ARG_BUSINESS_NEWS,
         validateArticleHasTerms(["dolar", "dólar"])
+      );
+
+      const AUS_BUSINESS_NEWS =
+        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=AU&ri=300&rs=20&sort=0";
+      const CAN_BUSINESS_NEWS =
+        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=CA&ri=300&rs=20&sort=0";
+      const USA_BUSINESS_NEWS =
+        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=US&ri=300&rs=20&sort=0";
+      const MEX_BUSINESS_NEWS =
+        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=MX&ri=300&rs=20&sort=0";
+      const NZ_BUSINESS_NEWS =
+        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=NZ&ri=300&rs=20&sort=0";
+      const UK_BUSINESS_NEWS =
+        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=GB&ri=300&rs=20&sort=0";
+
+      const bitcoinTerms = ["bitcoin", "btc", "cripto", "crypto", "altcoin"];
+      updateNews(
+        "bitcoin-news-section",
+        ARG_BUSINESS_NEWS,
+        validateArticleHasTerms(bitcoinTerms)
+      );
+      updateNews(
+        "bitcoin-news-section",
+        AUS_BUSINESS_NEWS,
+        validateArticleHasTerms(bitcoinTerms)
+      );
+      updateNews(
+        "bitcoin-news-section",
+        CAN_BUSINESS_NEWS,
+        validateArticleHasTerms(bitcoinTerms)
+      );
+      updateNews(
+        "bitcoin-news-section",
+        USA_BUSINESS_NEWS,
+        validateArticleHasTerms(bitcoinTerms)
+      );
+      updateNews(
+        "bitcoin-news-section",
+        MEX_BUSINESS_NEWS,
+        validateArticleHasTerms(bitcoinTerms)
+      );
+      updateNews(
+        "bitcoin-news-section",
+        NZ_BUSINESS_NEWS,
+        validateArticleHasTerms(bitcoinTerms)
+      );
+      updateNews(
+        "bitcoin-news-section",
+        UK_BUSINESS_NEWS,
+        validateArticleHasTerms(bitcoinTerms)
       );
     </script>
   </body>
