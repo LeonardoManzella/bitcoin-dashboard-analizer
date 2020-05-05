@@ -261,8 +261,9 @@
     }
     div.news-article-title {
       font-weight: 700;
-      font-size: 110%;
+      font-size: 100%;
       margin-left: 0.4rem;
+      text-transform: uppercase;
     }
     img.news-article-image {
       max-height: 5rem;
@@ -522,18 +523,18 @@
       const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
       const URL_LIQUI = "https://mercados.ambito.com//dolar/cl/variacion";
 
+      const fetchData = (url, options) => {
+        return fetch(url, options)
+          .then((response) => response.json())
+          .catch((error) => {
+            console.error(`-- Error al fetchear url: ${url} ---`);
+            console.error(error);
+            console.trace();
+          });
+      };
+
       const updateDolarIndicators = () => {
         console.group("updateDolarIndicators");
-
-        const fetchData = (url) => {
-          return fetch(url)
-            .then((response) => response.json())
-            .catch((error) => {
-              console.error("-- Error al fetchear indicadores dolar ---");
-              console.error(error);
-              console.trace();
-            });
-        };
 
         const updateElements = (
           idArray,
@@ -622,7 +623,7 @@
       const BITCOIN_PRICE_URL =
         "https://www.google.com/async/currency_v2_update?vet=12ahUKEwjT_e-hkJHpAhVtCrkGHZoHCwIQ_sIDMAB6BAgVEAE..i&ei=iEerXtOZBO2U5OUPmo-sEA&yv=3&async=source_amount:1,source_currency:%2Fm%2F05p0rrx,target_currency:%2Fm%2F09nqf,lang:es-419,country:ar,disclaimer_url:https%3A%2F%2Fwww.google.com%2Fintl%2Fes%2Fgooglefinance%2Fdisclaimer%2F,period:1M,interval:86400,_id:currency-v2-updatable_85,_pms:s,_fmt:pc";
 
-      const fetchData = () => {
+      const fetchBitcoinData = () => {
         return (
           fetch(PROXY_URL + BITCOIN_PRICE_URL)
             .then((response) => response.text())
@@ -636,7 +637,7 @@
       };
 
       const updateBitcoinPrice = () => {
-        fetchData().then((fetchedData) => {
+        fetchBitcoinData().then((fetchedData) => {
           if (!fetchedData) return;
           // console.log("fetchedData: ", fetchedData);
           const textFrom = 'data-exchange-rate="';
@@ -660,7 +661,7 @@
     <!-- Argentinian dolar news updater -->
     <script type="text/javascript">
       const obtainGoogleNews = async (url) => {
-        console.group("Calling obtainGoogleNews");
+        // console.log("- Calling obtainGoogleNews");
 
         const news = await fetch(PROXY_URL + url)
           .then(function (response) {
@@ -672,7 +673,7 @@
             response = response.substring(JSON_DATA_START);
             // console.log("After substring oogle response: ", response);
             response = JSON.parse(response).storySummaries.trendingStories;
-            console.log("Post send, google response: ", response);
+            // console.log("Post send, google response: ", response);
             return response;
           })
           .catch(function (error) {
@@ -681,7 +682,6 @@
             console.trace();
           });
 
-        console.groupEnd();
         return news;
       };
 
@@ -781,15 +781,20 @@
       };
 
       const updateNews = async (sectionID, url, articleValidator) => {
-        console.group(`updateNews ${sectionID}`);
-        let news = await obtainGoogleNews(url);
-        if (!news) {
-          console.groupEnd();
-          return;
+        // console.log(`calling updateNews ${sectionID}`);
+        try {
+          let news = await obtainGoogleNews(url);
+          if (!news) {
+            return;
+          }
+          news = transformNews(news, articleValidator);
+          // console.log("newsTransformed: ", news);
+          addSectionNews(sectionID, news);
+        } catch (error) {
+          console.error("=== Error al updateNews ===");
+          console.error(error);
+          console.trace();
         }
-        news = transformNews(news, articleValidator);
-        console.log("newsTransformed: ", news);
-        addSectionNews(sectionID, news);
       };
 
       const validateArticleHasTerms = (termsArray) => {
@@ -860,6 +865,47 @@
         UK_BUSINESS_NEWS,
         validateArticleHasTerms(bitcoinTerms)
       );
+    </script>
+
+    <script type="text/javascript">
+      const RIPIO_DATA_URL =
+        "https://coinmonitor.info/topars_ar.json?_=1588690143986";
+      const SATOSHI_PRICE_URL = "https://api.satoshitango.com/v3/ticker/ARS";
+      const SATOSHI_VARIATION_URL = "https://api.satoshitango.com/v3/graph/ARS";
+      const RIPIO_LAST_PRICE = "RIPIO_LAST_PRICE";
+
+      const calcVariation = (newPrice) => {
+        const lastPrice = window.localStorage.getItem(RIPIO_LAST_PRICE);
+        window.localStorage.setItem(RIPIO_LAST_PRICE, newPrice);
+        return lastPrice ? (lastPrice / newPrice) * 100 - 100 : 0;
+      };
+
+      const updateExchangePrices = () => {
+        fetchData(PROXY_URL + RIPIO_DATA_URL).then((response) => {
+          let ripioData = {};
+          ripioData.price = response.best_buy_4 - 10000;
+          ripioData.variation = calcVariation(ripioData.price);
+          console.log("ripioData: ", ripioData);
+          //TODO update in html
+        });
+
+        fetchData(PROXY_URL + SATOSHI_PRICE_URL).then((response) => {
+          let satoshiData = {};
+          satoshiData.price = response.data.ticker.BTC.ask;
+          console.log("satoshiData: ", satoshiData);
+          fetchData(PROXY_URL + SATOSHI_VARIATION_URL).then((data) => {
+            satoshiData.variation = data.data.graph.BTC.change;
+            console.log("satoshiData.variation: ", satoshiData.variation);
+            //TODO update in html
+          });
+        });
+      };
+
+      updateExchangePrices();
+
+      window.setInterval(() => {
+        updateExchangePrices();
+      }, 10 * 1000);
     </script>
   </body>
 </html>
