@@ -952,7 +952,7 @@
 
         element = document.getElementById(variationID);
         element.classList.add(classByNumber(exchangeData.variation));
-        element.innerText =
+        if(exchangeData.variation !== 0) element.innerText =
           addNumSymbol(exchangeData.variation) +
           exchangeData.variation.toFixed(2) +
           "%";
