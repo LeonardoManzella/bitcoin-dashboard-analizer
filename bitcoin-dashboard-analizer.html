@@ -952,14 +952,14 @@
 
         element = document.getElementById(variationID);
         element.classList.add(classByNumber(exchangeData.variation));
-        element.innerText =
+        if(exchangeData.variation !== 0) element.innerText =
           addNumSymbol(exchangeData.variation) +
           exchangeData.variation.toFixed(2) +
           "%";
       };
 
       const obtainRipioPrice = (data) => {
-        let finder = Object.keys(data).filter( key => key.match(/exchange_buy_..$/) && data[key].includes("ripio") );
+        let finder = Object.keys(data).filter( key => key.match(/exchange_buy_(..|.)$/) && data[key].includes("ripio") );
         finder = finder[0];
         finder = finder.replace("exchange", "best");
         return data[finder];
