@@ -531,6 +531,21 @@
     <div id="bitcoin-news-section" class="news-section"></div>
     <!-- Global Bitcoin News Widget END -->
 
+    <!-- Bitcoin related hashtags Widget BEGIN -->
+    <a
+      href="https://ritetag.com/best-hashtags-for/bitcoin"
+      target="_blank"
+      style="
+        display: flex;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        font-size: 200%;
+      "
+      >Bitcoin related hashtags</a
+    >
+    <!-- Bitcoin related hashtags Widget END -->
+
     <!-- Section Divider BEGIN -->
     <div
       class="section-divider"
@@ -987,6 +1002,19 @@
           });
         });
       };
+
+      //TODO probar pueda obtener datos de URLs
+      document.cookie =
+        "__stripe_mid=0c7525d1-07f0-4cdb-a144-c302c7419710; driftt_aid=57473e20-bca0-4f67-96e9-fe6bca7544a9; DFTT_END_USER_PREV_BOOTSTRAPPED=true; driftt_wmd=true; __stripe_sid=83610ed9-077b-46b2-bbce-d530ab3443f3; driftt_sid=0e28630e-3fec-425c-b2c5-1d448c4939ff; XSRF-TOKEN=eyJpdiI6IlhhTWUyU3pYMFpDVjZSWk93S2RsRXc9PSIsInZhbHVlIjoiekhMQnoxdStjVjZxOXRRYkpDU3BPWUQ3VDFXajk0SWh5ZU5BRFRKTWFMWG8wMXg3UGhsb2o0aVFDS1RzV1YzNSIsIm1hYyI6IjI3YjNmYmY3ZjAzMTE1MGUyOWExNmFiYmIwZTU5Y2U2MTMzMDVjYTFiOGVmYTFmYmRlOGUwMTcxNDg4ZDhjYzgifQ%3D%3D";
+      fetchData(
+        PROXY_URL +
+          "https://www.trackmyhashtag.com/preview/overview?_token=N51TNWuyTIppFARZZ7Y4L52O9GN90DeKE5aS3FeT&req_url=https%3A%2F%2Fwww.trackmyhashtag.com&search_keyword=bitcoin",
+        {
+          credentials: "same-origin",
+        }
+      ).then((response) => {
+        console.log("fuente: ", response);
+      });
 
       updateExchangePrices();
 
