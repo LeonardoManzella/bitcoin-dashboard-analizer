@@ -29,6 +29,9 @@
   </head>
 
   <style type="text/css">
+    html {
+      scroll-behavior: smooth;
+    }
     ::-webkit-scrollbar {
       width: 0.4rem;
     }
@@ -339,11 +342,36 @@
       font-weight: 700;
       font-size: 130%;
     }
+    a.floating-top-button {
+      padding: 1.5rem 1.2rem;
+      z-index: 100000000;
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      --aug-inset: 2px;
+      --aug-inset-bg: #2f96f3;
+      --aug-border: 2px;
+      --aug-border-bg: #2f96f3;
+      --aug-border-opacity: 0.5;
+      --aug-tl-width: 43%;
+      --aug-tr-width: 43%;
+      --aug-tl-height: 43%;
+      --aug-tr-height: 43%;
+      --aug-b: 20%;
+      --aug-b-height: 10%;
+      opacity: 70%;
+      transition: opacity 0.3s;
+    }
+    a.floating-top-button:hover {
+      opacity: 100%;
+      --aug-border-opacity: 1;
+    }
   </style>
 
   <body style="background-color: #131722; margin: 0;">
     <!-- TradingView Widget BEGIN -->
     <div
+      id="bitcoin-tradingview"
       class="bitcoin-tradingview"
       augmented-ui="br-clip b-clip-x bl-clip exe"
       style="z-index: 1000;"
@@ -594,7 +622,12 @@
     <div id="dolar-news-section" class="news-section"></div>
     <!-- Argentinian Dolar News Widget END -->
 
-    <!-- TODO floating button go to Top using augmented to generate triangle like the one on Cyberpunk UI -->
+    <a
+      href="#bitcoin-tradingview"
+      class="floating-top-button"
+      augmented-ui="tl-clip tr-clip b-clip-x exe"
+    >
+    </a>
 
     <!-- TODO la hora esta mal, pero no vi donde, preguntar a Papa, dice 2+ horas adelantadas -->
 
@@ -1022,8 +1055,7 @@
       // document.cookie =
       //   "__stripe_mid=0c7525d1-07f0-4cdb-a144-c302c7419710; driftt_aid=57473e20-bca0-4f67-96e9-fe6bca7544a9; DFTT_END_USER_PREV_BOOTSTRAPPED=true; driftt_wmd=true; __stripe_sid=83610ed9-077b-46b2-bbce-d530ab3443f3; driftt_sid=0e28630e-3fec-425c-b2c5-1d448c4939ff; XSRF-TOKEN=eyJpdiI6IlhhTWUyU3pYMFpDVjZSWk93S2RsRXc9PSIsInZhbHVlIjoiekhMQnoxdStjVjZxOXRRYkpDU3BPWUQ3VDFXajk0SWh5ZU5BRFRKTWFMWG8wMXg3UGhsb2o0aVFDS1RzV1YzNSIsIm1hYyI6IjI3YjNmYmY3ZjAzMTE1MGUyOWExNmFiYmIwZTU5Y2U2MTMzMDVjYTFiOGVmYTFmYmRlOGUwMTcxNDg4ZDhjYzgifQ%3D%3D";
       fetchData(
-        PROXY_URL +
-          "https://ingramer.com/profile/tradewithraul_/",
+        PROXY_URL + "https://ingramer.com/profile/tradewithraul_/"
         // {
         //   credentials: "same-origin",
         // }
