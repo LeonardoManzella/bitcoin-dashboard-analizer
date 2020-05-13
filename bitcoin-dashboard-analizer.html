@@ -1066,31 +1066,82 @@
         });
       };
 
-      //TODO probar pueda obtener datos de URLs
-      // document.cookie =
-      //   "__stripe_mid=0c7525d1-07f0-4cdb-a144-c302c7419710; driftt_aid=57473e20-bca0-4f67-96e9-fe6bca7544a9; DFTT_END_USER_PREV_BOOTSTRAPPED=true; driftt_wmd=true; __stripe_sid=83610ed9-077b-46b2-bbce-d530ab3443f3; driftt_sid=0e28630e-3fec-425c-b2c5-1d448c4939ff; XSRF-TOKEN=eyJpdiI6IlhhTWUyU3pYMFpDVjZSWk93S2RsRXc9PSIsInZhbHVlIjoiekhMQnoxdStjVjZxOXRRYkpDU3BPWUQ3VDFXajk0SWh5ZU5BRFRKTWFMWG8wMXg3UGhsb2o0aVFDS1RzV1YzNSIsIm1hYyI6IjI3YjNmYmY3ZjAzMTE1MGUyOWExNmFiYmIwZTU5Y2U2MTMzMDVjYTFiOGVmYTFmYmRlOGUwMTcxNDg4ZDhjYzgifQ%3D%3D";
-      fetchData(
-        // PROXY_URL +
-        "https://online-parser-service.leonardo-manzella.workers.dev",
-        // ,{
-        //   credentials: "same-origin",
-        // }
-        {
-          method: "POST", 
-          body: JSON.stringify({
-            param1: "Prueba enviar algo",
-            param2: "otro mas"
-          }),
-        }
-      ).then((response) => {
-        console.log("fuente: ", response);
-      });
-
       updateExchangePrices();
 
       window.setInterval(() => {
         updateExchangePrices();
       }, 10 * 1000);
+    </script>
+
+    <script type="text/javascript">
+      //TODO probar pueda obtener datos de URLs
+      // document.cookie =
+      //   "__stripe_mid=0c7525d1-07f0-4cdb-a144-c302c7419710; driftt_aid=57473e20-bca0-4f67-96e9-fe6bca7544a9; DFTT_END_USER_PREV_BOOTSTRAPPED=true; driftt_wmd=true; __stripe_sid=83610ed9-077b-46b2-bbce-d530ab3443f3; driftt_sid=0e28630e-3fec-425c-b2c5-1d448c4939ff; XSRF-TOKEN=eyJpdiI6IlhhTWUyU3pYMFpDVjZSWk93S2RsRXc9PSIsInZhbHVlIjoiekhMQnoxdStjVjZxOXRRYkpDU3BPWUQ3VDFXajk0SWh5ZU5BRFRKTWFMWG8wMXg3UGhsb2o0aVFDS1RzV1YzNSIsIm1hYyI6IjI3YjNmYmY3ZjAzMTE1MGUyOWExNmFiYmIwZTU5Y2U2MTMzMDVjYTFiOGVmYTFmYmRlOGUwMTcxNDg4ZDhjYzgifQ%3D%3D";
+      // fetchData(
+      //   PROXY_URL +
+      //     "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D"
+        // ,{
+        //   credentials: "same-origin",
+        // }
+        // ,{
+        //   method: "POST",
+        //   body: JSON.stringify({
+        //     param1: "Prueba enviar algo",
+        //     param2: "otro mas"
+        //   }),
+        // }
+        // ).then(function (response) {
+        //   // The API call was successful!
+        //   return response.text();
+        // }
+      // ).then((response) => {
+      //   console.log("fuente: ", response);
+      // });
+
+      /**
+       * Get HTML asynchronously
+       * @param  {String}   url      The URL to get HTML from
+       * @param  {Function} callback A callback funtion. Pass in "response" variable to use returned HTML.
+       */
+      var getHTML = function (url, callback) {
+        // Feature detection
+        if (!window.XMLHttpRequest) return;
+
+        // Create new request
+        var xhr = new XMLHttpRequest();
+
+        // Setup callback
+        xhr.onload = function () {
+          if (callback && typeof callback === "function") {
+            callback(this.responseXML);
+          }
+        };
+
+        // Get the HTML
+        xhr.open("GET", url);
+        xhr.responseType = "document";
+        xhr.send();
+      };
+      
+      getHTML(
+        PROXY_URL +
+          "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
+        (response) => { //! TODO refactor function as part of updateYoutubeVideos, this one is transformYoutubeResponse
+          console.log("obtenido: ", response);
+          let variabl = response.body.children[11].innerText;
+          variabl = variabl.match(
+            /{"videoRenderer.*?("enableOverlay":true}}}|Reproduciendo"}]}}}]}})/gm
+          );
+          variabl = variabl.map((elem) => {
+            try {
+              return JSON.parse(elem + "}").videoRenderer;
+            } catch (error) {
+              return JSON.parse(elem).videoRenderer;
+            }
+          });
+          // console.log("obtenido2: ", variabl);
+        }
+      );
     </script>
   </body>
 </html>
