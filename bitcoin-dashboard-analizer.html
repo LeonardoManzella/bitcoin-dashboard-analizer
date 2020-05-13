@@ -70,9 +70,9 @@
       width: fit-content;
       padding: 0 30px 30px 30px; /* mind the gap */
       --aug-inset: 7px;
-      --aug-inset-bg: lightgrey;
+      --aug-inset-bg: #f7f7f7;
       --aug-border: 5px;
-      --aug-border-bg: lightgrey;
+      --aug-border-bg: #f7f7f7;
       --aug-border-opacity: 0.5;
       --aug-l-offset: 0px;
       --aug-b-offset: 0px;
@@ -104,9 +104,9 @@
       width: 400px;
       padding: 0 50px 30px 30px; /* mind the gap */
       --aug-inset: 7px;
-      --aug-inset-bg: lightgrey;
+      --aug-inset-bg: #f7f7f7;
       --aug-border: 5px;
-      --aug-border-bg: lightgrey;
+      --aug-border-bg: #f7f7f7;
       --aug-border-opacity: 0.5;
       --aug-r-offset: 0px;
       --aug-b-offset: 0px;
@@ -198,7 +198,7 @@
       --aug-b-width: 50%;
     }
     div.news-section-title {
-      color: white;
+      color: #f7f7f7;
       height: fit-content;
       text-align: center;
       font-size: 34px;
@@ -237,7 +237,7 @@
       font-family: BlenderProBold, sans-serif;
       font-weight: 500;
       line-height: normal;
-      color: white;
+      color: #f7f7f7;
       display: inline-block;
       width: 29%;
       height: fit-content;
@@ -245,7 +245,7 @@
       --aug-border: 1px;
       padding: 7px; /* mind the gap */
       text-align: center;
-      --aug-border-bg: white;
+      --aug-border-bg: #f7f7f7;
       --aug-inset-bg: transparent;
       flex-direction: column;
       /* align-items: center;
@@ -254,7 +254,7 @@
     a.news-article:hover {
       color: black;
       --aug-border-bg: transparent;
-      --aug-inset-bg: white;
+      --aug-inset-bg: #f7f7f7;
     }
     div.news-article-first-row {
       display: flex;
@@ -320,9 +320,9 @@
       font-size: 130%;
       padding: 40px;
       --aug-inset: 7px;
-      --aug-inset-bg: lightgrey;
+      --aug-inset-bg: #f7f7f7;
       --aug-border: 5px;
-      --aug-border-bg: lightgrey;
+      --aug-border-bg: #f7f7f7;
       --aug-border-opacity: 0.5;
     }
     div.ripio-price {
@@ -566,7 +566,7 @@
       style="
         display: flex;
         justify-content: center;
-        color: white;
+        color: #f7f7f7;
         text-align: center;
         font-size: 200%;
       "
@@ -581,7 +581,7 @@
       style="
         display: flex;
         justify-content: center;
-        color: white;
+        color: #f7f7f7;
         text-align: center;
         font-size: 200%;
       "
@@ -596,7 +596,7 @@
       style="
         display: flex;
         justify-content: center;
-        color: white;
+        color: #f7f7f7;
         text-align: center;
         font-size: 200%;
       "
@@ -1037,13 +1037,14 @@
         let element = document.getElementById(priceID);
         element.innerText = `$ ${exchangeData.price.toFixed(0)}`;
 
-        element = document.getElementById(variationID);
-        element.classList.add(classByNumber(exchangeData.variation));
-        if (exchangeData.variation !== 0)
+        if (exchangeData.variation !== 0) {
+          element = document.getElementById(variationID);
+          element.classList.add(classByNumber(exchangeData.variation));
           element.innerText =
             addNumSymbol(exchangeData.variation) +
             exchangeData.variation.toFixed(2) +
             "%";
+        }
       };
 
       const obtainRipioPrice = (data) => {
