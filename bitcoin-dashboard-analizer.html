@@ -248,15 +248,14 @@
       --aug-border-bg: #f7f7f7;
       --aug-inset-bg: transparent;
       flex-direction: column;
-      /* align-items: center;
-      justify-content: space-evenly; */
     }
     a.news-article:hover {
       color: black;
       --aug-border-bg: transparent;
       --aug-inset-bg: #f7f7f7;
     }
-    div.news-article-first-row {
+    div.news-article-first-row,
+    div.youtube-content-row {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -341,6 +340,60 @@
     .exchange-price {
       font-weight: 700;
       font-size: 130%;
+    }
+    a.video-item {
+      text-decoration: none;
+      font-family: BlenderProBold, sans-serif;
+      font-weight: 500;
+      line-height: normal;
+      color: #f7f7f7;
+      display: inline-block;
+      width: 47%;
+      height: fit-content;
+      margin: 0px;
+      margin-top: -5px;
+      --aug-border: 2px;
+      --aug-inset: -1px;
+      --aug-tl-width: 52%;
+      --aug-br-width: 52%;
+      padding: 7px; /* mind the gap */
+      text-align: center;
+      --aug-border-bg: #f7f7f7;
+      --aug-inset-bg: #f7f7f7;
+      flex-direction: column;
+    }
+    a.video-item:hover {
+      color: black;
+      --aug-border-bg: #f7f7f7;
+      --aug-inset-bg: #f7f7f7;
+    }
+    div.youtube-content-row {
+      background-color: #131722;
+      margin: 3px 0;
+    }
+    div.youtube-content-row:hover {
+      background-color: #f7f7f7;
+    }
+    .youtube-video-image {
+      max-height: 10rem;
+    }
+    div.youtube-content-container {
+      margin-left: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .youtube-video-title {
+      font-weight: 700;
+      font-size: 100%;
+      text-transform: uppercase;
+    }
+    .youtube-video-metadata {
+      margin-top: 0.5rem;
+      font-size: 80%;
+    }
+    .youtube-video-snippet {
+      font-size: 80%;
     }
     a.floating-top-button {
       padding: 1.5rem 1.2rem;
@@ -1146,69 +1199,60 @@
       };
 
       const generateVideoItem = (video) => {
-        // let imageElement = document.createElement("img");
-        // imageElement.classList.add("news-article-image");
-        // imageElement.setAttribute("src", article.imageUrl);
-        // imageElement.setAttribute("augmented-ui", "tl-clip br-clip exe");
+        const FIRST = 0;
+        let imageElement = document.createElement("img");
+        imageElement.classList.add("youtube-video-image");
+        imageElement.setAttribute(
+          "src",
+          video.thumbnail.thumbnails[video.thumbnail.thumbnails.length - 1].url
+        );
 
-        // let titleElement = document.createElement("div");
-        // titleElement.classList.add("news-article-title");
-        // titleElement.appendChild(
-        //   document.createTextNode(decodeHTML(article.title))
-        // );
+        let titleElement = document.createElement("div");
+        titleElement.classList.add("youtube-video-title");
+        titleElement.appendChild(
+          document.createTextNode(decodeHTML(video.title.runs[FIRST].text))
+        );
+
+        let metaDataElement = document.createElement("div");
+        metaDataElement.classList.add("youtube-video-metadata");
+        metaDataElement.appendChild(
+          document.createTextNode(
+            decodeHTML(
+              `${video.shortBylineText.runs[FIRST].text} • ${video.shortViewCountText.simpleText} • ${video.publishedTimeText.simpleText}`
+            )
+          )
+        );
+
+        let descriptionElement = document.createElement("div");
+        descriptionElement.classList.add("youtube-video-snippet");
+        descriptionElement.appendChild(
+          document.createTextNode(
+            decodeHTML(
+              video.descriptionSnippet.runs[
+                video.descriptionSnippet.runs.length - 1
+              ].text
+            )
+          )
+        );
+
+        let containerElement = document.createElement("div");
+        containerElement.classList.add("youtube-content-container");
+        containerElement.appendChild(titleElement);
+        containerElement.appendChild(metaDataElement);
+        containerElement.appendChild(descriptionElement);
 
         let contentRow = document.createElement("div");
         contentRow.classList.add("youtube-content-row");
         contentRow.appendChild(imageElement);
-        contentRow.appendChild(titleElement);
-
-        // let secondRow = document.createElement("div");
-        // secondRow.classList.add("news-article-second-row");
-        // secondRow.appendChild(
-        //   document.createTextNode(decodeHTML(article.snippet))
-        // );
-
-        // let thirdRow = null;
-        // if (article.relatedTerms && article.relatedTerms.length > 0) {
-        //   let relatedTermsElement = document.createElement("div");
-        //   relatedTermsElement.classList.add("news-article-related-searchs");
-        //   relatedTermsElement.appendChild(
-        //     document.createTextNode("Busquedas relacionadas")
-        //   );
-
-        //   thirdRow = document.createElement("div");
-        //   thirdRow.classList.add("news-article-third-row");
-        //   thirdRow.appendChild(relatedTermsElement);
-
-        //   article.relatedTerms.forEach((term) => {
-        //     let termElement = document.createElement("div");
-        //     termElement.classList.add("news-article-related-term");
-        //     termElement.appendChild(document.createTextNode(term));
-        //     thirdRow.appendChild(termElement);
-        //   });
-        // }
-
-        // if (article.searchs) {
-        //   let searchsElement = document.createElement("img");
-        //   searchsElement.appendChild(document.createTextNode(article.searchs));
-        // }
-
-        // let sourceElement = document.createElement("div");
-        // sourceElement.appendChild(document.createTextNode(article.source));
-
-        // let timeElement = document.createElement("div");
-        // timeElement.appendChild(document.createTextNode(article.time));
-
-        // let fourthRow = document.createElement("div");
-        // fourthRow.classList.add("news-article-fourth-row");
-        // if (article.searchs) fourthRow.appendChild(searchsElement);
-        // fourthRow.appendChild(sourceElement);
-        // fourthRow.appendChild(timeElement);
+        contentRow.appendChild(containerElement);
 
         let newHtmlElement = document.createElement("a");
         newHtmlElement.classList.add("video-item");
-        newHtmlElement.setAttribute("augmented-ui", "tl-clip br-clip exe");
-        newHtmlElement.setAttribute("href", `https://www.youtube.com/watch?v=${video.navigationEndpoint.watchEndpoint.videoId}`);
+        newHtmlElement.setAttribute("augmented-ui", "tl-clip-x br-clip-x exe");
+        newHtmlElement.setAttribute(
+          "href",
+          `https://www.youtube.com/watch?v=${video.navigationEndpoint.watchEndpoint.videoId}`
+        );
         newHtmlElement.setAttribute("target", "_blank");
         newHtmlElement.appendChild(contentRow);
         return newHtmlElement;
@@ -1224,7 +1268,7 @@
 
       const updateYoutubeVideos = (youtubeResponse) => {
         let youtubeVideos = transformYoutubeResponse(youtubeResponse);
-        addSectionVideos('youtube-section', youtubeVideos);
+        addSectionVideos("youtube-section", youtubeVideos);
       };
 
       const getYoutubeVideos = () => {
