@@ -1181,6 +1181,13 @@
         xhr.send();
       };
 
+      const youtubeVideosComparator = (firstVideo, secondVideo) => {
+        return firstVideo.publishedTimeText.simpleText >
+          secondVideo.publishedTimeText.simpleText
+          ? 1
+          : -1;
+      };
+
       const transformYoutubeResponse = (youtubeResponse) => {
         // console.log("youtubeVideos before transform: ", youtubeResponse);
         let youtubeVideos = youtubeResponse.body.children[11].innerText;
@@ -1195,7 +1202,7 @@
           }
         });
         console.log("youtubeVideos after transform: ", youtubeVideos);
-        return youtubeVideos;
+        return youtubeVideos.sort(youtubeVideosComparator);
       };
 
       const generateVideoItem = (video) => {
