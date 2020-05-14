@@ -590,18 +590,11 @@
     <!-- Bitcoin top instagram influencers posts Widget END -->
 
     <!-- Bitcoin top seen videos by influencers Widget BEGIN -->
-    <a
-      href="https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D"
-      target="_blank"
-      style="
-        display: flex;
-        justify-content: center;
-        color: #f7f7f7;
-        text-align: center;
-        font-size: 200%;
-      "
-      >Bitcoin top seen youtube videos by influencers</a
-    >
+    <div class="news-section-title" style="margin-top: 2rem;">
+      <p>Videos mas vistos sobre el Bitcoin</p>
+      <div augmented-ui="br-clip-x exe" style="width: 33rem;"></div>
+    </div>
+    <div id="youtube-section" class="news-section"></div>
     <!-- Bitcoin top seen videos by influencers Widget END -->
 
     <!-- Section Divider BEGIN -->
@@ -1082,7 +1075,7 @@
 
       window.setInterval(() => {
         updateExchangePrices();
-      }, 10 * 1000);
+      }, 30 * 1000);
     </script>
 
     <script type="text/javascript">
@@ -1135,26 +1128,42 @@
         xhr.send();
       };
 
-      getHTML(
-        PROXY_URL +
-          "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
-        (response) => {
-          //! TODO refactor function as part of updateYoutubeVideos, this one is transformYoutubeResponse
-          console.log("obtenido: ", response);
-          let variabl = response.body.children[11].innerText;
-          variabl = variabl.match(
-            /{"videoRenderer.*?("enableOverlay":true}}}|Reproduciendo"}]}}}]}})/gm
-          );
-          variabl = variabl.map((elem) => {
-            try {
-              return JSON.parse(elem + "}").videoRenderer;
-            } catch (error) {
-              return JSON.parse(elem).videoRenderer;
-            }
-          });
-          // console.log("obtenido2: ", variabl);
-        }
-      );
+      const transformYoutubeResponse = (youtubeResponse) => {
+        console.log("youtubeVideos before transform: ", youtubeResponse);
+        let youtubeVideos = youtubeResponse.body.children[11].innerText;
+        youtubeVideos = youtubeVideos.match(
+          /{"videoRenderer.*?("enableOverlay":true}}}|Reproduciendo"}]}}}]}})/gm
+        );
+        youtubeVideos = youtubeVideos.map((elem) => {
+          try {
+            return JSON.parse(elem + "}").videoRenderer;
+          } catch (error) {
+            return JSON.parse(elem).videoRenderer;
+          }
+        });
+        // console.log("youtubeVideos after transform: ", youtubeVideos);
+        return youtubeVideos;
+      };
+
+      const updateYoutubeVideos = (youtubeResponse) => {
+        let youtubeVideos = transformYoutubeResponse(youtubeResponse);
+      };
+
+      const getYoutubeVideos = () => {
+        getHTML(
+          PROXY_URL +
+            "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
+          (response) => {
+            updateYoutubeVideos(response);
+          }
+        );
+      };
+
+      getYoutubeVideos();
+
+      window.setInterval(() => {
+        getYoutubeVideos();
+      }, 60 * 60 * 1000);
     </script>
   </body>
 </html>
