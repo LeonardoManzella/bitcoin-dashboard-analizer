@@ -70,9 +70,9 @@
       width: fit-content;
       padding: 0 30px 30px 30px; /* mind the gap */
       --aug-inset: 7px;
-      --aug-inset-bg: lightgrey;
+      --aug-inset-bg: #f7f7f7;
       --aug-border: 5px;
-      --aug-border-bg: lightgrey;
+      --aug-border-bg: #f7f7f7;
       --aug-border-opacity: 0.5;
       --aug-l-offset: 0px;
       --aug-b-offset: 0px;
@@ -104,9 +104,9 @@
       width: 400px;
       padding: 0 50px 30px 30px; /* mind the gap */
       --aug-inset: 7px;
-      --aug-inset-bg: lightgrey;
+      --aug-inset-bg: #f7f7f7;
       --aug-border: 5px;
-      --aug-border-bg: lightgrey;
+      --aug-border-bg: #f7f7f7;
       --aug-border-opacity: 0.5;
       --aug-r-offset: 0px;
       --aug-b-offset: 0px;
@@ -198,7 +198,7 @@
       --aug-b-width: 50%;
     }
     div.news-section-title {
-      color: white;
+      color: #f7f7f7;
       height: fit-content;
       text-align: center;
       font-size: 34px;
@@ -219,7 +219,7 @@
       --aug-inset-bg: #2f96f3;
       --aug-br: 50px;
       --aug-br-height: 12px;
-      --aug-br-width: 25rem;
+      --aug-br-width: 75%;
       width: 32rem;
       margin-bottom: 2rem;
     }
@@ -237,7 +237,7 @@
       font-family: BlenderProBold, sans-serif;
       font-weight: 500;
       line-height: normal;
-      color: white;
+      color: #f7f7f7;
       display: inline-block;
       width: 29%;
       height: fit-content;
@@ -245,18 +245,17 @@
       --aug-border: 1px;
       padding: 7px; /* mind the gap */
       text-align: center;
-      --aug-border-bg: white;
+      --aug-border-bg: #f7f7f7;
       --aug-inset-bg: transparent;
       flex-direction: column;
-      /* align-items: center;
-      justify-content: space-evenly; */
     }
     a.news-article:hover {
       color: black;
       --aug-border-bg: transparent;
-      --aug-inset-bg: white;
+      --aug-inset-bg: #f7f7f7;
     }
-    div.news-article-first-row {
+    div.news-article-first-row,
+    div.youtube-content-row {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -320,9 +319,9 @@
       font-size: 130%;
       padding: 40px;
       --aug-inset: 7px;
-      --aug-inset-bg: lightgrey;
+      --aug-inset-bg: #f7f7f7;
       --aug-border: 5px;
-      --aug-border-bg: lightgrey;
+      --aug-border-bg: #f7f7f7;
       --aug-border-opacity: 0.5;
     }
     div.ripio-price {
@@ -341,6 +340,60 @@
     .exchange-price {
       font-weight: 700;
       font-size: 130%;
+    }
+    a.video-item {
+      text-decoration: none;
+      font-family: BlenderProBold, sans-serif;
+      font-weight: 500;
+      line-height: normal;
+      color: #f7f7f7;
+      display: inline-block;
+      width: 47%;
+      height: fit-content;
+      margin: 0px;
+      margin-top: -5px;
+      --aug-border: 2px;
+      --aug-inset: -1px;
+      --aug-tl-width: 52%;
+      --aug-br-width: 52%;
+      padding: 7px; /* mind the gap */
+      text-align: center;
+      --aug-border-bg: #f7f7f7;
+      --aug-inset-bg: #f7f7f7;
+      flex-direction: column;
+    }
+    a.video-item:hover {
+      --aug-border-bg: #f7f7f7;
+      --aug-inset-bg: #f7f7f7;
+    }
+    div.youtube-content-row {
+      background-color: #131722;
+      margin: 3px 0;
+    }
+    div.youtube-content-row:hover {
+      color: black;
+      background-color: #f7f7f7;
+    }
+    .youtube-video-image {
+      max-height: 10rem;
+    }
+    div.youtube-content-container {
+      margin-left: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .youtube-video-title {
+      font-weight: 700;
+      font-size: 100%;
+      text-transform: uppercase;
+    }
+    .youtube-video-metadata {
+      margin-top: 0.5rem;
+      font-size: 80%;
+    }
+    .youtube-video-snippet {
+      font-size: 80%;
     }
     a.floating-top-button {
       padding: 1.5rem 1.2rem;
@@ -566,7 +619,7 @@
       style="
         display: flex;
         justify-content: center;
-        color: white;
+        color: #f7f7f7;
         text-align: center;
         font-size: 200%;
       "
@@ -581,7 +634,7 @@
       style="
         display: flex;
         justify-content: center;
-        color: white;
+        color: #f7f7f7;
         text-align: center;
         font-size: 200%;
       "
@@ -590,18 +643,11 @@
     <!-- Bitcoin top instagram influencers posts Widget END -->
 
     <!-- Bitcoin top seen videos by influencers Widget BEGIN -->
-    <a
-      href="https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D"
-      target="_blank"
-      style="
-        display: flex;
-        justify-content: center;
-        color: white;
-        text-align: center;
-        font-size: 200%;
-      "
-      >Bitcoin top seen youtube videos by influencers</a
-    >
+    <div class="news-section-title" style="margin-top: 2rem;">
+      <p>Videos mas vistos sobre el Bitcoin</p>
+      <div augmented-ui="br-clip-x exe" style="width: 46rem;"></div>
+    </div>
+    <div id="youtube-section" class="news-section"></div>
     <!-- Bitcoin top seen videos by influencers Widget END -->
 
     <!-- Section Divider BEGIN -->
@@ -651,7 +697,7 @@
       const URL_OFICIAL =
         "https://mercados.ambito.com//dolar/oficial/variacion";
       const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
-      const URL_LIQUI = "https://mercados.ambito.com//dolar/cl/variacion";
+      const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
 
       const fetchData = (url, options) => {
         return fetch(url, options)
@@ -815,6 +861,13 @@
         return news;
       };
 
+      const decodeHTML = (anString) => {
+        return anString
+          .replace(/&quot;/gi, '"')
+          .replace(/&#39;/gi, "'")
+          .replace(/\&nbsp\;/gi, " ");
+      };
+
       const generateArticleItem = (article) => {
         let imageElement = document.createElement("img");
         imageElement.classList.add("news-article-image");
@@ -823,7 +876,9 @@
 
         let titleElement = document.createElement("div");
         titleElement.classList.add("news-article-title");
-        titleElement.appendChild(document.createTextNode(article.title));
+        titleElement.appendChild(
+          document.createTextNode(decodeHTML(article.title))
+        );
 
         let firstRow = document.createElement("div");
         firstRow.classList.add("news-article-first-row");
@@ -832,7 +887,9 @@
 
         let secondRow = document.createElement("div");
         secondRow.classList.add("news-article-second-row");
-        secondRow.appendChild(document.createTextNode(article.snippet));
+        secondRow.appendChild(
+          document.createTextNode(decodeHTML(article.snippet))
+        );
 
         let thirdRow = null;
         if (article.relatedTerms && article.relatedTerms.length > 0) {
@@ -883,10 +940,10 @@
         return newHtmlElement;
       };
 
-      const addSectionNews = (senctionID, newsArray) => {
+      const addSectionNews = (sectionID, newsArray) => {
         let element = null;
         newsArray.forEach((article) => {
-          element = document.getElementById(senctionID);
+          element = document.getElementById(sectionID);
           element.appendChild(generateArticleItem(article));
         });
       };
@@ -1026,13 +1083,14 @@
         let element = document.getElementById(priceID);
         element.innerText = `$ ${exchangeData.price.toFixed(0)}`;
 
-        element = document.getElementById(variationID);
-        element.classList.add(classByNumber(exchangeData.variation));
-        if (exchangeData.variation !== 0)
+        if (exchangeData.variation !== 0) {
+          element = document.getElementById(variationID);
+          element.classList.add(classByNumber(exchangeData.variation));
           element.innerText =
             addNumSymbol(exchangeData.variation) +
             exchangeData.variation.toFixed(2) +
             "%";
+        }
       };
 
       const obtainRipioPrice = (data) => {
@@ -1070,7 +1128,7 @@
 
       window.setInterval(() => {
         updateExchangePrices();
-      }, 10 * 1000);
+      }, 30 * 1000);
     </script>
 
     <script type="text/javascript">
@@ -1080,20 +1138,20 @@
       // fetchData(
       //   PROXY_URL +
       //     "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D"
-        // ,{
-        //   credentials: "same-origin",
-        // }
-        // ,{
-        //   method: "POST",
-        //   body: JSON.stringify({
-        //     param1: "Prueba enviar algo",
-        //     param2: "otro mas"
-        //   }),
-        // }
-        // ).then(function (response) {
-        //   // The API call was successful!
-        //   return response.text();
-        // }
+      // ,{
+      //   credentials: "same-origin",
+      // }
+      // ,{
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     param1: "Prueba enviar algo",
+      //     param2: "otro mas"
+      //   }),
+      // }
+      // ).then(function (response) {
+      //   // The API call was successful!
+      //   return response.text();
+      // }
       // ).then((response) => {
       //   console.log("fuente: ", response);
       // });
@@ -1122,26 +1180,114 @@
         xhr.responseType = "document";
         xhr.send();
       };
-      
-      getHTML(
-        PROXY_URL +
-          "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
-        (response) => { //! TODO refactor function as part of updateYoutubeVideos, this one is transformYoutubeResponse
-          console.log("obtenido: ", response);
-          let variabl = response.body.children[11].innerText;
-          variabl = variabl.match(
-            /{"videoRenderer.*?("enableOverlay":true}}}|Reproduciendo"}]}}}]}})/gm
+
+      const transformYoutubeResponse = (youtubeResponse) => {
+        // console.log("youtubeVideos before transform: ", youtubeResponse);
+        let youtubeVideos = youtubeResponse.body.children[11].innerText;
+        youtubeVideos = youtubeVideos.match(
+          /{"videoRenderer.*?("enableOverlay":true}}}|Reproduciendo"}]}}}]}})/gm
+        );
+        youtubeVideos = youtubeVideos.map((elem) => {
+          try {
+            return JSON.parse(elem + "}").videoRenderer;
+          } catch (error) {
+            return JSON.parse(elem).videoRenderer;
+          }
+        });
+        console.log("youtubeVideos after transform: ", youtubeVideos);
+        return youtubeVideos;
+      };
+
+      const generateVideoItem = (video) => {
+        const FIRST = 0;
+        let imageElement = document.createElement("img");
+        imageElement.classList.add("youtube-video-image");
+        imageElement.setAttribute(
+          "src",
+          video.thumbnail.thumbnails[video.thumbnail.thumbnails.length - 1].url
+        );
+
+        let titleElement = document.createElement("div");
+        titleElement.classList.add("youtube-video-title");
+        titleElement.appendChild(
+          document.createTextNode(decodeHTML(video.title.runs[FIRST].text))
+        );
+
+        let metaDataElement = document.createElement("div");
+        metaDataElement.classList.add("youtube-video-metadata");
+        metaDataElement.appendChild(
+          document.createTextNode(
+            decodeHTML(
+              `${video.shortBylineText.runs[FIRST].text} • ${video.shortViewCountText.simpleText} • ${video.publishedTimeText.simpleText}`
+            )
+          )
+        );
+
+        let descriptionElement = document.createElement("div");
+        descriptionElement.classList.add("youtube-video-snippet");
+        descriptionElement.appendChild(
+          document.createTextNode(
+            decodeHTML(
+              video.descriptionSnippet.runs[
+                video.descriptionSnippet.runs.length - 1
+              ].text
+            )
+          )
+        );
+
+        let containerElement = document.createElement("div");
+        containerElement.classList.add("youtube-content-container");
+        containerElement.appendChild(titleElement);
+        containerElement.appendChild(metaDataElement);
+        containerElement.appendChild(descriptionElement);
+
+        let contentRow = document.createElement("div");
+        contentRow.classList.add("youtube-content-row");
+        contentRow.appendChild(imageElement);
+        contentRow.appendChild(containerElement);
+
+        let newHtmlElement = document.createElement("a");
+        newHtmlElement.classList.add("video-item");
+        newHtmlElement.setAttribute("augmented-ui", "tl-clip-x br-clip-x exe");
+        newHtmlElement.setAttribute(
+          "href",
+          `https://www.youtube.com/watch?v=${video.navigationEndpoint.watchEndpoint.videoId}`
+        );
+        newHtmlElement.setAttribute("target", "_blank");
+        newHtmlElement.appendChild(contentRow);
+        return newHtmlElement;
+      };
+
+      const addSectionVideos = (sectionID, videosArray) => {
+        let element = null;
+        videosArray.forEach((video) => {
+          element = document.getElementById(sectionID);
+          element.appendChild(generateVideoItem(video));
+        });
+      };
+
+      const updateYoutubeVideos = (youtubeResponse) => {
+        let youtubeVideos = transformYoutubeResponse(youtubeResponse);
+        addSectionVideos("youtube-section", youtubeVideos);
+      };
+
+      const getYoutubeVideos = () => {
+        try {
+          getHTML(
+            PROXY_URL +
+              "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
+            updateYoutubeVideos
           );
-          variabl = variabl.map((elem) => {
-            try {
-              return JSON.parse(elem + "}").videoRenderer;
-            } catch (error) {
-              return JSON.parse(elem).videoRenderer;
-            }
-          });
-          // console.log("obtenido2: ", variabl);
+        } catch (error) {
+          getYoutubeVideos(); //Retry if error
         }
-      );
+      };
+
+      getYoutubeVideos();
+
+      window.setInterval(() => {
+        getYoutubeVideos();
+      }, 60 * 60 * 1000);
     </script>
   </body>
 </html>
