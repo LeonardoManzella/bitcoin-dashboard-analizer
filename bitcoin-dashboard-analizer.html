@@ -1202,10 +1202,14 @@
       };
 
       const getPublishedTime = (video) => {
-        return (
-          video.publishedTimeText.simpleText ||
-          video.publishedTimeText.runs[FIRST].text
-        );
+        try {
+          return (
+            video.publishedTimeText.simpleText ||
+            video.publishedTimeText.runs[FIRST].text
+          );
+        } catch (error) {
+          return "0 - En vivo";
+        }
       };
 
       const youtubeVideosComparator = (firstVideo, secondVideo) => {
@@ -1397,22 +1401,40 @@
 
     <!-- Twitter section loader -->
     <script type="text/javascript">
+      const tweetsComparator = (firstTweet, secondTweet) => {
+        const cleanText = (tweet) => {
+          return parseFloat(tweet.exposure.trim().replace(/,/g, ""));
+        };
+        return cleanText(firstTweet) < cleanText(secondTweet) ? 1 : -1;
+      };
+
       const transformTwitterBestHashtagsResponse = (twitterResponse) => {
         const FIRST = 0;
         // console.log("tweets before transform: ", twitterResponse);
         let tweets = twitterResponse.body.children[5].innerHTML;
-        // console.log("tweets in transform: ", tweets);
-        tweets = tweets.match(
-          /now\<\/strong\>.*\<strong\>over/s
-        );
-        console.log("tweets in transform: ", tweets);
-        tweets = tweets[FIRST].match(
-          /data-tag="[^-]*?">.*?\</g
-        );
-        //TODO for to group every 4 ones
+        tweets = tweets.match(/now\<\/strong\>.*\<strong\>over/s);
+        tweets = tweets[FIRST].match(/data-tag="[^-]*?">.*?\</g);
 
-        console.log("tweets after transform: ", tweets);
-        // return tweets.sort(tweetsComparator);
+        tweets = tweets.map((tweet) => {
+          const cutFrom = tweet.indexOf(">") + 1;
+          const cutUntil = tweet.indexOf("<");
+          return tweet.substring(cutFrom, cutUntil);
+        });
+
+        let hashtags = [];
+        for (let index = 0; index < tweets.length; index += 4) {
+          const hashtag = {
+            hashtag: tweets[index],
+            tweets: tweets[index + 1],
+            retweets: tweets[index + 2],
+            exposure: tweets[index + 3],
+          };
+          hashtags.push(hashtag);
+        }
+
+        hashtags = hashtags.sort(tweetsComparator);
+        // console.log("tweets after transform: ", hashtags);
+        return hashtags;
       };
 
       setTimeout(() => {
