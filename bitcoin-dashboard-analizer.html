@@ -350,7 +350,7 @@
       display: inline-block;
       width: 47%;
       height: fit-content;
-      margin: 3px 0px;
+      margin: 7px;
       --aug-border: 2px;
       --aug-inset: -1px;
       --aug-tl-width: 52%;
@@ -1189,15 +1189,21 @@
         xhr.send();
       };
 
+      const getPublishedTime = (video) => {
+        return (
+          video.publishedTimeText.simpleText ||
+          video.publishedTimeText.runs[FIRST].text
+        );
+      };
+
       const youtubeVideosComparator = (firstVideo, secondVideo) => {
-        try {
-          return firstVideo.publishedTimeText.simpleText >
-            secondVideo.publishedTimeText.simpleText
-            ? 1
-            : -1;
-        } catch (error) {
-          return 1;
-        }
+        const cleanText = (video) => {
+          return getPublishedTime(video)
+            .replace("Transmitido ", "")
+            .replace(/. semana/, "9 semana");
+        };
+
+        return cleanText(firstVideo) > cleanText(secondVideo) ? 1 : -1;
       };
 
       const transformYoutubeResponse = (youtubeResponse) => {
@@ -1215,12 +1221,6 @@
         });
         console.log("youtubeVideos after transform: ", youtubeVideos);
         return youtubeVideos.sort(youtubeVideosComparator);
-      };
-
-      const getPublishedTime = (video) => {
-        return (
-          video.publishedTimeText.simpleText || video.publishedTimeText.runs[FIRST].text
-        );
       };
 
       const generateVideoItem = (video) => {
