@@ -752,7 +752,7 @@
         };
 
         fetchData(URL_OFICIAL).then((data) => {
-          console.log(data);
+          // console.log(data);
           updateElements(
             ["dolar-of-buy", "dolar-of-sell"],
             [data.compra, data.venta],
@@ -763,7 +763,7 @@
         });
 
         fetchData(URL_LIQUI).then((data) => {
-          console.log(data);
+          // console.log(data);
           updateElements(
             ["dolar-cl-value"],
             [data.compra],
@@ -774,7 +774,7 @@
         });
 
         fetchData(URL_BLUE).then((data) => {
-          console.log(data);
+          // console.log(data);
           updateElements(
             ["dolar-blue-buy", "dolar-blue-sell"],
             [data.compra, data.venta],
@@ -787,7 +787,10 @@
         console.groupEnd();
       };
 
-      updateDolarIndicators();
+      const NEXT_JS_CYCLE = 0;
+      setTimeout(() => {
+        updateDolarIndicators();
+      }, NEXT_JS_CYCLE);
 
       window.setInterval(() => {
         updateDolarIndicators();
@@ -828,7 +831,9 @@
         });
       };
 
-      updateBitcoinPrice();
+      setTimeout(() => {
+        updateBitcoinPrice();
+      }, NEXT_JS_CYCLE);
 
       window.setInterval(() => {
         updateBitcoinPrice();
@@ -1018,41 +1023,44 @@
         "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=GB&ri=300&rs=20&sort=0";
 
       const bitcoinTerms = ["bitcoin", "btc", "cripto", "crypto", "altcoin"];
-      updateNews(
-        "bitcoin-news-section",
-        ARG_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        AUS_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        CAN_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        USA_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        MEX_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        NZ_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        UK_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
+
+      setTimeout(() => {
+        updateNews(
+          "bitcoin-news-section",
+          ARG_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          AUS_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          CAN_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          USA_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          MEX_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          NZ_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          UK_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+      }, NEXT_JS_CYCLE);
     </script>
 
     <script type="text/javascript">
@@ -1110,7 +1118,7 @@
           let ripioData = {};
           ripioData.price = obtainRipioPrice(response) - 10000;
           ripioData.variation = calcVariation(ripioData.price);
-          console.log("ripioData: ", ripioData);
+          // console.log("ripioData: ", ripioData);
           updateExchange(ripioData, "ripio-price", "ripio-variation");
         });
 
@@ -1121,31 +1129,35 @@
           console.log("satoshiData: ", satoshiData);
           fetchData(PROXY_URL + SATOSHI_VARIATION_URL).then((data) => {
             satoshiData.variation = data.data.graph.BTC.change;
-            console.log("satoshiData.variation: ", satoshiData.variation);
+            // console.log("satoshiData.variation: ", satoshiData.variation);
             updateExchange(satoshiData, "satoshi-price", "satoshi-variation");
           });
         });
       };
 
-      updateExchangePrices();
+      setTimeout(() => {
+        updateExchangePrices();
+      }, NEXT_JS_CYCLE);
 
       window.setInterval(() => {
         updateExchangePrices();
       }, 30 * 1000);
     </script>
 
+    <!-- Moment -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js"></script>
     <script>
       moment().format();
     </script>
 
+    <!-- Youtube section loader -->
     <script type="text/javascript">
       //TODO probar pueda obtener datos de URLs
       // document.cookie =
-      //   "__stripe_mid=0c7525d1-07f0-4cdb-a144-c302c7419710; driftt_aid=57473e20-bca0-4f67-96e9-fe6bca7544a9; DFTT_END_USER_PREV_BOOTSTRAPPED=true; driftt_wmd=true; __stripe_sid=83610ed9-077b-46b2-bbce-d530ab3443f3; driftt_sid=0e28630e-3fec-425c-b2c5-1d448c4939ff; XSRF-TOKEN=eyJpdiI6IlhhTWUyU3pYMFpDVjZSWk93S2RsRXc9PSIsInZhbHVlIjoiekhMQnoxdStjVjZxOXRRYkpDU3BPWUQ3VDFXajk0SWh5ZU5BRFRKTWFMWG8wMXg3UGhsb2o0aVFDS1RzV1YzNSIsIm1hYyI6IjI3YjNmYmY3ZjAzMTE1MGUyOWExNmFiYmIwZTU5Y2U2MTMzMDVjYTFiOGVmYTFmYmRlOGUwMTcxNDg4ZDhjYzgifQ%3D%3D";
+      //   "__stripe_mid=fc07ee05-c462-4105-a97f-20dfe441cc60; __stripe_sid=7e628cb8-2bcc-4a80-8e84-e6470f6d8bf3; driftt_aid=bcb64773-ff8c-44c6-8144-b81658c72680; driftt_sid=ad0c28e2-a9d0-4671-bdc2-c02c501f2eb1; DFTT_END_USER_PREV_BOOTSTRAPPED=true; XSRF-TOKEN=eyJpdiI6Ik5ldWxOc25PWXROUHZSSGZkYkZpM3c9PSIsInZhbHVlIjoiUWlnY0JkS09ycWlxNXF6a3VXZVVpMTdob2xqT3ZWekFJZTFVN1NQTlZ4TkFOZ0llNTl0Mnd1aWZ0d1FwdmxveCIsIm1hYyI6IjZmMTBlMmIwMmRlZThiZmFkMmI1MzM3MjE1OTg2NDZlOGMwMmY2NzVlZmZkZWU0ZWIxZDE3OGMxMmY2YWI2MGMifQ%3D%3D; trackmyhashtag_session=eyJpdiI6Im8zS21SdWJLWjRkaXhLMkZHQ2xnR2c9PSIsInZhbHVlIjoidUViR0Zsd3JPNlF6ZjM5c0tiUFwvcWZyWTFDVml5M3E4RWFVb3VkXC8weW42MnRZNEk2WnpRRHRHV202bnpoK3BaIiwibWFjIjoiMmU2NDBiZjhhNmU1Y2ZiZDAxZmQ1YmY0YjMwNTBhNDE4YzEwOWMyNTRhY2Q0MDc5M2FiYTMyYTEwMDY2NDVjNyJ9; driftt_wmd=true";
       // fetchData(
       //   PROXY_URL +
-      //     "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D"
+      //     "https://ritetag.com/best-hashtags-for/bitcoin"
       // ,{
       //   credentials: "same-origin",
       // }
@@ -1219,7 +1231,7 @@
             return JSON.parse(elem).videoRenderer;
           }
         });
-        console.log("youtubeVideos after transform: ", youtubeVideos);
+        // console.log("youtubeVideos after transform: ", youtubeVideos);
         return youtubeVideos.sort(youtubeVideosComparator);
       };
 
@@ -1355,7 +1367,7 @@
           ...youtubeVideos,
           maximuns.daily.youtube[TODAY]
         );
-        console.log("maxDayVideo: ", maxDayVideo);
+        // console.log("maxDayVideo: ", maxDayVideo);
         maximuns.daily.youtube[TODAY] = maxDayVideo;
         window.localStorage.setItem(MAXIMUNS, JSON.stringify(maximuns));
       };
@@ -1372,13 +1384,45 @@
         }
       };
 
-      getYoutubeWeeklyVideos();
-      getYoutubeDaylyVideos();
+      setTimeout(() => {
+        getYoutubeWeeklyVideos();
+        getYoutubeDaylyVideos();
+      }, NEXT_JS_CYCLE);
 
       window.setInterval(() => {
         getYoutubeWeeklyVideos();
         getYoutubeDaylyVideos();
       }, 60 * 60 * 1000);
+    </script>
+
+    <!-- Twitter section loader -->
+    <script type="text/javascript">
+      const transformTwitterBestHashtagsResponse = (twitterResponse) => {
+        console.log("tweets before transform: ", twitterResponse);
+        let tweets = twitterResponse.body.children[5].innerHTML;
+        // tweets = tweets.match(
+        //   /now\<\/strong\>.*\<strong\>over/m
+        // );
+        // tweets = tweets.match(
+        //   /data-tag="[^-]*?">.*?\</g
+        // );
+        // tweets = tweets.map((elem) => {
+        //   try {
+        //     return JSON.parse(elem + "}").videoRenderer;
+        //   } catch (error) {
+        //     return JSON.parse(elem).videoRenderer;
+        //   }
+        // });
+        console.log("tweets after transform: ", tweets);
+        // return tweets.sort(tweetsComparator);
+      };
+
+      setTimeout(() => {
+        getHTML(
+          PROXY_URL + "https://ritetag.com/best-hashtags-for/bitcoin",
+          transformTwitterBestHashtagsResponse
+        );
+      }, NEXT_JS_CYCLE);
     </script>
   </body>
 </html>
