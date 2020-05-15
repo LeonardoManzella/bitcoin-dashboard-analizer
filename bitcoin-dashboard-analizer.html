@@ -1106,6 +1106,7 @@
 
       const updateExchangePrices = () => {
         fetchData(PROXY_URL + RIPIO_DATA_URL).then((response) => {
+          if (!response) return;
           let ripioData = {};
           ripioData.price = obtainRipioPrice(response) - 10000;
           ripioData.variation = calcVariation(ripioData.price);
@@ -1114,6 +1115,7 @@
         });
 
         fetchData(PROXY_URL + SATOSHI_PRICE_URL).then((response) => {
+          if (!response) return;
           let satoshiData = {};
           satoshiData.price = response.data.ticker.BTC.ask;
           console.log("satoshiData: ", satoshiData);
@@ -1130,6 +1132,11 @@
       window.setInterval(() => {
         updateExchangePrices();
       }, 30 * 1000);
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js"></script>
+    <script>
+      moment().format();
     </script>
 
     <script type="text/javascript">
@@ -1183,10 +1190,14 @@
       };
 
       const youtubeVideosComparator = (firstVideo, secondVideo) => {
-        return firstVideo.publishedTimeText.simpleText >
-          secondVideo.publishedTimeText.simpleText
-          ? 1
-          : -1;
+        try {
+          return firstVideo.publishedTimeText.simpleText >
+            secondVideo.publishedTimeText.simpleText
+            ? 1
+            : -1;
+        } catch (error) {
+          return 1;
+        }
       };
 
       const transformYoutubeResponse = (youtubeResponse) => {
@@ -1204,6 +1215,12 @@
         });
         console.log("youtubeVideos after transform: ", youtubeVideos);
         return youtubeVideos.sort(youtubeVideosComparator);
+      };
+
+      const getPublishedTime = (video) => {
+        return (
+          video.publishedTimeText.simpleText || video.publishedTimeText.runs[FIRST].text
+        );
       };
 
       const generateVideoItem = (video) => {
@@ -1226,7 +1243,9 @@
         metaDataElement.appendChild(
           document.createTextNode(
             decodeHTML(
-              `${video.shortBylineText.runs[FIRST].text} • ${video.shortViewCountText.simpleText} • ${video.publishedTimeText.simpleText}`
+              `${video.shortBylineText.runs[FIRST].text} • ${
+                video.shortViewCountText.simpleText
+              } • ${getPublishedTime(video)}`
             )
           )
         );
@@ -1274,27 +1293,91 @@
         });
       };
 
-      const updateYoutubeVideos = (youtubeResponse) => {
+      const updateYoutubeWeeklyVideos = (youtubeResponse) => {
         let youtubeVideos = transformYoutubeResponse(youtubeResponse);
         addSectionVideos("youtube-section", youtubeVideos);
       };
 
-      const getYoutubeVideos = () => {
+      const getYoutubeWeeklyVideos = () => {
         try {
           getHTML(
             PROXY_URL +
               "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
-            updateYoutubeVideos
+            updateYoutubeWeeklyVideos
           );
         } catch (error) {
-          getYoutubeVideos(); //Retry if error
+          getYoutubeWeeklyVideos(); //Retry if error
         }
       };
 
-      getYoutubeVideos();
+      const MAXIMUNS = "MAXIMUNS";
+      const TODAY = moment().format("YYYY-MM-DD");
+      const getMaximuns = () => {
+        let maximuns = window.localStorage.getItem(MAXIMUNS);
+        maximuns = JSON.parse(maximuns);
+
+        if (!maximuns) {
+          maximuns = {
+            daily: {
+              searchs: {},
+              news: {},
+              youtube: {},
+              twitter: {},
+              instagram: {},
+              tiktok: {},
+            },
+            simpleText,
+          };
+          maximuns.daily.searchs[TODAY] = 0;
+          maximuns.daily.news[TODAY] = 0;
+          maximuns.daily.youtube[TODAY] = 0;
+          maximuns.daily.twitter[TODAY] = 0;
+          maximuns.daily.instagram[TODAY] = 0;
+          maximuns.daily.tiktok[TODAY] = 0;
+        }
+
+        return maximuns;
+      };
+
+      const updateYoutubeDaylyVideos = (youtubeResponse) => {
+        const FIRST = 0;
+        let youtubeVideos = transformYoutubeResponse(youtubeResponse);
+        youtubeVideos = youtubeVideos.map((video) =>
+          (
+            video.viewCountText.simpleText ||
+            video.viewCountText.runs[FIRST].text
+          )
+            .replace(",", "")
+            .replace(" vistas", "")
+        );
+        let maximuns = getMaximuns();
+        let maxDayVideo = Math.max(
+          ...youtubeVideos,
+          maximuns.daily.youtube[TODAY]
+        );
+        console.log("maxDayVideo: ", maxDayVideo);
+        maximuns.daily.youtube[TODAY] = maxDayVideo;
+        window.localStorage.setItem(MAXIMUNS, JSON.stringify(maximuns));
+      };
+
+      const getYoutubeDaylyVideos = () => {
+        try {
+          getHTML(
+            PROXY_URL +
+              "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgCEAE%253D",
+            updateYoutubeDaylyVideos
+          );
+        } catch (error) {
+          getYoutubeDaylyVideos(); //Retry if error
+        }
+      };
+
+      getYoutubeWeeklyVideos();
+      getYoutubeDaylyVideos();
 
       window.setInterval(() => {
-        getYoutubeVideos();
+        getYoutubeWeeklyVideos();
+        getYoutubeDaylyVideos();
       }, 60 * 60 * 1000);
     </script>
   </body>
