@@ -1398,21 +1398,19 @@
     <!-- Twitter section loader -->
     <script type="text/javascript">
       const transformTwitterBestHashtagsResponse = (twitterResponse) => {
-        console.log("tweets before transform: ", twitterResponse);
+        const FIRST = 0;
+        // console.log("tweets before transform: ", twitterResponse);
         let tweets = twitterResponse.body.children[5].innerHTML;
-        // tweets = tweets.match(
-        //   /now\<\/strong\>.*\<strong\>over/m
-        // );
-        // tweets = tweets.match(
-        //   /data-tag="[^-]*?">.*?\</g
-        // );
-        // tweets = tweets.map((elem) => {
-        //   try {
-        //     return JSON.parse(elem + "}").videoRenderer;
-        //   } catch (error) {
-        //     return JSON.parse(elem).videoRenderer;
-        //   }
-        // });
+        // console.log("tweets in transform: ", tweets);
+        tweets = tweets.match(
+          /now\<\/strong\>.*\<strong\>over/s
+        );
+        console.log("tweets in transform: ", tweets);
+        tweets = tweets[FIRST].match(
+          /data-tag="[^-]*?">.*?\</g
+        );
+        //TODO for to group every 4 ones
+
         console.log("tweets after transform: ", tweets);
         // return tweets.sort(tweetsComparator);
       };
