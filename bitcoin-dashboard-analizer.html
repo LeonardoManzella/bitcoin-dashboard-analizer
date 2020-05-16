@@ -69,11 +69,7 @@
       margin-left: 0.5rem;
       width: fit-content;
       padding: 0 30px 30px 30px; /* mind the gap */
-      --aug-inset: 7px;
       --aug-inset-bg: #f7f7f7;
-      --aug-border: 5px;
-      --aug-border-bg: #f7f7f7;
-      --aug-border-opacity: 0.5;
       --aug-l-offset: 0px;
       --aug-b-offset: 0px;
       --aug-tl: 10px;
@@ -82,12 +78,12 @@
       --aug-tr: 30px;
       --aug-tr-height: 30px;
       --aug-tr-width: 30px;
-      --aug-br: 20px;
-      --aug-br-height: 0px;
-      --aug-br-width: 0px;
-      --aug-bl: 30px;
-      --aug-bl-height: 30px;
-      --aug-bl-width: 30px;
+      --aug-bl: 20px;
+      --aug-bl-height: 0px;
+      --aug-bl-width: 0px;
+      --aug-br: 30px;
+      --aug-br-height: 30px;
+      --aug-br-width: 30px;
       --aug-t: 0px;
       --aug-t-height: 0px;
       --aug-t-width: 0px;
@@ -103,11 +99,8 @@
       margin-right: 0.5rem;
       width: 400px;
       padding: 0 50px 30px 30px; /* mind the gap */
-      --aug-inset: 7px;
+
       --aug-inset-bg: #f7f7f7;
-      --aug-border: 5px;
-      --aug-border-bg: #f7f7f7;
-      --aug-border-opacity: 0.5;
       --aug-r-offset: 0px;
       --aug-b-offset: 0px;
       --aug-tr: 10px;
@@ -116,12 +109,12 @@
       --aug-tl: 30px;
       --aug-tl-height: 30px;
       --aug-tl-width: 30px;
-      --aug-bl: 20px;
-      --aug-bl-height: 0px;
-      --aug-bl-width: 0px;
-      --aug-br: 30px;
-      --aug-br-height: 30px;
-      --aug-br-width: 30px;
+      --aug-br: 20px;
+      --aug-br-height: 0px;
+      --aug-br-width: 0px;
+      --aug-bl: 30px;
+      --aug-bl-height: 30px;
+      --aug-bl-width: 30px;
       --aug-t: 0px;
       --aug-t-height: 0px;
       --aug-t-width: 0px;
@@ -143,7 +136,7 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.4px;
-      font-family: Trebuchet MS, roboto, ubuntu, sans-serif;
+      font-family: BlenderProBold, sans-serif;
       --aug-tl: 30px;
       --aug-tl-height: 30px;
       --aug-tl-width: 30px;
@@ -178,6 +171,33 @@
     }
     .equal {
       color: #4ba79a;
+    }
+    div.bolsas-section {
+      margin-top: 0.5rem;
+      padding: 50px 10px;
+      --aug-border: 5px;
+      --aug-inset: -1px;
+      text-align: center;
+      --aug-border-bg: #f7f7f7;
+      --aug-inset-bg: #f7f7f7;
+      --aug-tl: 25px;
+      --aug-tl-width: 40%;
+      --aug-tr: 25px;
+      --aug-tr-width: 40%;
+      --aug-b: 10px;
+      --aug-b-height: 15px;
+      --aug-b-width: 48%;
+    }
+    div.bolsas-section-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      line-height: 160%;
+      font-weight: 700;
+      font-size: 120%;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-family: BlenderProBold, sans-serif;
     }
     div.section-divider {
       background-color: #131722;
@@ -318,11 +338,7 @@
       line-height: 3rem;
       font-size: 130%;
       padding: 40px;
-      --aug-inset: 7px;
       --aug-inset-bg: #f7f7f7;
-      --aug-border: 5px;
-      --aug-border-bg: #f7f7f7;
-      --aug-border-opacity: 0.5;
     }
     div.ripio-price {
       --aug-bl-width: 60%;
@@ -493,7 +509,7 @@
       <!-- TradingView Widget BEGIN -->
       <div
         class="bitcoin-technical-analysis"
-        augmented-ui="tr-clip l-clip-y bl-clip tl-round br-round b-clip-x exe"
+        augmented-ui="tr-clip l-clip-y br-clip tl-round bl-round b-clip-x exe"
       >
         <div class="tradingview-widget-container">
           <div class="tradingview-widget-container__widget"></div>
@@ -545,7 +561,7 @@
       <!-- Ambito Financiero Dolar Widget BEGIN -->
       <div
         class="dolar-widget"
-        augmented-ui="tl-clip r-clip-y br-clip tr-round bl-round b-clip-x exe"
+        augmented-ui="tl-clip r-clip-y bl-clip tr-round br-round b-clip-x exe"
       >
         <table class="dolar-table" augmented-ui="tl-clip exe">
           <tr class="dolar-table-top-row">
@@ -604,6 +620,25 @@
       </div>
       <!-- Ambito Financiero Dolar Widget END -->
     </div>
+
+    <!-- Bolsas Widget BEGIN -->
+    <div class="bolsas-section" augmented-ui="tl-clip-x tr-clip-x b-clip-x exe">
+      <div
+        id="bolsas-section-container"
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        "
+      >
+        <div class="bolsas-section-item">
+          <div>BOLSA</div>
+          <div>VARIACIÓN</div>
+          <div>PUNTOS</div>
+        </div>
+      </div>
+    </div>
+    <!-- Bolsas Widget END -->
 
     <!-- Global Bitcoin News Widget BEGIN -->
     <div class="news-section-title" style="margin-top: 2rem;">
@@ -1097,8 +1132,8 @@
       };
 
       const classByNumber = (number) => {
-        if (number > 0) return "up";
-        if (number < 0) return "down";
+        if (parseFloat(number) > 0) return "up";
+        if (parseFloat(number) < 0) return "down";
         return "equal";
       };
 
@@ -1478,7 +1513,7 @@
         );
         bolsas = bolsas.map((elem) => {
           if (elem.includes("span>")) {
-            const cutFrom = elem.indexOf(">", 1)+1;
+            const cutFrom = elem.indexOf(">", 1) + 1;
             const cutUntil = elem.indexOf("<", 5);
             return elem.substring(cutFrom, cutUntil);
           } else {
@@ -1491,7 +1526,7 @@
         let bolsasTransformed = [];
         for (let index = 0; index < bolsas.length; index += 3) {
           const bolsa = {
-            bolsa: bolsas[index],
+            nombre: bolsas[index],
             variacion: bolsas[index + 1],
             puntos: bolsas[index + 2],
           };
@@ -1499,13 +1534,62 @@
         }
 
         console.log("bolsas after transform: ", bolsasTransformed);
+        return bolsasTransformed;
+      };
+
+      const generateBolsaItem = (bolsa) => {
+        const FIRST = 0;
+        //TODO rewrite
+
+        let nameElement = document.createElement("div");
+        nameElement.appendChild(
+          document.createTextNode(decodeHTML(bolsa.nombre))
+        );
+
+        let variationElement = document.createElement("div");
+        variationElement.classList.add(classByNumber(bolsa.variacion));
+        variationElement.appendChild(
+          document.createTextNode(
+            addNumSymbol(bolsa.variacion) +
+              decodeHTML(parseFloat(bolsa.variacion).toFixed(2)) +
+              "%"
+          )
+        );
+
+        let puntosElement = document.createElement("div");
+        puntosElement.appendChild(
+          document.createTextNode(
+            parseInt(decodeHTML(bolsa.puntos.replace(".", "")))
+          )
+        );
+
+        let containerElement = document.createElement("div");
+        containerElement.classList.add("bolsas-section-item");
+        containerElement.appendChild(nameElement);
+        containerElement.appendChild(variationElement);
+        containerElement.appendChild(puntosElement);
+
+        return containerElement;
+      };
+
+      const addSectionBolsas = (sectionID, bolsasArray) => {
+        let element = null;
+        bolsasArray.forEach((bolsa) => {
+          element = document.getElementById(sectionID);
+          element.appendChild(generateBolsaItem(bolsa));
+        });
+      };
+
+      const updateBolsas = (response) => {
+        let bolsasTransformed = transformBolsasResponse(response);
+        addSectionBolsas("bolsas-section-container", bolsasTransformed);
       };
 
       setTimeout(() => {
         getHTML(
           PROXY_URL +
             "https://www.cronista.com/economiapolitica/En-busca-de-dolares-restringen-creditos-a-empresas-del-agro-con-incentivos-para-que-vendan-la-cosecha--20200515-0048.html",
-          transformBolsasResponse
+          updateBolsas
         );
       }, NEXT_JS_CYCLE);
     </script>
