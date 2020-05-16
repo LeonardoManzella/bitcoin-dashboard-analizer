@@ -69,11 +69,7 @@
       margin-left: 0.5rem;
       width: fit-content;
       padding: 0 30px 30px 30px; /* mind the gap */
-      --aug-inset: 7px;
       --aug-inset-bg: #f7f7f7;
-      --aug-border: 5px;
-      --aug-border-bg: #f7f7f7;
-      --aug-border-opacity: 0.5;
       --aug-l-offset: 0px;
       --aug-b-offset: 0px;
       --aug-tl: 10px;
@@ -82,12 +78,12 @@
       --aug-tr: 30px;
       --aug-tr-height: 30px;
       --aug-tr-width: 30px;
-      --aug-br: 20px;
-      --aug-br-height: 0px;
-      --aug-br-width: 0px;
-      --aug-bl: 30px;
-      --aug-bl-height: 30px;
-      --aug-bl-width: 30px;
+      --aug-bl: 20px;
+      --aug-bl-height: 0px;
+      --aug-bl-width: 0px;
+      --aug-br: 30px;
+      --aug-br-height: 30px;
+      --aug-br-width: 30px;
       --aug-t: 0px;
       --aug-t-height: 0px;
       --aug-t-width: 0px;
@@ -103,11 +99,8 @@
       margin-right: 0.5rem;
       width: 400px;
       padding: 0 50px 30px 30px; /* mind the gap */
-      --aug-inset: 7px;
+
       --aug-inset-bg: #f7f7f7;
-      --aug-border: 5px;
-      --aug-border-bg: #f7f7f7;
-      --aug-border-opacity: 0.5;
       --aug-r-offset: 0px;
       --aug-b-offset: 0px;
       --aug-tr: 10px;
@@ -116,12 +109,12 @@
       --aug-tl: 30px;
       --aug-tl-height: 30px;
       --aug-tl-width: 30px;
-      --aug-bl: 20px;
-      --aug-bl-height: 0px;
-      --aug-bl-width: 0px;
-      --aug-br: 30px;
-      --aug-br-height: 30px;
-      --aug-br-width: 30px;
+      --aug-br: 20px;
+      --aug-br-height: 0px;
+      --aug-br-width: 0px;
+      --aug-bl: 30px;
+      --aug-bl-height: 30px;
+      --aug-bl-width: 30px;
       --aug-t: 0px;
       --aug-t-height: 0px;
       --aug-t-width: 0px;
@@ -143,7 +136,7 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.4px;
-      font-family: Trebuchet MS, roboto, ubuntu, sans-serif;
+      font-family: BlenderProBold, sans-serif;
       --aug-tl: 30px;
       --aug-tl-height: 30px;
       --aug-tl-width: 30px;
@@ -178,6 +171,33 @@
     }
     .equal {
       color: #4ba79a;
+    }
+    div.bolsas-section {
+      margin-top: 0.5rem;
+      padding: 50px 10px;
+      --aug-border: 5px;
+      --aug-inset: -1px;
+      text-align: center;
+      --aug-border-bg: #f7f7f7;
+      --aug-inset-bg: #f7f7f7;
+      --aug-tl: 25px;
+      --aug-tl-width: 40%;
+      --aug-tr: 25px;
+      --aug-tr-width: 40%;
+      --aug-b: 10px;
+      --aug-b-height: 15px;
+      --aug-b-width: 48%;
+    }
+    div.bolsas-section-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      line-height: 160%;
+      font-weight: 700;
+      font-size: 120%;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-family: BlenderProBold, sans-serif;
     }
     div.section-divider {
       background-color: #131722;
@@ -318,11 +338,7 @@
       line-height: 3rem;
       font-size: 130%;
       padding: 40px;
-      --aug-inset: 7px;
       --aug-inset-bg: #f7f7f7;
-      --aug-border: 5px;
-      --aug-border-bg: #f7f7f7;
-      --aug-border-opacity: 0.5;
     }
     div.ripio-price {
       --aug-bl-width: 60%;
@@ -350,12 +366,13 @@
       display: inline-block;
       width: 47%;
       height: fit-content;
-      margin: 0px;
-      margin-top: -5px;
+      margin: 7px;
       --aug-border: 2px;
       --aug-inset: -1px;
       --aug-tl-width: 52%;
       --aug-br-width: 52%;
+      --aug-tl: 10px;
+      --aug-br: 10px;
       padding: 7px; /* mind the gap */
       text-align: center;
       --aug-border-bg: #f7f7f7;
@@ -368,7 +385,7 @@
     }
     div.youtube-content-row {
       background-color: #131722;
-      margin: 3px 0;
+      margin: 5px 0;
     }
     div.youtube-content-row:hover {
       color: black;
@@ -492,7 +509,7 @@
       <!-- TradingView Widget BEGIN -->
       <div
         class="bitcoin-technical-analysis"
-        augmented-ui="tr-clip l-clip-y bl-clip tl-round br-round b-clip-x exe"
+        augmented-ui="tr-clip l-clip-y br-clip tl-round bl-round b-clip-x exe"
       >
         <div class="tradingview-widget-container">
           <div class="tradingview-widget-container__widget"></div>
@@ -544,7 +561,7 @@
       <!-- Ambito Financiero Dolar Widget BEGIN -->
       <div
         class="dolar-widget"
-        augmented-ui="tl-clip r-clip-y br-clip tr-round bl-round b-clip-x exe"
+        augmented-ui="tl-clip r-clip-y bl-clip tr-round br-round b-clip-x exe"
       >
         <table class="dolar-table" augmented-ui="tl-clip exe">
           <tr class="dolar-table-top-row">
@@ -604,12 +621,37 @@
       <!-- Ambito Financiero Dolar Widget END -->
     </div>
 
+    <!-- Bolsas Widget BEGIN -->
+    <div class="bolsas-section" augmented-ui="tl-clip-x tr-clip-x b-clip-x exe">
+      <div
+        id="bolsas-section-container"
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        "
+      >
+        <div class="bolsas-section-item">
+          <div>BOLSA</div>
+          <div>VARIACIÓN</div>
+          <div>PUNTOS</div>
+        </div>
+      </div>
+    </div>
+    <!-- Bolsas Widget END -->
+
     <!-- Global Bitcoin News Widget BEGIN -->
     <div class="news-section-title" style="margin-top: 2rem;">
       <p>Noticias sobre el Bitcoin</p>
       <div augmented-ui="br-clip-x exe" style="width: 33rem;"></div>
     </div>
-    <div id="bitcoin-news-section" class="news-section"></div>
+    <div id="bitcoin-news-section" class="news-section">
+      <a class="news-article">
+        <div class="news-article-title" style="padding: 0.5rem;">
+          👍 No hay novedades
+        </div>
+      </a>
+    </div>
     <!-- Global Bitcoin News Widget END -->
 
     <!-- Bitcoin related hashtags Widget BEGIN -->
@@ -680,7 +722,13 @@
       <p>Noticias sobre el Dólar</p>
       <div augmented-ui="br-clip-x exe"></div>
     </div>
-    <div id="dolar-news-section" class="news-section"></div>
+    <div id="dolar-news-section" class="news-section">
+      <a class="news-article">
+        <div class="news-article-title" style="padding: 0.5rem;">
+          👍 No hay novedades
+        </div>
+      </a>
+    </div>
     <!-- Argentinian Dolar News Widget END -->
 
     <a
@@ -751,7 +799,7 @@
         };
 
         fetchData(URL_OFICIAL).then((data) => {
-          console.log(data);
+          // console.log(data);
           updateElements(
             ["dolar-of-buy", "dolar-of-sell"],
             [data.compra, data.venta],
@@ -762,7 +810,7 @@
         });
 
         fetchData(URL_LIQUI).then((data) => {
-          console.log(data);
+          // console.log(data);
           updateElements(
             ["dolar-cl-value"],
             [data.compra],
@@ -773,7 +821,7 @@
         });
 
         fetchData(URL_BLUE).then((data) => {
-          console.log(data);
+          // console.log(data);
           updateElements(
             ["dolar-blue-buy", "dolar-blue-sell"],
             [data.compra, data.venta],
@@ -786,7 +834,10 @@
         console.groupEnd();
       };
 
-      updateDolarIndicators();
+      const NEXT_JS_CYCLE = 0;
+      setTimeout(() => {
+        updateDolarIndicators();
+      }, NEXT_JS_CYCLE);
 
       window.setInterval(() => {
         updateDolarIndicators();
@@ -827,7 +878,9 @@
         });
       };
 
-      updateBitcoinPrice();
+      setTimeout(() => {
+        updateBitcoinPrice();
+      }, NEXT_JS_CYCLE);
 
       window.setInterval(() => {
         updateBitcoinPrice();
@@ -967,6 +1020,13 @@
           });
       };
 
+      const clearSection = (sectionID) => {
+        const elem = document.getElementById(sectionID);
+        if (elem.innerText.includes("NOVEDADES")) {
+          elem.innerText = "";
+        }
+      };
+
       const updateNews = async (sectionID, url, articleValidator) => {
         // console.log(`calling updateNews ${sectionID}`);
         try {
@@ -976,6 +1036,7 @@
           }
           news = transformNews(news, articleValidator);
           // console.log("newsTransformed: ", news);
+          clearSection(sectionID);
           addSectionNews(sectionID, news);
         } catch (error) {
           console.error("=== Error al updateNews ===");
@@ -1017,41 +1078,44 @@
         "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=GB&ri=300&rs=20&sort=0";
 
       const bitcoinTerms = ["bitcoin", "btc", "cripto", "crypto", "altcoin"];
-      updateNews(
-        "bitcoin-news-section",
-        ARG_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        AUS_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        CAN_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        USA_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        MEX_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        NZ_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
-      updateNews(
-        "bitcoin-news-section",
-        UK_BUSINESS_NEWS,
-        validateArticleHasTerms(bitcoinTerms)
-      );
+
+      setTimeout(() => {
+        updateNews(
+          "bitcoin-news-section",
+          ARG_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          AUS_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          CAN_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          USA_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          MEX_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          NZ_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+        updateNews(
+          "bitcoin-news-section",
+          UK_BUSINESS_NEWS,
+          validateArticleHasTerms(bitcoinTerms)
+        );
+      }, NEXT_JS_CYCLE);
     </script>
 
     <script type="text/javascript">
@@ -1068,8 +1132,8 @@
       };
 
       const classByNumber = (number) => {
-        if (number > 0) return "up";
-        if (number < 0) return "down";
+        if (parseFloat(number) > 0) return "up";
+        if (parseFloat(number) < 0) return "down";
         return "equal";
       };
 
@@ -1105,39 +1169,50 @@
 
       const updateExchangePrices = () => {
         fetchData(PROXY_URL + RIPIO_DATA_URL).then((response) => {
+          if (!response) return;
           let ripioData = {};
           ripioData.price = obtainRipioPrice(response) - 10000;
           ripioData.variation = calcVariation(ripioData.price);
-          console.log("ripioData: ", ripioData);
+          // console.log("ripioData: ", ripioData);
           updateExchange(ripioData, "ripio-price", "ripio-variation");
         });
 
         fetchData(PROXY_URL + SATOSHI_PRICE_URL).then((response) => {
+          if (!response) return;
           let satoshiData = {};
           satoshiData.price = response.data.ticker.BTC.ask;
           console.log("satoshiData: ", satoshiData);
           fetchData(PROXY_URL + SATOSHI_VARIATION_URL).then((data) => {
             satoshiData.variation = data.data.graph.BTC.change;
-            console.log("satoshiData.variation: ", satoshiData.variation);
+            // console.log("satoshiData.variation: ", satoshiData.variation);
             updateExchange(satoshiData, "satoshi-price", "satoshi-variation");
           });
         });
       };
 
-      updateExchangePrices();
+      setTimeout(() => {
+        updateExchangePrices();
+      }, NEXT_JS_CYCLE);
 
       window.setInterval(() => {
         updateExchangePrices();
       }, 30 * 1000);
     </script>
 
+    <!-- Moment -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js"></script>
+    <script>
+      moment().format();
+    </script>
+
+    <!-- Youtube section loader -->
     <script type="text/javascript">
       //TODO probar pueda obtener datos de URLs
       // document.cookie =
-      //   "__stripe_mid=0c7525d1-07f0-4cdb-a144-c302c7419710; driftt_aid=57473e20-bca0-4f67-96e9-fe6bca7544a9; DFTT_END_USER_PREV_BOOTSTRAPPED=true; driftt_wmd=true; __stripe_sid=83610ed9-077b-46b2-bbce-d530ab3443f3; driftt_sid=0e28630e-3fec-425c-b2c5-1d448c4939ff; XSRF-TOKEN=eyJpdiI6IlhhTWUyU3pYMFpDVjZSWk93S2RsRXc9PSIsInZhbHVlIjoiekhMQnoxdStjVjZxOXRRYkpDU3BPWUQ3VDFXajk0SWh5ZU5BRFRKTWFMWG8wMXg3UGhsb2o0aVFDS1RzV1YzNSIsIm1hYyI6IjI3YjNmYmY3ZjAzMTE1MGUyOWExNmFiYmIwZTU5Y2U2MTMzMDVjYTFiOGVmYTFmYmRlOGUwMTcxNDg4ZDhjYzgifQ%3D%3D";
+      //   "__stripe_mid=fc07ee05-c462-4105-a97f-20dfe441cc60; __stripe_sid=7e628cb8-2bcc-4a80-8e84-e6470f6d8bf3; driftt_aid=bcb64773-ff8c-44c6-8144-b81658c72680; driftt_sid=ad0c28e2-a9d0-4671-bdc2-c02c501f2eb1; DFTT_END_USER_PREV_BOOTSTRAPPED=true; XSRF-TOKEN=eyJpdiI6Ik5ldWxOc25PWXROUHZSSGZkYkZpM3c9PSIsInZhbHVlIjoiUWlnY0JkS09ycWlxNXF6a3VXZVVpMTdob2xqT3ZWekFJZTFVN1NQTlZ4TkFOZ0llNTl0Mnd1aWZ0d1FwdmxveCIsIm1hYyI6IjZmMTBlMmIwMmRlZThiZmFkMmI1MzM3MjE1OTg2NDZlOGMwMmY2NzVlZmZkZWU0ZWIxZDE3OGMxMmY2YWI2MGMifQ%3D%3D; trackmyhashtag_session=eyJpdiI6Im8zS21SdWJLWjRkaXhLMkZHQ2xnR2c9PSIsInZhbHVlIjoidUViR0Zsd3JPNlF6ZjM5c0tiUFwvcWZyWTFDVml5M3E4RWFVb3VkXC8weW42MnRZNEk2WnpRRHRHV202bnpoK3BaIiwibWFjIjoiMmU2NDBiZjhhNmU1Y2ZiZDAxZmQ1YmY0YjMwNTBhNDE4YzEwOWMyNTRhY2Q0MDc5M2FiYTMyYTEwMDY2NDVjNyJ9; driftt_wmd=true";
       // fetchData(
       //   PROXY_URL +
-      //     "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D"
+      //     "https://ritetag.com/best-hashtags-for/bitcoin"
       // ,{
       //   credentials: "same-origin",
       // }
@@ -1181,11 +1256,25 @@
         xhr.send();
       };
 
+      const getPublishedTime = (video) => {
+        try {
+          return (
+            video.publishedTimeText.simpleText ||
+            video.publishedTimeText.runs[FIRST].text
+          );
+        } catch (error) {
+          return "0 - En vivo";
+        }
+      };
+
       const youtubeVideosComparator = (firstVideo, secondVideo) => {
-        return firstVideo.publishedTimeText.simpleText >
-          secondVideo.publishedTimeText.simpleText
-          ? 1
-          : -1;
+        const cleanText = (video) => {
+          return getPublishedTime(video)
+            .replace("Transmitido ", "")
+            .replace(/. semana/, "9 semana");
+        };
+
+        return cleanText(firstVideo) > cleanText(secondVideo) ? 1 : -1;
       };
 
       const transformYoutubeResponse = (youtubeResponse) => {
@@ -1201,7 +1290,7 @@
             return JSON.parse(elem).videoRenderer;
           }
         });
-        console.log("youtubeVideos after transform: ", youtubeVideos);
+        // console.log("youtubeVideos after transform: ", youtubeVideos);
         return youtubeVideos.sort(youtubeVideosComparator);
       };
 
@@ -1225,7 +1314,9 @@
         metaDataElement.appendChild(
           document.createTextNode(
             decodeHTML(
-              `${video.shortBylineText.runs[FIRST].text} • ${video.shortViewCountText.simpleText} • ${video.publishedTimeText.simpleText}`
+              `${video.shortBylineText.runs[FIRST].text} • ${
+                video.shortViewCountText.simpleText
+              } • ${getPublishedTime(video)}`
             )
           )
         );
@@ -1273,28 +1364,234 @@
         });
       };
 
-      const updateYoutubeVideos = (youtubeResponse) => {
+      const updateYoutubeWeeklyVideos = (youtubeResponse) => {
         let youtubeVideos = transformYoutubeResponse(youtubeResponse);
         addSectionVideos("youtube-section", youtubeVideos);
       };
 
-      const getYoutubeVideos = () => {
+      const getYoutubeWeeklyVideos = () => {
         try {
           getHTML(
             PROXY_URL +
               "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
-            updateYoutubeVideos
+            updateYoutubeWeeklyVideos
           );
         } catch (error) {
-          getYoutubeVideos(); //Retry if error
+          getYoutubeWeeklyVideos(); //Retry if error
         }
       };
 
-      getYoutubeVideos();
+      const MAXIMUNS = "MAXIMUNS";
+      const TODAY = moment().format("YYYY-MM-DD");
+      const getMaximuns = () => {
+        let maximuns = window.localStorage.getItem(MAXIMUNS);
+        maximuns = JSON.parse(maximuns);
+
+        if (!maximuns) {
+          maximuns = {
+            daily: {
+              searchs: {},
+              news: {},
+              youtube: {},
+              twitter: {},
+              instagram: {},
+              tiktok: {},
+            },
+            simpleText,
+          };
+          maximuns.daily.searchs[TODAY] = 0;
+          maximuns.daily.news[TODAY] = 0;
+          maximuns.daily.youtube[TODAY] = 0;
+          maximuns.daily.twitter[TODAY] = 0;
+          maximuns.daily.instagram[TODAY] = 0;
+          maximuns.daily.tiktok[TODAY] = 0;
+        }
+
+        return maximuns;
+      };
+
+      const updateYoutubeDaylyVideos = (youtubeResponse) => {
+        const FIRST = 0;
+        let youtubeVideos = transformYoutubeResponse(youtubeResponse);
+        youtubeVideos = youtubeVideos.map((video) =>
+          (
+            video.viewCountText.simpleText ||
+            video.viewCountText.runs[FIRST].text
+          )
+            .replace(",", "")
+            .replace(" vistas", "")
+        );
+        let maximuns = getMaximuns();
+        let maxDayVideo = Math.max(
+          ...youtubeVideos,
+          maximuns.daily.youtube[TODAY]
+        );
+        // console.log("maxDayVideo: ", maxDayVideo);
+        maximuns.daily.youtube[TODAY] = maxDayVideo;
+        window.localStorage.setItem(MAXIMUNS, JSON.stringify(maximuns));
+      };
+
+      const getYoutubeDaylyVideos = () => {
+        try {
+          getHTML(
+            PROXY_URL +
+              "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgCEAE%253D",
+            updateYoutubeDaylyVideos
+          );
+        } catch (error) {
+          getYoutubeDaylyVideos(); //Retry if error
+        }
+      };
+
+      setTimeout(() => {
+        getYoutubeWeeklyVideos();
+        getYoutubeDaylyVideos();
+      }, NEXT_JS_CYCLE);
 
       window.setInterval(() => {
-        getYoutubeVideos();
+        getYoutubeWeeklyVideos();
+        getYoutubeDaylyVideos();
       }, 60 * 60 * 1000);
+    </script>
+
+    <!-- Twitter section loader -->
+    <script type="text/javascript">
+      const tweetsComparator = (firstTweet, secondTweet) => {
+        const cleanText = (tweet) => {
+          return parseFloat(tweet.exposure.trim().replace(/,/g, ""));
+        };
+        return cleanText(firstTweet) < cleanText(secondTweet) ? 1 : -1;
+      };
+
+      const transformTwitterBestHashtagsResponse = (twitterResponse) => {
+        const FIRST = 0;
+        // console.log("tweets before transform: ", twitterResponse);
+        let tweets = twitterResponse.body.children[5].innerHTML;
+        tweets = tweets.match(/now\<\/strong\>.*\<strong\>over/s);
+        tweets = tweets[FIRST].match(/data-tag="[^-]*?">.*?\</g);
+
+        tweets = tweets.map((tweet) => {
+          const cutFrom = tweet.indexOf(">") + 1;
+          const cutUntil = tweet.indexOf("<");
+          return tweet.substring(cutFrom, cutUntil);
+        });
+
+        let hashtags = [];
+        for (let index = 0; index < tweets.length; index += 4) {
+          const hashtag = {
+            hashtag: tweets[index],
+            tweets: tweets[index + 1],
+            retweets: tweets[index + 2],
+            exposure: tweets[index + 3],
+          };
+          hashtags.push(hashtag);
+        }
+
+        hashtags = hashtags.sort(tweetsComparator);
+        // console.log("tweets after transform: ", hashtags);
+        return hashtags;
+      };
+
+      setTimeout(() => {
+        getHTML(
+          PROXY_URL + "https://ritetag.com/best-hashtags-for/bitcoin",
+          transformTwitterBestHashtagsResponse
+        );
+      }, NEXT_JS_CYCLE);
+    </script>
+
+    <!-- Bolsas Section -->
+    <script type="text/javascript">
+      const transformBolsasResponse = (response) => {
+        // console.log("bolsas before transform: ", response);
+        let bolsas =
+          response.body.children[4].children[0].children[2].children[1]
+            .children[1].children[1].children[0].children[5].innerHTML;
+        bolsas = bolsas.match(/\>[^"]+?\<\/(a>|span)/g);
+        bolsas = bolsas.filter(
+          (elem) => elem !== "></span> </span" && elem !== ">BOLSAS</a>"
+        );
+        bolsas = bolsas.map((elem) => {
+          if (elem.includes("span>")) {
+            const cutFrom = elem.indexOf(">", 1) + 1;
+            const cutUntil = elem.indexOf("<", 5);
+            return elem.substring(cutFrom, cutUntil);
+          } else {
+            const cutFrom = 1;
+            const cutUntil = elem.indexOf("<");
+            return elem.substring(cutFrom, cutUntil);
+          }
+        });
+
+        let bolsasTransformed = [];
+        for (let index = 0; index < bolsas.length; index += 3) {
+          const bolsa = {
+            nombre: bolsas[index],
+            variacion: bolsas[index + 1],
+            puntos: bolsas[index + 2],
+          };
+          bolsasTransformed.push(bolsa);
+        }
+
+        console.log("bolsas after transform: ", bolsasTransformed);
+        return bolsasTransformed;
+      };
+
+      const generateBolsaItem = (bolsa) => {
+        const FIRST = 0;
+        //TODO rewrite
+
+        let nameElement = document.createElement("div");
+        nameElement.appendChild(
+          document.createTextNode(decodeHTML(bolsa.nombre))
+        );
+
+        let variationElement = document.createElement("div");
+        variationElement.classList.add(classByNumber(bolsa.variacion));
+        variationElement.appendChild(
+          document.createTextNode(
+            addNumSymbol(bolsa.variacion) +
+              decodeHTML(parseFloat(bolsa.variacion).toFixed(2)) +
+              "%"
+          )
+        );
+
+        let puntosElement = document.createElement("div");
+        puntosElement.appendChild(
+          document.createTextNode(
+            parseInt(decodeHTML(bolsa.puntos.replace(".", "")))
+          )
+        );
+
+        let containerElement = document.createElement("div");
+        containerElement.classList.add("bolsas-section-item");
+        containerElement.appendChild(nameElement);
+        containerElement.appendChild(variationElement);
+        containerElement.appendChild(puntosElement);
+
+        return containerElement;
+      };
+
+      const addSectionBolsas = (sectionID, bolsasArray) => {
+        let element = null;
+        bolsasArray.forEach((bolsa) => {
+          element = document.getElementById(sectionID);
+          element.appendChild(generateBolsaItem(bolsa));
+        });
+      };
+
+      const updateBolsas = (response) => {
+        let bolsasTransformed = transformBolsasResponse(response);
+        addSectionBolsas("bolsas-section-container", bolsasTransformed);
+      };
+
+      setTimeout(() => {
+        getHTML(
+          PROXY_URL +
+            "https://www.cronista.com/economiapolitica/En-busca-de-dolares-restringen-creditos-a-empresas-del-agro-con-incentivos-para-que-vendan-la-cosecha--20200515-0048.html",
+          updateBolsas
+        );
+      }, NEXT_JS_CYCLE);
     </script>
   </body>
 </html>
