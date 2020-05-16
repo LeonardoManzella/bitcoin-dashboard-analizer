@@ -610,7 +610,13 @@
       <p>Noticias sobre el Bitcoin</p>
       <div augmented-ui="br-clip-x exe" style="width: 33rem;"></div>
     </div>
-    <div id="bitcoin-news-section" class="news-section"></div>
+    <div id="bitcoin-news-section" class="news-section">
+      <a class="news-article">
+        <div class="news-article-title" style="padding: 0.5rem;">
+          👍 No hay novedades
+        </div>
+      </a>
+    </div>
     <!-- Global Bitcoin News Widget END -->
 
     <!-- Bitcoin related hashtags Widget BEGIN -->
@@ -681,7 +687,13 @@
       <p>Noticias sobre el Dólar</p>
       <div augmented-ui="br-clip-x exe"></div>
     </div>
-    <div id="dolar-news-section" class="news-section"></div>
+    <div id="dolar-news-section" class="news-section">
+      <a class="news-article">
+        <div class="news-article-title" style="padding: 0.5rem;">
+          👍 No hay novedades
+        </div>
+      </a>
+    </div>
     <!-- Argentinian Dolar News Widget END -->
 
     <a
@@ -973,6 +985,13 @@
           });
       };
 
+      const clearSection = (sectionID) => {
+        const elem = document.getElementById(sectionID);
+        if (elem.innerText.includes("NOVEDADES")) {
+          elem.innerText = "";
+        }
+      };
+
       const updateNews = async (sectionID, url, articleValidator) => {
         // console.log(`calling updateNews ${sectionID}`);
         try {
@@ -982,6 +1001,7 @@
           }
           news = transformNews(news, articleValidator);
           // console.log("newsTransformed: ", news);
+          clearSection(sectionID);
           addSectionNews(sectionID, news);
         } catch (error) {
           console.error("=== Error al updateNews ===");
@@ -1441,6 +1461,51 @@
         getHTML(
           PROXY_URL + "https://ritetag.com/best-hashtags-for/bitcoin",
           transformTwitterBestHashtagsResponse
+        );
+      }, NEXT_JS_CYCLE);
+    </script>
+
+    <!-- Bolsas Section -->
+    <script type="text/javascript">
+      const transformBolsasResponse = (response) => {
+        // console.log("bolsas before transform: ", response);
+        let bolsas =
+          response.body.children[4].children[0].children[2].children[1]
+            .children[1].children[1].children[0].children[5].innerHTML;
+        bolsas = bolsas.match(/\>[^"]+?\<\/(a>|span)/g);
+        bolsas = bolsas.filter(
+          (elem) => elem !== "></span> </span" && elem !== ">BOLSAS</a>"
+        );
+        bolsas = bolsas.map((elem) => {
+          if (elem.includes("span>")) {
+            const cutFrom = elem.indexOf(">", 1)+1;
+            const cutUntil = elem.indexOf("<", 5);
+            return elem.substring(cutFrom, cutUntil);
+          } else {
+            const cutFrom = 1;
+            const cutUntil = elem.indexOf("<");
+            return elem.substring(cutFrom, cutUntil);
+          }
+        });
+
+        let bolsasTransformed = [];
+        for (let index = 0; index < bolsas.length; index += 3) {
+          const bolsa = {
+            bolsa: bolsas[index],
+            variacion: bolsas[index + 1],
+            puntos: bolsas[index + 2],
+          };
+          bolsasTransformed.push(bolsa);
+        }
+
+        console.log("bolsas after transform: ", bolsasTransformed);
+      };
+
+      setTimeout(() => {
+        getHTML(
+          PROXY_URL +
+            "https://www.cronista.com/economiapolitica/En-busca-de-dolares-restringen-creditos-a-empresas-del-agro-con-incentivos-para-que-vendan-la-cosecha--20200515-0048.html",
+          transformBolsasResponse
         );
       }, NEXT_JS_CYCLE);
     </script>
