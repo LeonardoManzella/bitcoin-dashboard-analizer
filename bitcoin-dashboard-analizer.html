@@ -470,11 +470,12 @@
       border-bottom-right-radius: 5px;
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: space-between;
       align-items: center;
-      padding: 10px;
+      padding: 10px 0;
       margin-right: 1px;
       margin-left: 1px;
+      margin-top: -1px;
     }
     .hashtag-section-item {
       font-family: BlenderProBold, sans-serif;
@@ -482,13 +483,25 @@
       font-size: 100%;
       text-transform: uppercase;
       color: #f7f7f7;
-      display: flex;
-      flex-direction: row;
       width: 100%;
+      margin-top: 0.6rem;
+    }
+    .hashtag-section-item:nth-child(even) {
+      background: #2f96f338;
     }
     .hashtag-section-item-name {
+      width: 12rem;
+      padding-left: 0.5rem;
+    }
+    .hashtag-section-item-name div {
       color: #131722;
       background-color: #f7f7f7;
+      border: 4px solid #f7f7f7;
+      width: fit-content;
+    }
+    .hashtag-section-item-cell {
+      width: 14.5rem;
+      text-align: right;
     }
   </style>
 
@@ -716,152 +729,160 @@
         <div>Retweets</div>
         <div>Exposure / hora</div>
       </div>
-      <div id="twitter-section" class="twitter-section-container">
-        <div class="loader" augmented-ui="br-clip tl-clip exe">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            style="margin: -70px 0; background: transparent; display: block;"
-            width="151px"
-            height="151px"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="xMidYMid"
-          >
-            <defs>
-              <pattern
-                id="ldio-op5tqvy0lkf-pattern"
-                patternUnits="userSpaceOnUse"
-                x="0"
-                y="0"
-                width="100"
-                height="100"
+      <table id="twitter-section" class="twitter-section-container">
+        <tr>
+          <td>
+            <div class="loader" augmented-ui="br-clip tl-clip exe">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                style="
+                  margin: -70px 0;
+                  background: transparent;
+                  display: block;
+                "
+                width="151px"
+                height="151px"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="xMidYMid"
               >
-                <g transform="translate(18.6061 0)">
-                  <g transform="rotate(20 50 50) scale(1.2)">
-                    <rect
-                      x="-20"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#131722"
-                    ></rect>
-                    <rect
-                      x="-10"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#2f96f3"
-                    ></rect>
-                    <rect
-                      x="0"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#131722"
-                    ></rect>
-                    <rect
-                      x="10"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#2f96f3"
-                    ></rect>
-                    <rect
-                      x="20"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#131722"
-                    ></rect>
-                    <rect
-                      x="30"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#2f96f3"
-                    ></rect>
-                    <rect
-                      x="40"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#131722"
-                    ></rect>
-                    <rect
-                      x="50"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#2f96f3"
-                    ></rect>
-                    <rect
-                      x="60"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#131722"
-                    ></rect>
-                    <rect
-                      x="70"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#2f96f3"
-                    ></rect>
-                    <rect
-                      x="80"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#131722"
-                    ></rect>
-                    <rect
-                      x="90"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#2f96f3"
-                    ></rect>
-                    <rect
-                      x="100"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#131722"
-                    ></rect>
-                    <rect
-                      x="110"
-                      y="-10"
-                      width="10"
-                      height="120"
-                      fill="#131722"
-                    ></rect>
-                  </g>
-                  <animateTransform
-                    attributeName="transform"
-                    type="translate"
-                    values="0 0;26 0"
-                    keyTimes="0;1"
-                    dur="0.28328611898017s"
-                    repeatCount="indefinite"
-                  ></animateTransform>
-                </g>
-              </pattern>
-            </defs>
-            <rect
-              rx="0"
-              ry="0"
-              x="3.5"
-              y="42"
-              stroke="#131722"
-              stroke-width="2.5"
-              width="93"
-              height="16"
-              fill="url(#ldio-op5tqvy0lkf-pattern)"
-            ></rect>
-          </svg>
-        </div>
-      </div>
+                <defs>
+                  <pattern
+                    id="ldio-op5tqvy0lkf-pattern"
+                    patternUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="100"
+                    height="100"
+                  >
+                    <g transform="translate(18.6061 0)">
+                      <g transform="rotate(20 50 50) scale(1.2)">
+                        <rect
+                          x="-20"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="-10"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="0"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="10"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="20"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="30"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="40"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="50"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="60"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="70"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="80"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="90"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="100"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="110"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                      </g>
+                      <animateTransform
+                        attributeName="transform"
+                        type="translate"
+                        values="0 0;26 0"
+                        keyTimes="0;1"
+                        dur="0.28328611898017s"
+                        repeatCount="indefinite"
+                      ></animateTransform>
+                    </g>
+                  </pattern>
+                </defs>
+                <rect
+                  rx="0"
+                  ry="0"
+                  x="3.5"
+                  y="42"
+                  stroke="#131722"
+                  stroke-width="2.5"
+                  width="93"
+                  height="16"
+                  fill="url(#ldio-op5tqvy0lkf-pattern)"
+                ></rect>
+              </svg>
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
     <!-- Bitcoin related hashtags Widget END -->
 
@@ -1836,29 +1857,35 @@
 
       const generateHashtagItem = (hashtag) => {
         let nameElement = document.createElement("div");
-        nameElement.classList.add("hashtag-section-item-name");
         nameElement.appendChild(
           document.createTextNode(decodeHTML(hashtag.name))
         );
 
-        let tweetsElement = document.createElement("div");
+        let containerNameElement = document.createElement("td");
+        containerNameElement.classList.add("hashtag-section-item-name");
+        containerNameElement.appendChild(nameElement);
+
+        let tweetsElement = document.createElement("td");
+        tweetsElement.classList.add("hashtag-section-item-cell");
         tweetsElement.appendChild(
           document.createTextNode(decodeHTML(hashtag.tweets))
         );
 
-        let retweetsElement = document.createElement("div");
+        let retweetsElement = document.createElement("td");
+        retweetsElement.classList.add("hashtag-section-item-cell");
         retweetsElement.appendChild(
           document.createTextNode(decodeHTML(hashtag.retweets))
         );
 
-        let exposureElement = document.createElement("div");
+        let exposureElement = document.createElement("td");
+        exposureElement.classList.add("hashtag-section-item-cell");
         exposureElement.appendChild(
           document.createTextNode(decodeHTML(hashtag.exposure))
         );
 
-        let containerElement = document.createElement("div");
+        let containerElement = document.createElement("tr");
         containerElement.classList.add("hashtag-section-item");
-        containerElement.appendChild(nameElement);
+        containerElement.appendChild(containerNameElement);
         containerElement.appendChild(tweetsElement);
         containerElement.appendChild(retweetsElement);
         containerElement.appendChild(exposureElement);
