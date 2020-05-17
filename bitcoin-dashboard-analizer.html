@@ -436,6 +436,73 @@
       opacity: 100%;
       --aug-border-opacity: 1;
     }
+    div.loader {
+      padding: 10px;
+      --aug-border: 2px;
+      --aug-border-bg: #2f96f3;
+      --aug-border-opacity: 0.7;
+      --aug-br-height: 70px;
+      --aug-tl-height: 70px;
+    }
+    .twitter-section {
+      width: 80%;
+      margin: auto;
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+    }
+    div.twitter-section-title {
+      font-family: BlenderProBold, sans-serif;
+      font-weight: 700;
+      font-size: 120%;
+      text-transform: uppercase;
+      --aug-border-bg: #2f96f3;
+      --aug-inset-bg: #2f96f3;
+      color: #f7f7f7;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 10px;
+    }
+    .twitter-section-container {
+      border: 1px solid #2f96f3;
+      border-bottom: 4px solid #2f96f3;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      margin-right: 1px;
+      margin-left: 1px;
+      margin-top: -1px;
+    }
+    .hashtag-section-item {
+      font-family: BlenderProBold, sans-serif;
+      font-weight: 700;
+      font-size: 100%;
+      text-transform: uppercase;
+      color: #f7f7f7;
+      width: 100%;
+      margin-top: 0.6rem;
+    }
+    .hashtag-section-item:nth-child(even) {
+      background: #2f96f338;
+    }
+    .hashtag-section-item-name {
+      width: 12rem;
+      padding-left: 0.5rem;
+    }
+    .hashtag-section-item-name div {
+      color: #131722;
+      background-color: #f7f7f7;
+      border: 4px solid #f7f7f7;
+      width: fit-content;
+    }
+    .hashtag-section-item-cell {
+      width: 14.5rem;
+      text-align: right;
+    }
   </style>
 
   <body style="background-color: #131722; margin: 0;">
@@ -655,18 +722,168 @@
     <!-- Global Bitcoin News Widget END -->
 
     <!-- Bitcoin related hashtags Widget BEGIN -->
-    <a
-      href="https://ritetag.com/best-hashtags-for/bitcoin"
-      target="_blank"
-      style="
-        display: flex;
-        justify-content: center;
-        color: #f7f7f7;
-        text-align: center;
-        font-size: 200%;
-      "
-      >Bitcoin related hashtags</a
-    >
+    <div class="twitter-section">
+      <div class="twitter-section-title" augmented-ui="tr-clip tl-clip exe">
+        <div style="margin-right: 3rem;">Twitter Hashtag</div>
+        <div>Tweets</div>
+        <div>Retweets</div>
+        <div>Exposure / hora</div>
+      </div>
+      <table id="twitter-section" class="twitter-section-container">
+        <tr>
+          <td>
+            <div class="loader" augmented-ui="br-clip tl-clip exe">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                style="
+                  margin: -70px 0;
+                  background: transparent;
+                  display: block;
+                "
+                width="151px"
+                height="151px"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="xMidYMid"
+              >
+                <defs>
+                  <pattern
+                    id="ldio-op5tqvy0lkf-pattern"
+                    patternUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="100"
+                    height="100"
+                  >
+                    <g transform="translate(18.6061 0)">
+                      <g transform="rotate(20 50 50) scale(1.2)">
+                        <rect
+                          x="-20"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="-10"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="0"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="10"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="20"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="30"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="40"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="50"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="60"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="70"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="80"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="90"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="100"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="110"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                      </g>
+                      <animateTransform
+                        attributeName="transform"
+                        type="translate"
+                        values="0 0;26 0"
+                        keyTimes="0;1"
+                        dur="0.28328611898017s"
+                        repeatCount="indefinite"
+                      ></animateTransform>
+                    </g>
+                  </pattern>
+                </defs>
+                <rect
+                  rx="0"
+                  ry="0"
+                  x="3.5"
+                  y="42"
+                  stroke="#131722"
+                  stroke-width="2.5"
+                  width="93"
+                  height="16"
+                  fill="url(#ldio-op5tqvy0lkf-pattern)"
+                ></rect>
+              </svg>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
     <!-- Bitcoin related hashtags Widget END -->
 
     <!-- Bitcoin top instagram influencers posts Widget BEGIN -->
@@ -689,7 +906,152 @@
       <p>Videos mas vistos sobre el Bitcoin</p>
       <div augmented-ui="br-clip-x exe" style="width: 46rem;"></div>
     </div>
-    <div id="youtube-section" class="news-section"></div>
+    <div id="youtube-section" class="news-section">
+      <div class="loader" augmented-ui="br-clip tl-clip exe">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          style="margin: -70px 0; background: transparent; display: block;"
+          width="151px"
+          height="151px"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid"
+        >
+          <defs>
+            <pattern
+              id="ldio-op5tqvy0lkf-pattern"
+              patternUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              width="100"
+              height="100"
+            >
+              <g transform="translate(18.6061 0)">
+                <g transform="rotate(20 50 50) scale(1.2)">
+                  <rect
+                    x="-20"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#131722"
+                  ></rect>
+                  <rect
+                    x="-10"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#2f96f3"
+                  ></rect>
+                  <rect
+                    x="0"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#131722"
+                  ></rect>
+                  <rect
+                    x="10"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#2f96f3"
+                  ></rect>
+                  <rect
+                    x="20"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#131722"
+                  ></rect>
+                  <rect
+                    x="30"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#2f96f3"
+                  ></rect>
+                  <rect
+                    x="40"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#131722"
+                  ></rect>
+                  <rect
+                    x="50"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#2f96f3"
+                  ></rect>
+                  <rect
+                    x="60"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#131722"
+                  ></rect>
+                  <rect
+                    x="70"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#2f96f3"
+                  ></rect>
+                  <rect
+                    x="80"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#131722"
+                  ></rect>
+                  <rect
+                    x="90"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#2f96f3"
+                  ></rect>
+                  <rect
+                    x="100"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#131722"
+                  ></rect>
+                  <rect
+                    x="110"
+                    y="-10"
+                    width="10"
+                    height="120"
+                    fill="#131722"
+                  ></rect>
+                </g>
+                <animateTransform
+                  attributeName="transform"
+                  type="translate"
+                  values="0 0;26 0"
+                  keyTimes="0;1"
+                  dur="0.28328611898017s"
+                  repeatCount="indefinite"
+                ></animateTransform>
+              </g>
+            </pattern>
+          </defs>
+          <rect
+            rx="0"
+            ry="0"
+            x="3.5"
+            y="42"
+            stroke="#131722"
+            stroke-width="2.5"
+            width="93"
+            height="16"
+            fill="url(#ldio-op5tqvy0lkf-pattern)"
+          ></rect>
+        </svg>
+      </div>
+    </div>
     <!-- Bitcoin top seen videos by influencers Widget END -->
 
     <!-- Section Divider BEGIN -->
@@ -995,8 +1357,8 @@
 
       const addSectionNews = (sectionID, newsArray) => {
         let element = null;
+        element = document.getElementById(sectionID);
         newsArray.forEach((article) => {
-          element = document.getElementById(sectionID);
           element.appendChild(generateArticleItem(article));
         });
       };
@@ -1358,8 +1720,9 @@
 
       const addSectionVideos = (sectionID, videosArray) => {
         let element = null;
+        element = document.getElementById(sectionID);
+        element.innerHTML = "";
         videosArray.forEach((video) => {
-          element = document.getElementById(sectionID);
           element.appendChild(generateVideoItem(video));
         });
       };
@@ -1479,7 +1842,7 @@
         let hashtags = [];
         for (let index = 0; index < tweets.length; index += 4) {
           const hashtag = {
-            hashtag: tweets[index],
+            name: tweets[index],
             tweets: tweets[index + 1],
             retweets: tweets[index + 2],
             exposure: tweets[index + 3],
@@ -1488,14 +1851,68 @@
         }
 
         hashtags = hashtags.sort(tweetsComparator);
-        // console.log("tweets after transform: ", hashtags);
+        console.log("tweets after transform: ", hashtags);
         return hashtags;
+      };
+
+      const generateHashtagItem = (hashtag) => {
+        let nameElement = document.createElement("div");
+        nameElement.appendChild(
+          document.createTextNode(decodeHTML(hashtag.name))
+        );
+
+        let containerNameElement = document.createElement("td");
+        containerNameElement.classList.add("hashtag-section-item-name");
+        containerNameElement.appendChild(nameElement);
+
+        let tweetsElement = document.createElement("td");
+        tweetsElement.classList.add("hashtag-section-item-cell");
+        tweetsElement.appendChild(
+          document.createTextNode(decodeHTML(hashtag.tweets))
+        );
+
+        let retweetsElement = document.createElement("td");
+        retweetsElement.classList.add("hashtag-section-item-cell");
+        retweetsElement.appendChild(
+          document.createTextNode(decodeHTML(hashtag.retweets))
+        );
+
+        let exposureElement = document.createElement("td");
+        exposureElement.classList.add("hashtag-section-item-cell");
+        exposureElement.appendChild(
+          document.createTextNode(decodeHTML(hashtag.exposure))
+        );
+
+        let containerElement = document.createElement("tr");
+        containerElement.classList.add("hashtag-section-item");
+        containerElement.appendChild(containerNameElement);
+        containerElement.appendChild(tweetsElement);
+        containerElement.appendChild(retweetsElement);
+        containerElement.appendChild(exposureElement);
+
+        return containerElement;
+      };
+
+      const addHashtags = (sectionID, hashtagsArray) => {
+        let element = null;
+        element = document.getElementById(sectionID);
+        element.innerHTML = "";
+        hashtagsArray.forEach((hashtag) => {
+          element.appendChild(generateHashtagItem(hashtag));
+        });
+      };
+
+      const updateTwitterHashtags = (response) => {
+        let hashtagsTransformed = transformTwitterBestHashtagsResponse(
+          response
+        );
+        addHashtags("twitter-section", hashtagsTransformed);
       };
 
       setTimeout(() => {
         getHTML(
           PROXY_URL + "https://ritetag.com/best-hashtags-for/bitcoin",
-          transformTwitterBestHashtagsResponse
+          updateTwitterHashtags
         );
       }, NEXT_JS_CYCLE);
     </script>
@@ -1533,14 +1950,11 @@
           bolsasTransformed.push(bolsa);
         }
 
-        console.log("bolsas after transform: ", bolsasTransformed);
+        // console.log("bolsas after transform: ", bolsasTransformed);
         return bolsasTransformed;
       };
 
       const generateBolsaItem = (bolsa) => {
-        const FIRST = 0;
-        //TODO rewrite
-
         let nameElement = document.createElement("div");
         nameElement.appendChild(
           document.createTextNode(decodeHTML(bolsa.nombre))
@@ -1574,8 +1988,8 @@
 
       const addSectionBolsas = (sectionID, bolsasArray) => {
         let element = null;
+        element = document.getElementById(sectionID);
         bolsasArray.forEach((bolsa) => {
-          element = document.getElementById(sectionID);
           element.appendChild(generateBolsaItem(bolsa));
         });
       };
