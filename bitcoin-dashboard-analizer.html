@@ -1773,6 +1773,14 @@
         return maximuns;
       };
 
+      const setMaximuns = (type, valueArray) => {
+        let maximuns = getMaximuns();
+        let maxDayType = Math.max(...valueArray, maximuns.daily[type][TODAY]);
+        console.log("maxDayType: ", maxDayType);
+        maximuns.daily[type][TODAY] = maxDayType;
+        window.localStorage.setItem(MAXIMUNS, JSON.stringify(maximuns));
+      };
+
       const updateYoutubeDaylyVideos = (youtubeResponse) => {
         const FIRST = 0;
         let youtubeVideos = transformYoutubeResponse(youtubeResponse);
@@ -1784,14 +1792,7 @@
             .replace(",", "")
             .replace(" vistas", "")
         );
-        let maximuns = getMaximuns();
-        let maxDayVideo = Math.max(
-          ...youtubeVideos,
-          maximuns.daily.youtube[TODAY]
-        );
-        // console.log("maxDayVideo: ", maxDayVideo);
-        maximuns.daily.youtube[TODAY] = maxDayVideo;
-        window.localStorage.setItem(MAXIMUNS, JSON.stringify(maximuns));
+        setMaximuns("youtube", youtubeVideos);
       };
 
       const getYoutubeDaylyVideos = () => {
@@ -1906,6 +1907,10 @@
         let hashtagsTransformed = transformTwitterBestHashtagsResponse(
           response
         );
+        maxTwitterValues = hashtagsTransformed.map(
+          (hashtag) => hashtag.exposure.replace(/,/gi,'')
+        );
+        setMaximuns("twitter", maxTwitterValues);
         addHashtags("twitter-section", hashtagsTransformed);
       };
 
