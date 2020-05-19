@@ -506,6 +506,46 @@
       width: 14.5rem;
       text-align: right;
     }
+    .instagram-section-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    .instagram-post-image {
+      max-height: 21rem;
+    }
+    .instagram-post-media-data {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      position: relative;
+      margin-top: -21rem;
+      text-decoration: none;
+      font-family: BlenderProBold, sans-serif;
+      font-weight: 700;
+      font-size: 100%;
+      text-transform: uppercase;
+      color: #f7f7f7;
+      height: 21rem;
+      background: #00000054;
+    }
+    .instagram-post-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 10rem;
+    }
+    .instagram-post-comments,
+    .instagram-post-likes {
+      font-family: "icomoon" !important;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+    }
   </style>
 
   <body style="background-color: #131722; margin: 0;">
@@ -892,7 +932,6 @@
     </div>
     <!-- Bitcoin related hashtags Widget END -->
 
-    
     <!-- Bitcoin top seen videos by influencers Widget BEGIN -->
     <div class="news-section-title" style="margin-top: 2rem;">
       <p>Videos mas vistos sobre el Bitcoin</p>
@@ -1046,7 +1085,6 @@
     </div>
     <!-- Bitcoin top seen videos by influencers Widget END -->
 
-
     <!-- Bitcoin top instagram influencers posts Widget BEGIN -->
     <div class="table-section">
       <div
@@ -1055,7 +1093,15 @@
       >
         <div style="margin-right: 3rem;">Top instagram Influencers posts</div>
       </div>
-      <table id="instagram-section" class="table-section-container">
+      <table
+        id="instagram-section"
+        class="table-section-container"
+        style="
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+        "
+      >
         <tr>
           <td>
             <div class="loader" augmented-ui="br-clip tl-clip exe">
@@ -1211,7 +1257,6 @@
       </table>
     </div>
     <!-- Bitcoin top instagram influencers posts Widget END -->
-
 
     <!-- Section Divider BEGIN -->
     <div
@@ -1405,7 +1450,7 @@
 
       window.setInterval(() => {
         updateBitcoinPrice();
-      }, 2 * 1000);
+      }, 10 * 1000);
     </script>
 
     <!-- Argentinian dolar news updater -->
@@ -1702,7 +1747,7 @@
           if (!response) return;
           let satoshiData = {};
           satoshiData.price = response.data.ticker.BTC.ask;
-          console.log("satoshiData: ", satoshiData);
+          // console.log("satoshiData: ", satoshiData);
           fetchData(PROXY_URL + SATOSHI_VARIATION_URL).then((data) => {
             satoshiData.variation = data.data.graph.BTC.change;
             // console.log("satoshiData.variation: ", satoshiData.variation);
@@ -1937,7 +1982,7 @@
       const setMaximuns = (type, valueArray) => {
         let maximuns = getMaximuns();
         let maxDayType = Math.max(...valueArray, maximuns.daily[type][TODAY]);
-        console.log("maxDayType: ", maxDayType);
+        console.log(`maxDayType ${type}: ${maxDayType}`);
         maximuns.daily[type][TODAY] = maxDayType;
         window.localStorage.setItem(MAXIMUNS, JSON.stringify(maximuns));
       };
@@ -2013,7 +2058,7 @@
         }
 
         hashtags = hashtags.sort(tweetsComparator);
-        console.log("tweets after transform: ", hashtags);
+        // console.log("tweets after transform: ", hashtags);
         return hashtags;
       };
 
@@ -2188,6 +2233,56 @@
           }
         });
       };
+
+      const generatePostItem = (instaPost) => {
+        let imageElement = document.createElement("img");
+        imageElement.classList.add("instagram-post-image");
+        imageElement.setAttribute("src", instaPost.imageUrl);
+
+        let mediaDataCommentsImg = document.createElement("i");
+        mediaDataCommentsImg.classList.add("instagram-post-comments");
+
+        let mediaDataComments = document.createElement("div");
+        mediaDataComments.classList.add("instagram-post-container");
+        mediaDataComments.appendChild(mediaDataCommentsImg);
+        mediaDataComments.appendChild(
+          document.createTextNode("💬" + instaPost.comments)
+        );
+
+        let mediaDataLikesImg = document.createElement("i");
+        mediaDataLikesImg.classList.add("instagram-post-likes");
+
+        let mediaDataLikes = document.createElement("div");
+        mediaDataLikes.classList.add("instagram-post-container");
+        mediaDataLikes.appendChild(mediaDataLikesImg);
+        mediaDataLikes.appendChild(
+          document.createTextNode("👍" + instaPost.likes)
+        );
+
+        let mediaDataElement = document.createElement("div");
+        mediaDataElement.classList.add("instagram-post-media-data");
+        mediaDataElement.appendChild(mediaDataComments);
+        mediaDataElement.appendChild(mediaDataLikes);
+
+        let containerElement = document.createElement("a");
+        containerElement.classList.add("instagram-section-item");
+        containerElement.setAttribute("href", instaPost.postUrl);
+        containerElement.setAttribute("target", "_blank");
+        containerElement.appendChild(imageElement);
+        containerElement.appendChild(mediaDataElement);
+
+        return containerElement;
+      };
+
+      const addSectionPosts = (sectionID, postsArray) => {
+        let element = null;
+        element = document.getElementById(sectionID);
+        element.innerHTML = "";
+        postsArray.forEach((post) => {
+          element.appendChild(generatePostItem(post));
+        });
+      };
+
       const transformPosts = (posts) => {
         // console.log("posts before transform: ", posts);
         const contentChildren =
@@ -2204,19 +2299,42 @@
             .replace(/([" ]|\/i>|<\/div>)/g, "")
             .replace(/&amp;/g, "&");
         });
-        let postTransformedFinished = new Set();
+        let postTransformedFinished = [];
         for (let index = 0; index < postsTransformed.length; index += 4) {
+          //These 2 if exists to skip video posts
+          if (!postsTransformed[index + 3]) {
+            break;
+          }
+          if (
+            !postsTransformed[index].includes("https://instagram") ||
+            !postsTransformed[index + 3].includes("www.instagram.com")
+          ) {
+            index -= 3;
+            continue;
+          }
           const post = {
-            imgUrl: postsTransformed[index],
+            imageUrl: postsTransformed[index],
             comments: postsTransformed[index + 1],
             likes: postsTransformed[index + 2],
             postUrl: postsTransformed[index + 3],
           };
-          postTransformedFinished.add(post);
+          if (
+            postTransformedFinished.find(
+              (elem) => elem.postUrl === post.postUrl
+            )
+          ) {
+            continue;
+          }
+          postTransformedFinished.push(post);
         }
         // console.log("posts after transform: ", postTransformedFinished);
-        return Array.from(postTransformedFinished);
+        return postTransformedFinished;
       };
+
+      const instagramPostComparator = (firstPost, secondPost) => {
+        return firstPost.postUrl < secondPost.postUrl ? 1 : -1;
+      };
+
       const transformInstagramResponse = async (response) => {
         // console.log("instagrams before transform: ", response);
         let instagrams =
@@ -2236,13 +2354,23 @@
           postsObtained = transformPosts(postsObtained);
           instagramsTransformed.push(...postsObtained);
         }
-        console.log("instagrams after transform: ", instagramsTransformed);
+        instagramsTransformed = instagramsTransformed.sort(
+          instagramPostComparator
+        );
+        // console.log("instagrams middle transform: ", instagramsTransformed);
+        instagramsTransformed = instagramsTransformed.slice(0, 18);
+        // console.log("instagrams after transform: ", instagramsTransformed);
         return instagramsTransformed;
+      };
+
+      const getMaxPosts = (posts) => {
+        return posts.slice(0, 5).map((post) => post.likes);
       };
 
       const updateInstagram = async (response) => {
         let postsTransformed = await transformInstagramResponse(response);
-        //TODO add elements to section
+        addSectionPosts("instagram-section", postsTransformed);
+        setMaximuns("instagram", getMaxPosts(postsTransformed));
       };
 
       setTimeout(() => {
