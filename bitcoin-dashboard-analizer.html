@@ -444,13 +444,13 @@
       --aug-br-height: 70px;
       --aug-tl-height: 70px;
     }
-    .twitter-section {
+    .table-section {
       width: 80%;
       margin: auto;
       margin-top: 3rem;
       margin-bottom: 3rem;
     }
-    div.twitter-section-title {
+    div.table-section-title {
       font-family: BlenderProBold, sans-serif;
       font-weight: 700;
       font-size: 120%;
@@ -462,8 +462,11 @@
       flex-direction: row;
       justify-content: space-around;
       padding: 10px;
+      padding-top: 15px;
+      --aug-t: 5px;
+      --aug-t-width: 40%;
     }
-    .twitter-section-container {
+    .table-section-container {
       border: 1px solid #2f96f3;
       border-bottom: 4px solid #2f96f3;
       border-bottom-left-radius: 5px;
@@ -722,14 +725,14 @@
     <!-- Global Bitcoin News Widget END -->
 
     <!-- Bitcoin related hashtags Widget BEGIN -->
-    <div class="twitter-section">
-      <div class="twitter-section-title" augmented-ui="tr-clip tl-clip exe">
+    <div class="table-section">
+      <div class="table-section-title" augmented-ui="tr-clip tl-clip t-clip-x exe">
         <div style="margin-right: 3rem;">Twitter Hashtag</div>
         <div>Tweets</div>
         <div>Retweets</div>
         <div>Exposure / hora</div>
       </div>
-      <table id="twitter-section" class="twitter-section-container">
+      <table id="twitter-section" class="table-section-container">
         <tr>
           <td>
             <div class="loader" augmented-ui="br-clip tl-clip exe">
