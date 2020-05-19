@@ -1907,8 +1907,8 @@
         let hashtagsTransformed = transformTwitterBestHashtagsResponse(
           response
         );
-        maxTwitterValues = hashtagsTransformed.map(
-          (hashtag) => hashtag.exposure.replace(/,/gi,'')
+        maxTwitterValues = hashtagsTransformed.map((hashtag) =>
+          hashtag.exposure.replace(/,/gi, "")
         );
         setMaximuns("twitter", maxTwitterValues);
         addHashtags("twitter-section", hashtagsTransformed);
@@ -2009,6 +2009,78 @@
           PROXY_URL +
             "https://www.cronista.com/economiapolitica/En-busca-de-dolares-restringen-creditos-a-empresas-del-agro-con-incentivos-para-que-vendan-la-cosecha--20200515-0048.html",
           updateBolsas
+        );
+      }, NEXT_JS_CYCLE);
+    </script>
+
+    <!-- Instagram Section -->
+    <script type="text/javascript">
+      const getPosts = async (url) => {
+        return new Promise((resolve, reject) => {
+          try {
+            getHTML(PROXY_URL + url, resolve);
+          } catch (error) {
+            console.error(`Fallo al obtener posts de la url: ${url}`);
+            console.error(error);
+            console.trace();
+            reject();
+          }
+        });
+      };
+      const transformPosts = (posts) => {
+        console.log("posts before transform: ", posts);
+        const contentChildren =
+          posts.body.children[3].children[0].children[0].children[0].children[0]
+            .children[0].children[0].children;
+        let postsTransformed =
+          contentChildren[4].innerHTML + contentChildren[5].innerHTML;
+        postsTransformed = postsTransformed.match(
+          /(https:\/\/(www.)?instagram.*?"|\/i>.*?<\/div>)/gm
+        );
+        postsTransformed = postsTransformed.map((elem) => {
+          return elem
+            .replace(/([" ]|\/i>|<\/div>)/g, "")
+            .replace(/&amp;/g, "&");
+        });
+        //TODO use For to transform every 4/5? to an Item to return
+        debugger;
+        console.log("posts after transform: ", postsTransformed);
+        return postsTransformed;
+      };
+      const transformInstagramResponse = async (response) => {
+        console.log("instagrams before transform: ", response);
+        let instagrams =
+          response.body.children[3].children[0].children[2].children[2]
+            .children[0].innerHTML;
+        instagrams = instagrams.match(/\/profile\/.*?"\>Analyze/gm);
+        instagrams = instagrams.map((elem) => {
+          const cutFrom = 0;
+          const cutUntil = elem.indexOf('"', 10);
+          return "https://ingramer.com" + elem.substring(cutFrom, cutUntil);
+        });
+        console.log("instagrams middle transform: ", instagrams);
+        let instagramsTransformed = []; //TODO use a SET to eliminate duplicated items
+        for (let current = 0; current < instagrams.length; current++) {
+          let postsObtained = await getPosts(instagrams[current]);
+          if (!postsObtained) continue;
+          postsObtained = transformPosts(postsObtained);
+          instagramsTransformed.push(postsObtained);
+        }
+        debugger;
+
+        console.log("instagrams after transform: ", instagramsTransformed);
+        return instagramsTransformed;
+      };
+
+      const updateInstagram = async (response) => {
+        let postsTransformed = await transformInstagramResponse(response);
+      };
+
+      setTimeout(() => {
+        getHTML(
+          PROXY_URL +
+            "https://ingramer.com/tools/instagram-search/?InstagramSearchForm%5Busername%5D=bitcoin&InstagramSearchForm%5BprofileGender%5D=&InstagramSearchForm%5Bcategory%5D=&InstagramSearchForm%5BfollowersFrom%5D=1000&InstagramSearchForm%5BfollowersTo%5D=10000000000&_pjax=%23account-pjax",
+          updateInstagram
         );
       }, NEXT_JS_CYCLE);
     </script>
