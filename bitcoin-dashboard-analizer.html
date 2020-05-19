@@ -444,13 +444,13 @@
       --aug-br-height: 70px;
       --aug-tl-height: 70px;
     }
-    .twitter-section {
+    .table-section {
       width: 80%;
       margin: auto;
       margin-top: 3rem;
       margin-bottom: 3rem;
     }
-    div.twitter-section-title {
+    div.table-section-title {
       font-family: BlenderProBold, sans-serif;
       font-weight: 700;
       font-size: 120%;
@@ -462,8 +462,11 @@
       flex-direction: row;
       justify-content: space-around;
       padding: 10px;
+      padding-top: 15px;
+      --aug-t: 5px;
+      --aug-t-width: 40%;
     }
-    .twitter-section-container {
+    .table-section-container {
       border: 1px solid #2f96f3;
       border-bottom: 4px solid #2f96f3;
       border-bottom-left-radius: 5px;
@@ -502,6 +505,46 @@
     .hashtag-section-item-cell {
       width: 14.5rem;
       text-align: right;
+    }
+    .instagram-section-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    .instagram-post-image {
+      max-height: 21rem;
+    }
+    .instagram-post-media-data {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      position: relative;
+      margin-top: -21rem;
+      text-decoration: none;
+      font-family: BlenderProBold, sans-serif;
+      font-weight: 700;
+      font-size: 100%;
+      text-transform: uppercase;
+      color: #f7f7f7;
+      height: 21rem;
+      background: #00000054;
+    }
+    .instagram-post-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 10rem;
+    }
+    .instagram-post-comments,
+    .instagram-post-likes {
+      font-family: "icomoon" !important;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
     }
   </style>
 
@@ -722,14 +765,17 @@
     <!-- Global Bitcoin News Widget END -->
 
     <!-- Bitcoin related hashtags Widget BEGIN -->
-    <div class="twitter-section">
-      <div class="twitter-section-title" augmented-ui="tr-clip tl-clip exe">
+    <div class="table-section">
+      <div
+        class="table-section-title"
+        augmented-ui="tr-clip tl-clip t-clip-x exe"
+      >
         <div style="margin-right: 3rem;">Twitter Hashtag</div>
         <div>Tweets</div>
         <div>Retweets</div>
         <div>Exposure / hora</div>
       </div>
-      <table id="twitter-section" class="twitter-section-container">
+      <table id="twitter-section" class="table-section-container">
         <tr>
           <td>
             <div class="loader" augmented-ui="br-clip tl-clip exe">
@@ -886,21 +932,6 @@
     </div>
     <!-- Bitcoin related hashtags Widget END -->
 
-    <!-- Bitcoin top instagram influencers posts Widget BEGIN -->
-    <a
-      href="https://ingramer.com/tools/instagram-search/?InstagramSearchForm%5Busername%5D=bitcoin&InstagramSearchForm%5BprofileGender%5D=&InstagramSearchForm%5Bcategory%5D=&InstagramSearchForm%5BfollowersFrom%5D=1000&InstagramSearchForm%5BfollowersTo%5D=10000000000&_pjax=%23account-pjax"
-      target="_blank"
-      style="
-        display: flex;
-        justify-content: center;
-        color: #f7f7f7;
-        text-align: center;
-        font-size: 200%;
-      "
-      >Bitcoin top instagram influencers posts</a
-    >
-    <!-- Bitcoin top instagram influencers posts Widget END -->
-
     <!-- Bitcoin top seen videos by influencers Widget BEGIN -->
     <div class="news-section-title" style="margin-top: 2rem;">
       <p>Videos mas vistos sobre el Bitcoin</p>
@@ -1053,6 +1084,179 @@
       </div>
     </div>
     <!-- Bitcoin top seen videos by influencers Widget END -->
+
+    <!-- Bitcoin top instagram influencers posts Widget BEGIN -->
+    <div class="table-section">
+      <div
+        class="table-section-title"
+        augmented-ui="tr-clip tl-clip t-clip-x exe"
+      >
+        <div style="margin-right: 3rem;">Top instagram Influencers posts</div>
+      </div>
+      <table
+        id="instagram-section"
+        class="table-section-container"
+        style="
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+        "
+      >
+        <tr>
+          <td>
+            <div class="loader" augmented-ui="br-clip tl-clip exe">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                style="
+                  margin: -70px 0;
+                  background: transparent;
+                  display: block;
+                "
+                width="151px"
+                height="151px"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="xMidYMid"
+              >
+                <defs>
+                  <pattern
+                    id="ldio-op5tqvy0lkf-pattern"
+                    patternUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="100"
+                    height="100"
+                  >
+                    <g transform="translate(18.6061 0)">
+                      <g transform="rotate(20 50 50) scale(1.2)">
+                        <rect
+                          x="-20"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="-10"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="0"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="10"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="20"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="30"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="40"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="50"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="60"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="70"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="80"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="90"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#2f96f3"
+                        ></rect>
+                        <rect
+                          x="100"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                        <rect
+                          x="110"
+                          y="-10"
+                          width="10"
+                          height="120"
+                          fill="#131722"
+                        ></rect>
+                      </g>
+                      <animateTransform
+                        attributeName="transform"
+                        type="translate"
+                        values="0 0;26 0"
+                        keyTimes="0;1"
+                        dur="0.28328611898017s"
+                        repeatCount="indefinite"
+                      ></animateTransform>
+                    </g>
+                  </pattern>
+                </defs>
+                <rect
+                  rx="0"
+                  ry="0"
+                  x="3.5"
+                  y="42"
+                  stroke="#131722"
+                  stroke-width="2.5"
+                  width="93"
+                  height="16"
+                  fill="url(#ldio-op5tqvy0lkf-pattern)"
+                ></rect>
+              </svg>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- Bitcoin top instagram influencers posts Widget END -->
 
     <!-- Section Divider BEGIN -->
     <div
@@ -1246,7 +1450,7 @@
 
       window.setInterval(() => {
         updateBitcoinPrice();
-      }, 2 * 1000);
+      }, 10 * 1000);
     </script>
 
     <!-- Argentinian dolar news updater -->
@@ -1543,7 +1747,7 @@
           if (!response) return;
           let satoshiData = {};
           satoshiData.price = response.data.ticker.BTC.ask;
-          console.log("satoshiData: ", satoshiData);
+          // console.log("satoshiData: ", satoshiData);
           fetchData(PROXY_URL + SATOSHI_VARIATION_URL).then((data) => {
             satoshiData.variation = data.data.graph.BTC.change;
             // console.log("satoshiData.variation: ", satoshiData.variation);
@@ -1641,7 +1845,9 @@
 
       const transformYoutubeResponse = (youtubeResponse) => {
         // console.log("youtubeVideos before transform: ", youtubeResponse);
-        let youtubeVideos = youtubeResponse.body.children[11].innerText;
+        let youtubeVideos =
+          youtubeResponse.body.children[11].innerText ||
+          youtubeResponse.body.children[13].innerText;
         youtubeVideos = youtubeVideos.match(
           /{"videoRenderer.*?("enableOverlay":true}}}|Reproduciendo"}]}}}]}})/gm
         );
@@ -1773,6 +1979,14 @@
         return maximuns;
       };
 
+      const setMaximuns = (type, valueArray) => {
+        let maximuns = getMaximuns();
+        let maxDayType = Math.max(...valueArray, maximuns.daily[type][TODAY]);
+        console.log(`maxDayType ${type}: ${maxDayType}`);
+        maximuns.daily[type][TODAY] = maxDayType;
+        window.localStorage.setItem(MAXIMUNS, JSON.stringify(maximuns));
+      };
+
       const updateYoutubeDaylyVideos = (youtubeResponse) => {
         const FIRST = 0;
         let youtubeVideos = transformYoutubeResponse(youtubeResponse);
@@ -1784,14 +1998,7 @@
             .replace(",", "")
             .replace(" vistas", "")
         );
-        let maximuns = getMaximuns();
-        let maxDayVideo = Math.max(
-          ...youtubeVideos,
-          maximuns.daily.youtube[TODAY]
-        );
-        // console.log("maxDayVideo: ", maxDayVideo);
-        maximuns.daily.youtube[TODAY] = maxDayVideo;
-        window.localStorage.setItem(MAXIMUNS, JSON.stringify(maximuns));
+        setMaximuns("youtube", youtubeVideos);
       };
 
       const getYoutubeDaylyVideos = () => {
@@ -1851,7 +2058,7 @@
         }
 
         hashtags = hashtags.sort(tweetsComparator);
-        console.log("tweets after transform: ", hashtags);
+        // console.log("tweets after transform: ", hashtags);
         return hashtags;
       };
 
@@ -1906,6 +2113,10 @@
         let hashtagsTransformed = transformTwitterBestHashtagsResponse(
           response
         );
+        maxTwitterValues = hashtagsTransformed.map((hashtag) =>
+          hashtag.exposure.replace(/,/gi, "")
+        );
+        setMaximuns("twitter", maxTwitterValues);
         addHashtags("twitter-section", hashtagsTransformed);
       };
 
@@ -2004,6 +2215,169 @@
           PROXY_URL +
             "https://www.cronista.com/economiapolitica/En-busca-de-dolares-restringen-creditos-a-empresas-del-agro-con-incentivos-para-que-vendan-la-cosecha--20200515-0048.html",
           updateBolsas
+        );
+      }, NEXT_JS_CYCLE);
+    </script>
+
+    <!-- Instagram Section -->
+    <script type="text/javascript">
+      const getPosts = async (url) => {
+        return new Promise((resolve, reject) => {
+          try {
+            getHTML(PROXY_URL + url, resolve);
+          } catch (error) {
+            console.error(`Fallo al obtener posts de la url: ${url}`);
+            console.error(error);
+            console.trace();
+            reject();
+          }
+        });
+      };
+
+      const generatePostItem = (instaPost) => {
+        let imageElement = document.createElement("img");
+        imageElement.classList.add("instagram-post-image");
+        imageElement.setAttribute("src", instaPost.imageUrl);
+
+        let mediaDataCommentsImg = document.createElement("i");
+        mediaDataCommentsImg.classList.add("instagram-post-comments");
+
+        let mediaDataComments = document.createElement("div");
+        mediaDataComments.classList.add("instagram-post-container");
+        mediaDataComments.appendChild(mediaDataCommentsImg);
+        mediaDataComments.appendChild(
+          document.createTextNode("💬" + instaPost.comments)
+        );
+
+        let mediaDataLikesImg = document.createElement("i");
+        mediaDataLikesImg.classList.add("instagram-post-likes");
+
+        let mediaDataLikes = document.createElement("div");
+        mediaDataLikes.classList.add("instagram-post-container");
+        mediaDataLikes.appendChild(mediaDataLikesImg);
+        mediaDataLikes.appendChild(
+          document.createTextNode("👍" + instaPost.likes)
+        );
+
+        let mediaDataElement = document.createElement("div");
+        mediaDataElement.classList.add("instagram-post-media-data");
+        mediaDataElement.appendChild(mediaDataComments);
+        mediaDataElement.appendChild(mediaDataLikes);
+
+        let containerElement = document.createElement("a");
+        containerElement.classList.add("instagram-section-item");
+        containerElement.setAttribute("href", instaPost.postUrl);
+        containerElement.setAttribute("target", "_blank");
+        containerElement.appendChild(imageElement);
+        containerElement.appendChild(mediaDataElement);
+
+        return containerElement;
+      };
+
+      const addSectionPosts = (sectionID, postsArray) => {
+        let element = null;
+        element = document.getElementById(sectionID);
+        element.innerHTML = "";
+        postsArray.forEach((post) => {
+          element.appendChild(generatePostItem(post));
+        });
+      };
+
+      const transformPosts = (posts) => {
+        // console.log("posts before transform: ", posts);
+        const contentChildren =
+          posts.body.children[3].children[0].children[0].children[0].children[0]
+            .children[0].children[0].children;
+        if (contentChildren.length < 5) return [];
+        let postsTransformed =
+          contentChildren[4].innerHTML + contentChildren[5].innerHTML;
+        postsTransformed = postsTransformed.match(
+          /(https:\/\/(www.)?instagram.*?"|\/i>.*?<\/div>)/gm
+        );
+        postsTransformed = postsTransformed.map((elem) => {
+          return elem
+            .replace(/([" ]|\/i>|<\/div>)/g, "")
+            .replace(/&amp;/g, "&");
+        });
+        let postTransformedFinished = [];
+        for (let index = 0; index < postsTransformed.length; index += 4) {
+          //These 2 if exists to skip video posts
+          if (!postsTransformed[index + 3]) {
+            break;
+          }
+          if (
+            !postsTransformed[index].includes("https://instagram") ||
+            !postsTransformed[index + 3].includes("www.instagram.com")
+          ) {
+            index -= 3;
+            continue;
+          }
+          const post = {
+            imageUrl: postsTransformed[index],
+            comments: postsTransformed[index + 1],
+            likes: postsTransformed[index + 2],
+            postUrl: postsTransformed[index + 3],
+          };
+          if (
+            postTransformedFinished.find(
+              (elem) => elem.postUrl === post.postUrl
+            )
+          ) {
+            continue;
+          }
+          postTransformedFinished.push(post);
+        }
+        // console.log("posts after transform: ", postTransformedFinished);
+        return postTransformedFinished;
+      };
+
+      const instagramPostComparator = (firstPost, secondPost) => {
+        return firstPost.postUrl < secondPost.postUrl ? 1 : -1;
+      };
+
+      const transformInstagramResponse = async (response) => {
+        // console.log("instagrams before transform: ", response);
+        let instagrams =
+          response.body.children[3].children[0].children[2].children[2]
+            .children[0].innerHTML;
+        instagrams = instagrams.match(/\/profile\/.*?"\>Analyze/gm);
+        instagrams = instagrams.map((elem) => {
+          const cutFrom = 0;
+          const cutUntil = elem.indexOf('"', 10);
+          return "https://ingramer.com" + elem.substring(cutFrom, cutUntil);
+        });
+        // console.log("instagrams middle transform: ", instagrams);
+        let instagramsTransformed = [];
+        for (let current = 0; current < instagrams.length; current++) {
+          let postsObtained = await getPosts(instagrams[current]);
+          if (!postsObtained) continue;
+          postsObtained = transformPosts(postsObtained);
+          instagramsTransformed.push(...postsObtained);
+        }
+        instagramsTransformed = instagramsTransformed.sort(
+          instagramPostComparator
+        );
+        // console.log("instagrams middle transform: ", instagramsTransformed);
+        instagramsTransformed = instagramsTransformed.slice(0, 18);
+        // console.log("instagrams after transform: ", instagramsTransformed);
+        return instagramsTransformed;
+      };
+
+      const getMaxPosts = (posts) => {
+        return posts.slice(0, 5).map((post) => post.likes);
+      };
+
+      const updateInstagram = async (response) => {
+        let postsTransformed = await transformInstagramResponse(response);
+        addSectionPosts("instagram-section", postsTransformed);
+        setMaximuns("instagram", getMaxPosts(postsTransformed));
+      };
+
+      setTimeout(() => {
+        getHTML(
+          PROXY_URL +
+            "https://ingramer.com/tools/instagram-search/?InstagramSearchForm%5Busername%5D=bitcoin&InstagramSearchForm%5BprofileGender%5D=&InstagramSearchForm%5Bcategory%5D=&InstagramSearchForm%5BfollowersFrom%5D=1000&InstagramSearchForm%5BfollowersTo%5D=10000000000&_pjax=%23account-pjax",
+          updateInstagram
         );
       }, NEXT_JS_CYCLE);
     </script>
