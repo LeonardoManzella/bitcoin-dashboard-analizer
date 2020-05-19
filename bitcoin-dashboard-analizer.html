@@ -2030,10 +2030,11 @@
         });
       };
       const transformPosts = (posts) => {
-        console.log("posts before transform: ", posts);
+        // console.log("posts before transform: ", posts);
         const contentChildren =
           posts.body.children[3].children[0].children[0].children[0].children[0]
             .children[0].children[0].children;
+        if (contentChildren.length < 5) return [];
         let postsTransformed =
           contentChildren[4].innerHTML + contentChildren[5].innerHTML;
         postsTransformed = postsTransformed.match(
@@ -2044,13 +2045,21 @@
             .replace(/([" ]|\/i>|<\/div>)/g, "")
             .replace(/&amp;/g, "&");
         });
-        //TODO use For to transform every 4/5? to an Item to return
-        debugger;
-        console.log("posts after transform: ", postsTransformed);
-        return postsTransformed;
+        let postTransformedFinished = new Set();
+        for (let index = 0; index < postsTransformed.length; index += 4) {
+          const post = {
+            imgUrl: postsTransformed[index],
+            comments: postsTransformed[index + 1],
+            likes: postsTransformed[index + 2],
+            postUrl: postsTransformed[index + 3],
+          };
+          postTransformedFinished.add(post);
+        }
+        // console.log("posts after transform: ", postTransformedFinished);
+        return Array.from(postTransformedFinished);
       };
       const transformInstagramResponse = async (response) => {
-        console.log("instagrams before transform: ", response);
+        // console.log("instagrams before transform: ", response);
         let instagrams =
           response.body.children[3].children[0].children[2].children[2]
             .children[0].innerHTML;
@@ -2060,22 +2069,21 @@
           const cutUntil = elem.indexOf('"', 10);
           return "https://ingramer.com" + elem.substring(cutFrom, cutUntil);
         });
-        console.log("instagrams middle transform: ", instagrams);
-        let instagramsTransformed = []; //TODO use a SET to eliminate duplicated items
+        // console.log("instagrams middle transform: ", instagrams);
+        let instagramsTransformed = [];
         for (let current = 0; current < instagrams.length; current++) {
           let postsObtained = await getPosts(instagrams[current]);
           if (!postsObtained) continue;
           postsObtained = transformPosts(postsObtained);
-          instagramsTransformed.push(postsObtained);
+          instagramsTransformed.push(...postsObtained);
         }
-        debugger;
-
         console.log("instagrams after transform: ", instagramsTransformed);
         return instagramsTransformed;
       };
 
       const updateInstagram = async (response) => {
         let postsTransformed = await transformInstagramResponse(response);
+        //TODO add elements to section
       };
 
       setTimeout(() => {
