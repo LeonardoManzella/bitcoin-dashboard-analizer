@@ -1686,15 +1686,17 @@
     </script>
 
     <script type="text/javascript">
-      const RIPIO_DATA_URL =
-        "https://api.exchange.ripio.com/api/v1/rate/all/?country=AR";
+      const RIPIO_DATA_URL = (topic, my_suscription) =>
+        "wss://api.exchange.ripio.com/ws/v2/consumer/non-persistent/public/default/" +
+        topic +
+        "/" +
+        my_suscription;
       const SATOSHI_PRICE_URL = "https://api.satoshitango.com/v3/ticker/ARS";
       const SATOSHI_VARIATION_URL = "https://api.satoshitango.com/v3/graph/ARS";
       const RIPIO_LAST_PRICE = "RIPIO_LAST_PRICE";
 
       const calcVariation = (newPrice) => {
         const lastPrice = window.localStorage.getItem(RIPIO_LAST_PRICE);
-        window.localStorage.setItem(RIPIO_LAST_PRICE, newPrice);
         return lastPrice ? (lastPrice / newPrice) * 100 - 100 : 0;
       };
 
@@ -1725,41 +1727,51 @@
       };
 
       const obtainRipioPrice = (data) => {
-        let finder = Object.keys(data).filter(
-          (key) =>
-            key.match(/exchange_buy_(..|.)$/) && data[key].includes("ripio")
-        );
-        finder = finder[0];
-        finder = finder.replace("exchange", "best");
-        return data[finder];
+        const ONLY_VALUE = 0;
+        if (
+          parseInt(data.buy[ONLY_VALUE].amount) !== 0 ||
+          parseInt(data.sell[ONLY_VALUE].amount) !== 0
+        ) {
+          return null;
+        }
+        return data.buy[ONLY_VALUE].price;
       };
 
       const updateExchangePrices = () => {
         var my_suscription = btoa("test@ripio.com");
         var topic = "orderbook_btc_ars";
-        var ws = new WebSocket(
-          "wss://api.exchange.ripio.com/ws/v2/consumer/non-persistent/public/default/" +
-            topic +
-            "/" +
-            my_suscription
-        );
+        var ws = new WebSocket(RIPIO_DATA_URL(topic, my_suscription));
         ws.onmessage = function (event) {
+          if (!event.data) return;
           console.log("Ripio WS: ", event.data);
-          console.log("Ripio Price: ", atob(JSON.parse(event.data).payload));
+
+          //Reply Ok to message received so it doesn't send again
           var ackMsg = { messageId: event.data.messageId };
           ws.send(JSON.stringify(ackMsg));
+
+          console.log("Ripio Price: ", atob(JSON.parse(event.data).payload));
+          let ripioData = {};
+          ripioData.price =
+            obtainRipioPrice(JSON.parse(atob(JSON.parse(event.data).payload))) *
+            1.04;
+          if (!ripioData.price) return;
+          ripioData.variation = calcVariation(ripioData.price);
+          if (Math.abs(ripioData.variation) >= 5) return; //Skip weird numbers
+          window.localStorage.setItem(RIPIO_LAST_PRICE, ripioData.price);
+          console.log("ripioData: ", ripioData);
+          updateExchange(ripioData, "ripio-price", "ripio-variation");
         };
         ws.onerror = function (event) {
-          console.error("Ripio WS: ", event);
+          console.warn("Ripio WS Error: ", event);
         };
         // fetchData(PROXY_URL + RIPIO_DATA_URL).then((response) => {
         //   debugger
         //   if (!response) return;
-        //   let ripioData = {};
-        //   ripioData.price = obtainRipioPrice(response) - 10000;
-        //   ripioData.variation = calcVariation(ripioData.price);
-        //   // console.log("ripioData: ", ripioData);
-        //   updateExchange(ripioData, "ripio-price", "ripio-variation");
+        // let ripioData = {};
+        // ripioData.price = obtainRipioPrice(response) - 10000;
+        // ripioData.variation = calcVariation(ripioData.price);
+        // // console.log("ripioData: ", ripioData);
+        // updateExchange(ripioData, "ripio-price", "ripio-variation");
         // });
 
         fetchData(PROXY_URL + SATOSHI_PRICE_URL).then((response) => {
