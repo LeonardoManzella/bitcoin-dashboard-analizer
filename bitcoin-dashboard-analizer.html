@@ -1646,7 +1646,7 @@
 
       const bitcoinTerms = ["bitcoin", "btc", "cripto", "crypto", "altcoin"];
 
-      setTimeout(() => {
+      const updateAllBitcoinNews = () => {
         updateNews(
           "bitcoin-news-section",
           ARG_BUSINESS_NEWS,
@@ -1682,7 +1682,13 @@
           UK_BUSINESS_NEWS,
           validateArticleHasTerms(bitcoinTerms)
         );
-      }, NEXT_JS_CYCLE);
+      };
+
+      setTimeout(updateAllBitcoinNews, NEXT_JS_CYCLE);
+
+      window.setInterval(() => {
+        updateAllBitcoinNews();
+      }, 2 * 60 * 60 * 1000);
     </script>
 
     <script type="text/javascript">
@@ -1737,16 +1743,18 @@
         return data.buy[ONLY_VALUE].price;
       };
 
+      let first_load = true;
+
       const updateExchangePrices = () => {
-        var my_suscription = btoa("test@ripio.com");
-        var topic = "orderbook_btc_ars";
-        var ws = new WebSocket(RIPIO_DATA_URL(topic, my_suscription));
+        let my_suscription = btoa("test@ripio.com");
+        let topic = "orderbook_btc_ars";
+        let ws = new WebSocket(RIPIO_DATA_URL(topic, my_suscription));
         ws.onmessage = function (event) {
           if (!event.data) return;
           console.log("Ripio WS: ", event.data);
 
           //Reply Ok to message received so it doesn't send again
-          var ackMsg = { messageId: event.data.messageId };
+          let ackMsg = { messageId: event.data.messageId };
           ws.send(JSON.stringify(ackMsg));
 
           console.log("Ripio Price: ", atob(JSON.parse(event.data).payload));
@@ -1756,7 +1764,8 @@
             1.04;
           if (!ripioData.price) return;
           ripioData.variation = calcVariation(ripioData.price);
-          if (Math.abs(ripioData.variation) >= 5) return; //Skip weird numbers
+          if (!first_load && Math.abs(ripioData.variation) >= 5) return; //Skip weird numbers
+          first_load = false;
           window.localStorage.setItem(RIPIO_LAST_PRICE, ripioData.price);
           console.log("ripioData: ", ripioData);
           updateExchange(ripioData, "ripio-price", "ripio-variation");
@@ -2052,7 +2061,7 @@
       window.setInterval(() => {
         getYoutubeWeeklyVideos();
         getYoutubeDaylyVideos();
-      }, 60 * 60 * 1000);
+      }, 5 * 60 * 60 * 1000);
     </script>
 
     <!-- Twitter section loader -->
@@ -2151,12 +2160,18 @@
         addHashtags("twitter-section", hashtagsTransformed);
       };
 
-      setTimeout(() => {
+      const updateTwitterInitiation = () => {
         getHTML(
           PROXY_URL + "https://ritetag.com/best-hashtags-for/bitcoin",
           updateTwitterHashtags
         );
-      }, NEXT_JS_CYCLE);
+      };
+
+      setTimeout(updateTwitterInitiation, NEXT_JS_CYCLE);
+
+      window.setInterval(() => {
+        updateTwitterInitiation();
+      }, 1 * 60 * 60 * 1000);
     </script>
 
     <!-- Bolsas Section -->
@@ -2241,13 +2256,19 @@
         addSectionBolsas("bolsas-section-container", bolsasTransformed);
       };
 
-      setTimeout(() => {
+      const updateBolsasInitiator = () => {
         getHTML(
           PROXY_URL +
             "https://www.cronista.com/economiapolitica/En-busca-de-dolares-restringen-creditos-a-empresas-del-agro-con-incentivos-para-que-vendan-la-cosecha--20200515-0048.html",
           updateBolsas
         );
-      }, NEXT_JS_CYCLE);
+      };
+
+      setTimeout(updateBolsasInitiator, NEXT_JS_CYCLE);
+
+      window.setInterval(() => {
+        updateBolsasInitiator();
+      }, 3 * 60 * 60 * 1000);
     </script>
 
     <!-- Instagram Section -->
@@ -2404,13 +2425,19 @@
         setMaximuns("instagram", getMaxPosts(postsTransformed));
       };
 
-      setTimeout(() => {
+      const InstagramInitiator = () => {
         getHTML(
           PROXY_URL +
             "https://ingramer.com/tools/instagram-search/?InstagramSearchForm%5Busername%5D=bitcoin&InstagramSearchForm%5BprofileGender%5D=&InstagramSearchForm%5Bcategory%5D=&InstagramSearchForm%5BfollowersFrom%5D=1000&InstagramSearchForm%5BfollowersTo%5D=10000000000&_pjax=%23account-pjax",
           updateInstagram
         );
-      }, NEXT_JS_CYCLE);
+      };
+
+      setTimeout(InstagramInitiator, NEXT_JS_CYCLE);
+
+      window.setInterval(() => {
+        InstagramInitiator();
+      }, 4 * 60 * 60 * 1000);
     </script>
   </body>
 </html>
