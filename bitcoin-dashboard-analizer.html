@@ -1687,7 +1687,7 @@
 
     <script type="text/javascript">
       const RIPIO_DATA_URL =
-        "https://coinmonitor.info/topars_ar.json?_=1588690143986";
+        "https://api.exchange.ripio.com/api/v1/rate/all/?country=AR";
       const SATOSHI_PRICE_URL = "https://api.satoshitango.com/v3/ticker/ARS";
       const SATOSHI_VARIATION_URL = "https://api.satoshitango.com/v3/graph/ARS";
       const RIPIO_LAST_PRICE = "RIPIO_LAST_PRICE";
@@ -1735,14 +1735,32 @@
       };
 
       const updateExchangePrices = () => {
-        fetchData(PROXY_URL + RIPIO_DATA_URL).then((response) => {
-          if (!response) return;
-          let ripioData = {};
-          ripioData.price = obtainRipioPrice(response) - 10000;
-          ripioData.variation = calcVariation(ripioData.price);
-          // console.log("ripioData: ", ripioData);
-          updateExchange(ripioData, "ripio-price", "ripio-variation");
-        });
+        var my_suscription = btoa("test@ripio.com");
+        var topic = "orderbook_btc_ars";
+        var ws = new WebSocket(
+          "wss://api.exchange.ripio.com/ws/v2/consumer/non-persistent/public/default/" +
+            topic +
+            "/" +
+            my_suscription
+        );
+        ws.onmessage = function (event) {
+          console.log("Ripio WS: ", event.data);
+          console.log("Ripio Price: ", atob(JSON.parse(event.data).payload));
+          var ackMsg = { messageId: event.data.messageId };
+          ws.send(JSON.stringify(ackMsg));
+        };
+        ws.onerror = function (event) {
+          console.error("Ripio WS: ", event);
+        };
+        // fetchData(PROXY_URL + RIPIO_DATA_URL).then((response) => {
+        //   debugger
+        //   if (!response) return;
+        //   let ripioData = {};
+        //   ripioData.price = obtainRipioPrice(response) - 10000;
+        //   ripioData.variation = calcVariation(ripioData.price);
+        //   // console.log("ripioData: ", ripioData);
+        //   updateExchange(ripioData, "ripio-price", "ripio-variation");
+        // });
 
         fetchData(PROXY_URL + SATOSHI_PRICE_URL).then((response) => {
           if (!response) return;
