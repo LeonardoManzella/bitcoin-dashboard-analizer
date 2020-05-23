@@ -370,7 +370,7 @@
       line-height: normal;
       color: #f7f7f7;
       display: inline-block;
-      width: 47%;
+      width: 33%;
       height: fit-content;
       margin: 7px;
       --aug-border: 2px;
@@ -818,7 +818,7 @@
         <div>Exposure / hora</div>
       </div>
       <div class="table-section-border">
-        <div class="my-slider" id="twitter-section">
+        <div class="twitter-slider" id="twitter-section">
           <table class="table-section-container noselect">
             <tr>
               <td>
@@ -983,150 +983,154 @@
       <p>Videos mas vistos sobre el Bitcoin</p>
       <div augmented-ui="br-clip-x exe" style="width: 46rem;"></div>
     </div>
-    <div id="youtube-section" class="news-section">
-      <div class="loader" augmented-ui="br-clip tl-clip exe">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          style="margin: -70px 0; background: transparent; display: block;"
-          width="151px"
-          height="151px"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="xMidYMid"
-        >
-          <defs>
-            <pattern
-              id="ldio-op5tqvy0lkf-pattern"
-              patternUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="100"
-              height="100"
+    <div style="overflow-x: hidden;">
+      <div id="youtube-section" class="youtube-slider">
+        <div class="news-section">
+          <div class="loader" augmented-ui="br-clip tl-clip exe">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              style="margin: -70px 0; background: transparent; display: block;"
+              width="151px"
+              height="151px"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="xMidYMid"
             >
-              <g transform="translate(18.6061 0)">
-                <g transform="rotate(20 50 50) scale(1.2)">
-                  <rect
-                    x="-20"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="-10"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="0"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="10"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="20"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="30"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="40"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="50"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="60"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="70"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="80"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="90"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="100"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="110"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                </g>
-                <animateTransform
-                  attributeName="transform"
-                  type="translate"
-                  values="0 0;26 0"
-                  keyTimes="0;1"
-                  dur="0.28328611898017s"
-                  repeatCount="indefinite"
-                ></animateTransform>
-              </g>
-            </pattern>
-          </defs>
-          <rect
-            rx="0"
-            ry="0"
-            x="3.5"
-            y="42"
-            stroke="#131722"
-            stroke-width="2.5"
-            width="93"
-            height="16"
-            fill="url(#ldio-op5tqvy0lkf-pattern)"
-          ></rect>
-        </svg>
+              <defs>
+                <pattern
+                  id="ldio-op5tqvy0lkf-pattern"
+                  patternUnits="userSpaceOnUse"
+                  x="0"
+                  y="0"
+                  width="100"
+                  height="100"
+                >
+                  <g transform="translate(18.6061 0)">
+                    <g transform="rotate(20 50 50) scale(1.2)">
+                      <rect
+                        x="-20"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="-10"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="0"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="10"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="20"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="30"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="40"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="50"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="60"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="70"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="80"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="90"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="100"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="110"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                    </g>
+                    <animateTransform
+                      attributeName="transform"
+                      type="translate"
+                      values="0 0;26 0"
+                      keyTimes="0;1"
+                      dur="0.28328611898017s"
+                      repeatCount="indefinite"
+                    ></animateTransform>
+                  </g>
+                </pattern>
+              </defs>
+              <rect
+                rx="0"
+                ry="0"
+                x="3.5"
+                y="42"
+                stroke="#131722"
+                stroke-width="2.5"
+                width="93"
+                height="16"
+                fill="url(#ldio-op5tqvy0lkf-pattern)"
+              ></rect>
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
     <!-- Bitcoin top seen videos by influencers Widget END -->
@@ -1352,12 +1356,26 @@
 
     <!-- TODO la hora esta mal, pero no vi donde, preguntar a Papa, dice 2+ horas adelantadas -->
 
-    <!-- Dolar prices updater -->
+    <!-- Common functions and constants -->
     <script type="text/javascript">
-      const URL_OFICIAL =
-        "https://mercados.ambito.com//dolar/oficial/variacion";
-      const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
-      const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
+      const splitDo = (contentArray, step, doFunction) => {
+        for (let index = 0; index < contentArray.length; index += step) {
+          let subContent = contentArray.slice(
+            index,
+            Math.min(index + step, contentArray.length)
+          );
+          doFunction(subContent);
+        }
+      };
+
+      const generateSliderContainer = (type, containerClass) => {
+        let containerElement = document.createElement(type || "table");
+        containerElement.classList.add(
+          containerClass || "table-section-container"
+        );
+        containerElement.classList.add("noselect");
+        return containerElement;
+      };
 
       const fetchData = (url, options) => {
         return fetch(url, options)
@@ -1368,6 +1386,14 @@
             console.trace();
           });
       };
+    </script>
+
+    <!-- Dolar prices updater -->
+    <script type="text/javascript">
+      const URL_OFICIAL =
+        "https://mercados.ambito.com//dolar/oficial/variacion";
+      const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
+      const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
 
       const updateDolarIndicators = () => {
         console.group("updateDolarIndicators");
@@ -1818,15 +1844,6 @@
         ws.onerror = function (event) {
           console.warn("Ripio WS Error: ", event);
         };
-        // fetchData(PROXY_URL + RIPIO_DATA_URL).then((response) => {
-        //   debugger
-        //   if (!response) return;
-        // let ripioData = {};
-        // ripioData.price = obtainRipioPrice(response) - 10000;
-        // ripioData.variation = calcVariation(ripioData.price);
-        // // console.log("ripioData: ", ripioData);
-        // updateExchange(ripioData, "ripio-price", "ripio-variation");
-        // });
 
         fetchData(PROXY_URL + SATOSHI_PRICE_URL).then((response) => {
           if (!response) return;
@@ -2013,14 +2030,20 @@
         let element = null;
         element = document.getElementById(sectionID);
         element.innerHTML = "";
-        videosArray.forEach((video) => {
-          element.appendChild(generateVideoItem(video));
+
+        splitDo(videosArray, 6, (array) => {
+          let container = generateSliderContainer("div", "news-section");
+          array.forEach((video) => {
+            container.appendChild(generateVideoItem(video));
+          });
+          element.appendChild(container);
         });
       };
 
       const updateYoutubeWeeklyVideos = (youtubeResponse) => {
         let youtubeVideos = transformYoutubeResponse(youtubeResponse);
         addSectionVideos("youtube-section", youtubeVideos);
+        setYoutubeSlider();
       };
 
       const getYoutubeWeeklyVideos = () => {
@@ -2185,26 +2208,11 @@
         return containerElement;
       };
 
-      const generateSliderContainer = (containerClass) => {
-        let containerElement = document.createElement("table");
-        containerElement.classList.add(
-          containerClass || "table-section-container"
-        );
-        containerElement.classList.add("noselect");
-        return containerElement;
-      };
-
-      const splitDo = (contentArray, step, doFunction) => {
-        for (let index = 0; index < contentArray.length; index += step) {
-          let subContent = contentArray.slice(index, Math.min(index + step, contentArray.length));
-          doFunction(subContent);
-        }
-      };
-
       const addHashtags = (sectionID, hashtagsArray) => {
         let element = null;
         element = document.getElementById(sectionID);
         element.innerHTML = "";
+
         splitDo(hashtagsArray, 8, (array) => {
           let container = generateSliderContainer();
           array.forEach((hashtag) => {
@@ -2223,7 +2231,7 @@
         );
         setMaximuns("twitter", maxTwitterValues);
         addHashtags("twitter-section", hashtagsTransformed);
-        setSliders();
+        setTwitterSlider();
       };
 
       const updateTwitterInitiation = () => {
@@ -2511,9 +2519,24 @@
     <!-- Carousel config section -->
 
     <script type="text/javascript">
-      const setSliders = () => {
-        var slider = tns({
-          container: ".my-slider",
+      setTwitterSlider = () => {
+        tns({
+          container: ".twitter-slider",
+          items: 1,
+          slideBy: "page",
+          autoplay: false,
+          controls: true,
+          rewind: true,
+          mouseDrag: true,
+          controlsPosition: "bottom",
+          controlsText: ["❰", "❱"],
+          navPosition: "bottom",
+        });
+      };
+
+      setYoutubeSlider = () => {
+        tns({
+          container: ".youtube-slider",
           items: 1,
           slideBy: "page",
           autoplay: false,
