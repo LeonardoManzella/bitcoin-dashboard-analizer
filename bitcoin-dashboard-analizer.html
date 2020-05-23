@@ -26,6 +26,12 @@
       type="text/css"
       href="https://unpkg.com/augmented-ui/augmented.css"
     />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/tiny-slider.css"
+    />
   </head>
 
   <style type="text/css">
@@ -547,6 +553,24 @@
       line-height: 1;
       -webkit-font-smoothing: antialiased;
     }
+    .tns-nav > [aria-controls] {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      margin: 0 5px;
+      border-radius: 50%;
+      background: #ddd;
+      border: 0;
+    }
+    .tns-nav > .tns-nav-active {
+      background: #2f96f3;
+    }
+    .tns-controls > [aria-controls] {
+      background-color: transparent;
+      color: #2f96f3;
+      border: none;
+      padding: 0.5rem 1.5rem;
+    }
   </style>
 
   <body style="background-color: #131722; margin: 0;">
@@ -764,6 +788,18 @@
       </a>
     </div>
     <!-- Global Bitcoin News Widget END -->
+
+    <div class="my-slider" style="color: white;">
+      <div>dasdad</div>
+      <div>dasda</div>
+      <div>dasdasd</div>
+      <div>dasdad</div>
+      <div>dasda</div>
+      <div>dasdasd</div>
+      <div>dasdad</div>
+      <div>dasda</div>
+      <div>dasdasd</div>
+    </div>
 
     <!-- Bitcoin related hashtags Widget BEGIN -->
     <div class="table-section">
@@ -2438,6 +2474,25 @@
       window.setInterval(() => {
         InstagramInitiator();
       }, 4 * 60 * 60 * 1000);
+    </script>
+
+    <!-- Import Carousel Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+    <!-- Carousel config section -->
+
+    <script type="text/javascript">
+      var slider = tns({
+        container: ".my-slider",
+        items: 1,
+        slideBy: "page",
+        autoplay: false,
+        controls: true,
+        rewind: true,
+        mouseDrag: true,
+        controlsPosition: "bottom",
+        controlsText: ["❰", "❱"],
+        navPosition: "bottom",
+      });
     </script>
   </body>
 </html>
