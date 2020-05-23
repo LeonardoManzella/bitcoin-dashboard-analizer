@@ -249,7 +249,8 @@
       width: 32rem;
       margin-bottom: 2rem;
     }
-    div.news-section {
+    div.news-section,
+    div.youtube-section {
       min-height: 2.5rem;
       height: fit-content;
       display: flex;
@@ -362,6 +363,10 @@
     .exchange-price {
       font-weight: 700;
       font-size: 130%;
+    }
+    div.youtube-section {
+      display: inline-flex !important;
+      justify-content: center;
     }
     a.video-item {
       text-decoration: none;
@@ -2032,7 +2037,7 @@
         element.innerHTML = "";
 
         splitDo(videosArray, 6, (array) => {
-          let container = generateSliderContainer("div", "news-section");
+          let container = generateSliderContainer("div", "youtube-section");
           array.forEach((video) => {
             container.appendChild(generateVideoItem(video));
           });
@@ -2519,7 +2524,19 @@
     <!-- Carousel config section -->
 
     <script type="text/javascript">
+      const cleanPreviousSlider = (className) => {
+        const FIRST = 0;
+        let elements = document.getElementsByClassName(className);
+        if (!elements || elements <= 0) return;
+        elements[FIRST].parentElement.parentElement.parentElement.remove(2);
+        elements[FIRST].parentElement.parentElement.parentElement.remove(3);
+      };
+
+      let slidersOn = {};
       setTwitterSlider = () => {
+        if (slidersOn.twitter) {
+          cleanPreviousSlider("twitter-slider");
+        }
         tns({
           container: ".twitter-slider",
           items: 1,
@@ -2532,9 +2549,13 @@
           controlsText: ["❰", "❱"],
           navPosition: "bottom",
         });
+        slidersOn.twitter = true;
       };
 
       setYoutubeSlider = () => {
+        if (slidersOn.youtube) {
+          cleanPreviousSlider("youtube-slider");
+        }
         tns({
           container: ".youtube-slider",
           items: 1,
@@ -2547,6 +2568,7 @@
           controlsText: ["❰", "❱"],
           navPosition: "bottom",
         });
+        slidersOn.youtube = true;
       };
     </script>
   </body>
