@@ -472,19 +472,21 @@
       --aug-t: 5px;
       --aug-t-width: 40%;
     }
-    .table-section-container {
+    .table-section-border {
       border: 1px solid #2f96f3;
       border-bottom: 4px solid #2f96f3;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
       padding: 10px 0;
       margin-right: 1px;
       margin-left: 1px;
       margin-top: -1px;
+    }
+    .table-section-container {
+      display: inline-flex !important;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
     }
     .hashtag-section-item {
       font-family: BlenderProBold, sans-serif;
@@ -553,6 +555,12 @@
       line-height: 1;
       -webkit-font-smoothing: antialiased;
     }
+    .tns-outer {
+      padding: 0 !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     .tns-nav > [aria-controls] {
       width: 9px;
       height: 9px;
@@ -570,6 +578,14 @@
       color: #2f96f3;
       border: none;
       padding: 0.5rem 1.5rem;
+    }
+    .noselect {
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
     }
   </style>
 
@@ -789,18 +805,6 @@
     </div>
     <!-- Global Bitcoin News Widget END -->
 
-    <div class="my-slider" style="color: white;">
-      <div>dasdad</div>
-      <div>dasda</div>
-      <div>dasdasd</div>
-      <div>dasdad</div>
-      <div>dasda</div>
-      <div>dasdasd</div>
-      <div>dasdad</div>
-      <div>dasda</div>
-      <div>dasdasd</div>
-    </div>
-
     <!-- Bitcoin related hashtags Widget BEGIN -->
     <div class="table-section">
       <div
@@ -812,160 +816,318 @@
         <div>Retweets</div>
         <div>Exposure / hora</div>
       </div>
-      <table id="twitter-section" class="table-section-container">
-        <tr>
-          <td>
-            <div class="loader" augmented-ui="br-clip tl-clip exe">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                style="
-                  margin: -70px 0;
-                  background: transparent;
-                  display: block;
-                "
-                width="151px"
-                height="151px"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="xMidYMid"
-              >
-                <defs>
-                  <pattern
-                    id="ldio-op5tqvy0lkf-pattern"
-                    patternUnits="userSpaceOnUse"
-                    x="0"
-                    y="0"
-                    width="100"
-                    height="100"
+      <div class="table-section-border">
+        <div class="my-slider">
+          <table id="twitter-section" class="table-section-container noselect">
+            <tr>
+              <td>
+                <div class="loader" augmented-ui="br-clip tl-clip exe">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="
+                      margin: -70px 0;
+                      background: transparent;
+                      display: block;
+                    "
+                    width="151px"
+                    height="151px"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="xMidYMid"
                   >
-                    <g transform="translate(18.6061 0)">
-                      <g transform="rotate(20 50 50) scale(1.2)">
-                        <rect
-                          x="-20"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="-10"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="0"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="10"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="20"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="30"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="40"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="50"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="60"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="70"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="80"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="90"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="100"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="110"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                      </g>
-                      <animateTransform
-                        attributeName="transform"
-                        type="translate"
-                        values="0 0;26 0"
-                        keyTimes="0;1"
-                        dur="0.28328611898017s"
-                        repeatCount="indefinite"
-                      ></animateTransform>
-                    </g>
-                  </pattern>
-                </defs>
-                <rect
-                  rx="0"
-                  ry="0"
-                  x="3.5"
-                  y="42"
-                  stroke="#131722"
-                  stroke-width="2.5"
-                  width="93"
-                  height="16"
-                  fill="url(#ldio-op5tqvy0lkf-pattern)"
-                ></rect>
-              </svg>
-            </div>
-          </td>
-        </tr>
-      </table>
+                    <defs>
+                      <pattern
+                        id="ldio-op5tqvy0lkf-pattern"
+                        patternUnits="userSpaceOnUse"
+                        x="0"
+                        y="0"
+                        width="100"
+                        height="100"
+                      >
+                        <g transform="translate(18.6061 0)">
+                          <g transform="rotate(20 50 50) scale(1.2)">
+                            <rect
+                              x="-20"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="-10"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="0"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="10"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="20"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="30"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="40"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="50"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="60"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="70"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="80"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="90"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="100"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="110"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                          </g>
+                          <animateTransform
+                            attributeName="transform"
+                            type="translate"
+                            values="0 0;26 0"
+                            keyTimes="0;1"
+                            dur="0.28328611898017s"
+                            repeatCount="indefinite"
+                          ></animateTransform>
+                        </g>
+                      </pattern>
+                    </defs>
+                    <rect
+                      rx="0"
+                      ry="0"
+                      x="3.5"
+                      y="42"
+                      stroke="#131722"
+                      stroke-width="2.5"
+                      width="93"
+                      height="16"
+                      fill="url(#ldio-op5tqvy0lkf-pattern)"
+                    ></rect>
+                  </svg>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <table class="table-section-container noselect">
+            <tr>
+              <td>
+                <div class="loader" augmented-ui="br-clip tl-clip exe">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="
+                      margin: -70px 0;
+                      background: transparent;
+                      display: block;
+                    "
+                    width="151px"
+                    height="151px"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="xMidYMid"
+                  >
+                    <defs>
+                      <pattern
+                        id="ldio-op5tqvy0lkf-pattern"
+                        patternUnits="userSpaceOnUse"
+                        x="0"
+                        y="0"
+                        width="100"
+                        height="100"
+                      >
+                        <g transform="translate(18.6061 0)">
+                          <g transform="rotate(20 50 50) scale(1.2)">
+                            <rect
+                              x="-20"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="-10"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="0"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="10"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="20"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="30"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="40"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="50"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="60"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="70"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="80"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="90"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="100"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="110"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                          </g>
+                          <animateTransform
+                            attributeName="transform"
+                            type="translate"
+                            values="0 0;26 0"
+                            keyTimes="0;1"
+                            dur="0.28328611898017s"
+                            repeatCount="indefinite"
+                          ></animateTransform>
+                        </g>
+                      </pattern>
+                    </defs>
+                    <rect
+                      rx="0"
+                      ry="0"
+                      x="3.5"
+                      y="42"
+                      stroke="#131722"
+                      stroke-width="2.5"
+                      width="93"
+                      height="16"
+                      fill="url(#ldio-op5tqvy0lkf-pattern)"
+                    ></rect>
+                  </svg>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
     <!-- Bitcoin related hashtags Widget END -->
 
@@ -1132,7 +1294,7 @@
       </div>
       <table
         id="instagram-section"
-        class="table-section-container"
+        class="table-section-border table-section-container"
         style="
           flex-direction: row;
           flex-wrap: wrap;
@@ -2175,13 +2337,21 @@
 
         return containerElement;
       };
+      const splitDo = (contentArray, step, doFunction) => {
+        for (let index = 0; index < contentArray.length; index += step) {
+          let subContent = contentArray.splice(index, index + step);
+          doFunction(subContent);
+        }
+      };
 
       const addHashtags = (sectionID, hashtagsArray) => {
         let element = null;
         element = document.getElementById(sectionID);
         element.innerHTML = "";
-        hashtagsArray.forEach((hashtag) => {
-          element.appendChild(generateHashtagItem(hashtag));
+        splitDo(hashtagsArray, 6, (array) => {
+          array.forEach((hashtag) => {
+            element.appendChild(generateHashtagItem(hashtag));
+          });
         });
       };
 
