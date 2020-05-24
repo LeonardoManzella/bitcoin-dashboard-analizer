@@ -490,7 +490,8 @@
       margin-left: 1px;
       margin-top: -1px;
     }
-    .table-section-container {
+    .table-section-container,
+    .instagram-section-container {
       display: inline-flex !important;
       flex-direction: column;
       justify-content: space-between;
@@ -523,6 +524,11 @@
       width: 14.5rem;
       text-align: right;
     }
+    .instagram-section-container {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+    }
     .instagram-section-item {
       display: flex;
       flex-direction: column;
@@ -533,6 +539,8 @@
     .instagram-post-image {
       min-height: 21rem;
       max-height: 21rem;
+      min-width: 21rem;
+      max-width: 21rem;
     }
     .instagram-post-media-data {
       display: flex;
@@ -827,7 +835,7 @@
         <div>Exposure / hora</div>
       </div>
       <div class="table-section-border">
-        <div class="twitter-slider" id="twitter-section">
+        <div id="twitter-section" class="twitter-slider">
           <table class="table-section-container noselect">
             <tr>
               <td>
@@ -1152,17 +1160,9 @@
       >
         <div>Top instagram Influencers posts</div>
       </div>
-      <table
-        id="instagram-section"
-        class="table-section-border table-section-container"
-        style="
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: space-evenly;
-        "
-      >
-        <tr>
-          <td>
+      <div class="table-section-border">
+        <div id="instagram-section" class="instagram-slider">
+          <div class="instagram-section-container">
             <div class="loader" augmented-ui="br-clip tl-clip exe">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -1311,9 +1311,9 @@
                 ></rect>
               </svg>
             </div>
-          </td>
-        </tr>
-      </table>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Bitcoin top instagram influencers posts Widget END -->
 
@@ -2372,7 +2372,7 @@
       const generatePostItem = (instaPost) => {
         let imageElement = document.createElement("img");
         imageElement.classList.add("instagram-post-image");
-        imageElement.setAttribute("src", instaPost.imageUrl);
+        imageElement.setAttribute("data-src", instaPost.imageUrl);
 
         let mediaDataCommentsImg = document.createElement("i");
         mediaDataCommentsImg.classList.add("instagram-post-comments");
@@ -2413,8 +2413,15 @@
         let element = null;
         element = document.getElementById(sectionID);
         element.innerHTML = "";
-        postsArray.forEach((post) => {
-          element.appendChild(generatePostItem(post));
+        splitDo(postsArray, 9, (posts) => {
+          let container = generateSliderContainer(
+            "div",
+            "instagram-section-container"
+          );
+          posts.forEach((post) => {
+            container.appendChild(generatePostItem(post));
+          });
+          element.appendChild(container);
         });
       };
 
@@ -2431,26 +2438,36 @@
       };
 
       const instagramPostComparator = (firstPost, secondPost) => {
-        return firstPost.comments + firstPost.likes < secondPost.comments + secondPost.likes ? 1 : -1;
+        return firstPost.comments + firstPost.likes <
+          secondPost.comments + secondPost.likes
+          ? 1
+          : -1;
       };
 
       const transformInstagramResponse = async (response) => {
-        const ONLY_VALUE = 0, ITEMS = 4;
+        const ONLY_VALUE = 0,
+          ITEMS = 4;
         // console.log("instagrams before transform: ", response);
-        let instagrams =
-          response.body.children[ITEMS].innerHTML;
+        let instagrams = response.body.children[ITEMS].innerHTML;
         instagrams = instagrams.match(/{.*}/gm);
         instagrams = JSON.parse(instagrams[ONLY_VALUE]);
-        let instagramsTransformed = instagrams.entry_data.TagPage[ONLY_VALUE].graphql.hashtag.edge_hashtag_to_top_posts.edges;
-        instagramsTransformed.push(...instagrams.entry_data.TagPage[ONLY_VALUE].graphql.hashtag.edge_hashtag_to_media.edges);
-        instagramsTransformed = instagramsTransformed.map((post) => transformPost(post));
+        let instagramsTransformed =
+          instagrams.entry_data.TagPage[ONLY_VALUE].graphql.hashtag
+            .edge_hashtag_to_top_posts.edges;
+        instagramsTransformed.push(
+          ...instagrams.entry_data.TagPage[ONLY_VALUE].graphql.hashtag
+            .edge_hashtag_to_media.edges
+        );
+        instagramsTransformed = instagramsTransformed.map((post) =>
+          transformPost(post)
+        );
         // console.log("instagrams middle transform: ", instagrams);
 
         instagramsTransformed = instagramsTransformed.sort(
           instagramPostComparator
         );
         // console.log("instagrams middle transform: ", instagramsTransformed);
-        instagramsTransformed = instagramsTransformed.slice(0, 18);
+        instagramsTransformed = instagramsTransformed.slice(0, 27);
         // console.log("instagrams after transform: ", instagramsTransformed);
         return instagramsTransformed;
       };
@@ -2463,12 +2480,12 @@
         let postsTransformed = await transformInstagramResponse(response);
         addSectionPosts("instagram-section", postsTransformed);
         setMaximuns("instagram", getMaxPosts(postsTransformed));
+        setInstagramSlider();
       };
 
       const InstagramInitiator = () => {
         getHTML(
-          PROXY_URL +
-            "https://www.instagram.com/explore/tags/bitcoin/",
+          PROXY_URL + "https://www.instagram.com/explore/tags/bitcoin/",
           updateInstagram
         );
       };
@@ -2534,6 +2551,27 @@
           navPosition: "bottom",
           lazyload: true,
           lazyloadSelector: ".youtube-video-image",
+        });
+        slidersOn.youtube = true;
+      };
+
+      setInstagramSlider = () => {
+        if (slidersOn.youtube) {
+          cleanPreviousSlider("instagram-slider");
+        }
+        tns({
+          container: ".instagram-slider",
+          items: 1,
+          slideBy: "page",
+          autoplay: false,
+          controls: true,
+          rewind: true,
+          mouseDrag: true,
+          controlsPosition: "bottom",
+          controlsText: ["❰", "❱"],
+          navPosition: "bottom",
+          lazyload: true,
+          lazyloadSelector: ".instagram-post-image",
         });
         slidersOn.youtube = true;
       };
