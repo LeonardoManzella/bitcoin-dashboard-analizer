@@ -1764,7 +1764,7 @@
         );
       };
 
-      setTimeout(updateAllBitcoinNews, NEXT_JS_CYCLE);
+      setTimeout(updateAllBitcoinNews, 1 * 1000);
 
       window.setInterval(() => {
         updateAllBitcoinNews();
@@ -2133,7 +2133,7 @@
       setTimeout(() => {
         getYoutubeWeeklyVideos();
         getYoutubeDaylyVideos();
-      }, NEXT_JS_CYCLE);
+      }, 3 * 1000);
 
       window.setInterval(() => {
         getYoutubeWeeklyVideos();
@@ -2250,7 +2250,7 @@
         );
       };
 
-      setTimeout(updateTwitterInitiation, NEXT_JS_CYCLE);
+      setTimeout(updateTwitterInitiation, 2 * 1000);
 
       window.setInterval(() => {
         updateTwitterInitiation();
@@ -2347,7 +2347,7 @@
         );
       };
 
-      setTimeout(updateBolsasInitiator, NEXT_JS_CYCLE);
+      setTimeout(updateBolsasInitiator, 1 * 1000);
 
       window.setInterval(() => {
         updateBolsasInitiator();
@@ -2490,7 +2490,7 @@
         );
       };
 
-      setTimeout(InstagramInitiator, NEXT_JS_CYCLE);
+      setTimeout(InstagramInitiator, 3 * 1000);
 
       window.setInterval(() => {
         InstagramInitiator();
@@ -2556,7 +2556,7 @@
       };
 
       setInstagramSlider = () => {
-        if (slidersOn.youtube) {
+        if (slidersOn.instagram) {
           cleanPreviousSlider("instagram-slider");
         }
         tns({
@@ -2573,7 +2573,7 @@
           lazyload: true,
           lazyloadSelector: ".instagram-post-image",
         });
-        slidersOn.youtube = true;
+        slidersOn.instagram = true;
       };
     </script>
   </body>
