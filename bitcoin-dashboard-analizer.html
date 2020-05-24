@@ -403,7 +403,10 @@
       background-color: #f7f7f7;
     }
     .youtube-video-image {
+      min-height: 10rem;
+      min-width: 17.5rem;
       max-height: 10rem;
+      max-width: 17.5rem;
     }
     div.youtube-content-container {
       margin-left: 0.5rem;
@@ -1974,7 +1977,7 @@
         let imageElement = document.createElement("img");
         imageElement.classList.add("youtube-video-image");
         imageElement.setAttribute(
-          "src",
+          "data-src",
           video.thumbnail.thumbnails[video.thumbnail.thumbnails.length - 1].url
         );
 
@@ -2525,11 +2528,15 @@
 
     <script type="text/javascript">
       const cleanPreviousSlider = (className) => {
-        const FIRST = 0;
+        const FIRST = 0,
+          NAV = 2,
+          CONTROLS = 3;
         let elements = document.getElementsByClassName(className);
         if (!elements || elements <= 0) return;
-        elements[FIRST].parentElement.parentElement.parentElement.remove(2);
-        elements[FIRST].parentElement.parentElement.parentElement.remove(3);
+        let selectedElem =
+          elements[FIRST].parentElement.parentElement.parentElement.children;
+        selectedElem[CONTROLS].remove();
+        selectedElem[NAV].remove();
       };
 
       let slidersOn = {};
@@ -2567,6 +2574,8 @@
           controlsPosition: "bottom",
           controlsText: ["❰", "❱"],
           navPosition: "bottom",
+          lazyload: true,
+          lazyloadSelector: ".youtube-video-image",
         });
         slidersOn.youtube = true;
       };
