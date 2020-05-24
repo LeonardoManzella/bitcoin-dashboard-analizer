@@ -1831,13 +1831,13 @@
         let ws = new WebSocket(RIPIO_DATA_URL(topic, my_suscription));
         ws.onmessage = function (event) {
           if (!event.data) return;
-          console.log("Ripio WS: ", event.data);
+          // console.log("Ripio WS: ", event.data);
 
           //Reply Ok to message received so it doesn't send again
           let ackMsg = { messageId: event.data.messageId };
           ws.send(JSON.stringify(ackMsg));
 
-          console.log("Ripio Price: ", atob(JSON.parse(event.data).payload));
+          // console.log("Ripio Price: ", atob(JSON.parse(event.data).payload));
           let ripioData = {};
           ripioData.price =
             obtainRipioPrice(JSON.parse(atob(JSON.parse(event.data).payload))) *
