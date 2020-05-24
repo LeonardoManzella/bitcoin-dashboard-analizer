@@ -26,6 +26,12 @@
       type="text/css"
       href="https://unpkg.com/augmented-ui/augmented.css"
     />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/tiny-slider.css"
+    />
   </head>
 
   <style type="text/css">
@@ -243,7 +249,8 @@
       width: 32rem;
       margin-bottom: 2rem;
     }
-    div.news-section {
+    div.news-section,
+    div.youtube-section {
       min-height: 2.5rem;
       height: fit-content;
       display: flex;
@@ -357,6 +364,10 @@
       font-weight: 700;
       font-size: 130%;
     }
+    div.youtube-section {
+      display: inline-flex !important;
+      justify-content: center;
+    }
     a.video-item {
       text-decoration: none;
       font-family: BlenderProBold, sans-serif;
@@ -364,7 +375,7 @@
       line-height: normal;
       color: #f7f7f7;
       display: inline-block;
-      width: 47%;
+      width: 33%;
       height: fit-content;
       margin: 7px;
       --aug-border: 2px;
@@ -392,7 +403,10 @@
       background-color: #f7f7f7;
     }
     .youtube-video-image {
+      min-height: 10rem;
+      min-width: 17.5rem;
       max-height: 10rem;
+      max-width: 17.5rem;
     }
     div.youtube-content-container {
       margin-left: 0.5rem;
@@ -466,19 +480,22 @@
       --aug-t: 5px;
       --aug-t-width: 40%;
     }
-    .table-section-container {
+    .table-section-border {
       border: 1px solid #2f96f3;
       border-bottom: 4px solid #2f96f3;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
       padding: 10px 0;
       margin-right: 1px;
       margin-left: 1px;
       margin-top: -1px;
+    }
+    .table-section-container {
+      display: inline-flex !important;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
     }
     .hashtag-section-item {
       font-family: BlenderProBold, sans-serif;
@@ -514,6 +531,7 @@
       text-decoration: none;
     }
     .instagram-post-image {
+      min-height: 21rem;
       max-height: 21rem;
     }
     .instagram-post-media-data {
@@ -546,6 +564,38 @@
       text-transform: none;
       line-height: 1;
       -webkit-font-smoothing: antialiased;
+    }
+    .tns-outer {
+      padding: 0 !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tns-nav > [aria-controls] {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      margin: 0 5px;
+      border-radius: 50%;
+      background: #ddd;
+      border: 0;
+    }
+    .tns-nav > .tns-nav-active {
+      background: #2f96f3;
+    }
+    .tns-controls > [aria-controls] {
+      background-color: transparent;
+      color: #2f96f3;
+      border: none;
+      padding: 0.5rem 1.5rem;
+    }
+    .noselect {
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
     }
   </style>
 
@@ -776,160 +826,164 @@
         <div>Retweets</div>
         <div>Exposure / hora</div>
       </div>
-      <table id="twitter-section" class="table-section-container">
-        <tr>
-          <td>
-            <div class="loader" augmented-ui="br-clip tl-clip exe">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                style="
-                  margin: -70px 0;
-                  background: transparent;
-                  display: block;
-                "
-                width="151px"
-                height="151px"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="xMidYMid"
-              >
-                <defs>
-                  <pattern
-                    id="ldio-op5tqvy0lkf-pattern"
-                    patternUnits="userSpaceOnUse"
-                    x="0"
-                    y="0"
-                    width="100"
-                    height="100"
+      <div class="table-section-border">
+        <div class="twitter-slider" id="twitter-section">
+          <table class="table-section-container noselect">
+            <tr>
+              <td>
+                <div class="loader" augmented-ui="br-clip tl-clip exe">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    style="
+                      margin: -70px 0;
+                      background: transparent;
+                      display: block;
+                    "
+                    width="151px"
+                    height="151px"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="xMidYMid"
                   >
-                    <g transform="translate(18.6061 0)">
-                      <g transform="rotate(20 50 50) scale(1.2)">
-                        <rect
-                          x="-20"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="-10"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="0"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="10"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="20"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="30"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="40"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="50"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="60"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="70"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="80"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="90"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#2f96f3"
-                        ></rect>
-                        <rect
-                          x="100"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                        <rect
-                          x="110"
-                          y="-10"
-                          width="10"
-                          height="120"
-                          fill="#131722"
-                        ></rect>
-                      </g>
-                      <animateTransform
-                        attributeName="transform"
-                        type="translate"
-                        values="0 0;26 0"
-                        keyTimes="0;1"
-                        dur="0.28328611898017s"
-                        repeatCount="indefinite"
-                      ></animateTransform>
-                    </g>
-                  </pattern>
-                </defs>
-                <rect
-                  rx="0"
-                  ry="0"
-                  x="3.5"
-                  y="42"
-                  stroke="#131722"
-                  stroke-width="2.5"
-                  width="93"
-                  height="16"
-                  fill="url(#ldio-op5tqvy0lkf-pattern)"
-                ></rect>
-              </svg>
-            </div>
-          </td>
-        </tr>
-      </table>
+                    <defs>
+                      <pattern
+                        id="ldio-op5tqvy0lkf-pattern"
+                        patternUnits="userSpaceOnUse"
+                        x="0"
+                        y="0"
+                        width="100"
+                        height="100"
+                      >
+                        <g transform="translate(18.6061 0)">
+                          <g transform="rotate(20 50 50) scale(1.2)">
+                            <rect
+                              x="-20"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="-10"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="0"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="10"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="20"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="30"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="40"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="50"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="60"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="70"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="80"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="90"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#2f96f3"
+                            ></rect>
+                            <rect
+                              x="100"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                            <rect
+                              x="110"
+                              y="-10"
+                              width="10"
+                              height="120"
+                              fill="#131722"
+                            ></rect>
+                          </g>
+                          <animateTransform
+                            attributeName="transform"
+                            type="translate"
+                            values="0 0;26 0"
+                            keyTimes="0;1"
+                            dur="0.28328611898017s"
+                            repeatCount="indefinite"
+                          ></animateTransform>
+                        </g>
+                      </pattern>
+                    </defs>
+                    <rect
+                      rx="0"
+                      ry="0"
+                      x="3.5"
+                      y="42"
+                      stroke="#131722"
+                      stroke-width="2.5"
+                      width="93"
+                      height="16"
+                      fill="url(#ldio-op5tqvy0lkf-pattern)"
+                    ></rect>
+                  </svg>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
     <!-- Bitcoin related hashtags Widget END -->
 
@@ -938,150 +992,154 @@
       <p>Videos mas vistos sobre el Bitcoin</p>
       <div augmented-ui="br-clip-x exe" style="width: 46rem;"></div>
     </div>
-    <div id="youtube-section" class="news-section">
-      <div class="loader" augmented-ui="br-clip tl-clip exe">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          style="margin: -70px 0; background: transparent; display: block;"
-          width="151px"
-          height="151px"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="xMidYMid"
-        >
-          <defs>
-            <pattern
-              id="ldio-op5tqvy0lkf-pattern"
-              patternUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="100"
-              height="100"
+    <div style="overflow-x: hidden;">
+      <div id="youtube-section" class="youtube-slider">
+        <div class="news-section">
+          <div class="loader" augmented-ui="br-clip tl-clip exe">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              style="margin: -70px 0; background: transparent; display: block;"
+              width="151px"
+              height="151px"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="xMidYMid"
             >
-              <g transform="translate(18.6061 0)">
-                <g transform="rotate(20 50 50) scale(1.2)">
-                  <rect
-                    x="-20"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="-10"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="0"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="10"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="20"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="30"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="40"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="50"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="60"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="70"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="80"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="90"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#2f96f3"
-                  ></rect>
-                  <rect
-                    x="100"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                  <rect
-                    x="110"
-                    y="-10"
-                    width="10"
-                    height="120"
-                    fill="#131722"
-                  ></rect>
-                </g>
-                <animateTransform
-                  attributeName="transform"
-                  type="translate"
-                  values="0 0;26 0"
-                  keyTimes="0;1"
-                  dur="0.28328611898017s"
-                  repeatCount="indefinite"
-                ></animateTransform>
-              </g>
-            </pattern>
-          </defs>
-          <rect
-            rx="0"
-            ry="0"
-            x="3.5"
-            y="42"
-            stroke="#131722"
-            stroke-width="2.5"
-            width="93"
-            height="16"
-            fill="url(#ldio-op5tqvy0lkf-pattern)"
-          ></rect>
-        </svg>
+              <defs>
+                <pattern
+                  id="ldio-op5tqvy0lkf-pattern"
+                  patternUnits="userSpaceOnUse"
+                  x="0"
+                  y="0"
+                  width="100"
+                  height="100"
+                >
+                  <g transform="translate(18.6061 0)">
+                    <g transform="rotate(20 50 50) scale(1.2)">
+                      <rect
+                        x="-20"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="-10"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="0"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="10"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="20"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="30"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="40"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="50"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="60"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="70"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="80"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="90"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#2f96f3"
+                      ></rect>
+                      <rect
+                        x="100"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                      <rect
+                        x="110"
+                        y="-10"
+                        width="10"
+                        height="120"
+                        fill="#131722"
+                      ></rect>
+                    </g>
+                    <animateTransform
+                      attributeName="transform"
+                      type="translate"
+                      values="0 0;26 0"
+                      keyTimes="0;1"
+                      dur="0.28328611898017s"
+                      repeatCount="indefinite"
+                    ></animateTransform>
+                  </g>
+                </pattern>
+              </defs>
+              <rect
+                rx="0"
+                ry="0"
+                x="3.5"
+                y="42"
+                stroke="#131722"
+                stroke-width="2.5"
+                width="93"
+                height="16"
+                fill="url(#ldio-op5tqvy0lkf-pattern)"
+              ></rect>
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
     <!-- Bitcoin top seen videos by influencers Widget END -->
@@ -1096,7 +1154,7 @@
       </div>
       <table
         id="instagram-section"
-        class="table-section-container"
+        class="table-section-border table-section-container"
         style="
           flex-direction: row;
           flex-wrap: wrap;
@@ -1307,12 +1365,26 @@
 
     <!-- TODO la hora esta mal, pero no vi donde, preguntar a Papa, dice 2+ horas adelantadas -->
 
-    <!-- Dolar prices updater -->
+    <!-- Common functions and constants -->
     <script type="text/javascript">
-      const URL_OFICIAL =
-        "https://mercados.ambito.com//dolar/oficial/variacion";
-      const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
-      const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
+      const splitDo = (contentArray, step, doFunction) => {
+        for (let index = 0; index < contentArray.length; index += step) {
+          let subContent = contentArray.slice(
+            index,
+            Math.min(index + step, contentArray.length)
+          );
+          doFunction(subContent);
+        }
+      };
+
+      const generateSliderContainer = (type, containerClass) => {
+        let containerElement = document.createElement(type || "table");
+        containerElement.classList.add(
+          containerClass || "table-section-container"
+        );
+        containerElement.classList.add("noselect");
+        return containerElement;
+      };
 
       const fetchData = (url, options) => {
         return fetch(url, options)
@@ -1323,6 +1395,14 @@
             console.trace();
           });
       };
+    </script>
+
+    <!-- Dolar prices updater -->
+    <script type="text/javascript">
+      const URL_OFICIAL =
+        "https://mercados.ambito.com//dolar/oficial/variacion";
+      const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
+      const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
 
       const updateDolarIndicators = () => {
         console.group("updateDolarIndicators");
@@ -1751,13 +1831,13 @@
         let ws = new WebSocket(RIPIO_DATA_URL(topic, my_suscription));
         ws.onmessage = function (event) {
           if (!event.data) return;
-          console.log("Ripio WS: ", event.data);
+          // console.log("Ripio WS: ", event.data);
 
           //Reply Ok to message received so it doesn't send again
           let ackMsg = { messageId: event.data.messageId };
           ws.send(JSON.stringify(ackMsg));
 
-          console.log("Ripio Price: ", atob(JSON.parse(event.data).payload));
+          // console.log("Ripio Price: ", atob(JSON.parse(event.data).payload));
           let ripioData = {};
           ripioData.price =
             obtainRipioPrice(JSON.parse(atob(JSON.parse(event.data).payload))) *
@@ -1773,15 +1853,6 @@
         ws.onerror = function (event) {
           console.warn("Ripio WS Error: ", event);
         };
-        // fetchData(PROXY_URL + RIPIO_DATA_URL).then((response) => {
-        //   debugger
-        //   if (!response) return;
-        // let ripioData = {};
-        // ripioData.price = obtainRipioPrice(response) - 10000;
-        // ripioData.variation = calcVariation(ripioData.price);
-        // // console.log("ripioData: ", ripioData);
-        // updateExchange(ripioData, "ripio-price", "ripio-variation");
-        // });
 
         fetchData(PROXY_URL + SATOSHI_PRICE_URL).then((response) => {
           if (!response) return;
@@ -1818,7 +1889,7 @@
       //   "__stripe_mid=fc07ee05-c462-4105-a97f-20dfe441cc60; __stripe_sid=7e628cb8-2bcc-4a80-8e84-e6470f6d8bf3; driftt_aid=bcb64773-ff8c-44c6-8144-b81658c72680; driftt_sid=ad0c28e2-a9d0-4671-bdc2-c02c501f2eb1; DFTT_END_USER_PREV_BOOTSTRAPPED=true; XSRF-TOKEN=eyJpdiI6Ik5ldWxOc25PWXROUHZSSGZkYkZpM3c9PSIsInZhbHVlIjoiUWlnY0JkS09ycWlxNXF6a3VXZVVpMTdob2xqT3ZWekFJZTFVN1NQTlZ4TkFOZ0llNTl0Mnd1aWZ0d1FwdmxveCIsIm1hYyI6IjZmMTBlMmIwMmRlZThiZmFkMmI1MzM3MjE1OTg2NDZlOGMwMmY2NzVlZmZkZWU0ZWIxZDE3OGMxMmY2YWI2MGMifQ%3D%3D; trackmyhashtag_session=eyJpdiI6Im8zS21SdWJLWjRkaXhLMkZHQ2xnR2c9PSIsInZhbHVlIjoidUViR0Zsd3JPNlF6ZjM5c0tiUFwvcWZyWTFDVml5M3E4RWFVb3VkXC8weW42MnRZNEk2WnpRRHRHV202bnpoK3BaIiwibWFjIjoiMmU2NDBiZjhhNmU1Y2ZiZDAxZmQ1YmY0YjMwNTBhNDE4YzEwOWMyNTRhY2Q0MDc5M2FiYTMyYTEwMDY2NDVjNyJ9; driftt_wmd=true";
       // fetchData(
       //   PROXY_URL +
-      //     "https://ritetag.com/best-hashtags-for/bitcoin"
+      //     "https://www.instagram.com/explore/tags/bitcoin/"
       // ,{
       //   credentials: "same-origin",
       // }
@@ -1907,7 +1978,7 @@
         let imageElement = document.createElement("img");
         imageElement.classList.add("youtube-video-image");
         imageElement.setAttribute(
-          "src",
+          "data-src",
           video.thumbnail.thumbnails[video.thumbnail.thumbnails.length - 1].url
         );
 
@@ -1968,14 +2039,20 @@
         let element = null;
         element = document.getElementById(sectionID);
         element.innerHTML = "";
-        videosArray.forEach((video) => {
-          element.appendChild(generateVideoItem(video));
+
+        splitDo(videosArray, 6, (array) => {
+          let container = generateSliderContainer("div", "youtube-section");
+          array.forEach((video) => {
+            container.appendChild(generateVideoItem(video));
+          });
+          element.appendChild(container);
         });
       };
 
       const updateYoutubeWeeklyVideos = (youtubeResponse) => {
         let youtubeVideos = transformYoutubeResponse(youtubeResponse);
         addSectionVideos("youtube-section", youtubeVideos);
+        setYoutubeSlider();
       };
 
       const getYoutubeWeeklyVideos = () => {
@@ -2144,8 +2221,13 @@
         let element = null;
         element = document.getElementById(sectionID);
         element.innerHTML = "";
-        hashtagsArray.forEach((hashtag) => {
-          element.appendChild(generateHashtagItem(hashtag));
+
+        splitDo(hashtagsArray, 8, (array) => {
+          let container = generateSliderContainer();
+          array.forEach((hashtag) => {
+            container.appendChild(generateHashtagItem(hashtag));
+          });
+          element.appendChild(container);
         });
       };
 
@@ -2158,6 +2240,7 @@
         );
         setMaximuns("twitter", maxTwitterValues);
         addHashtags("twitter-section", hashtagsTransformed);
+        setTwitterSlider();
       };
 
       const updateTwitterInitiation = () => {
@@ -2335,77 +2418,34 @@
         });
       };
 
-      const transformPosts = (posts) => {
-        // console.log("posts before transform: ", posts);
-        const contentChildren =
-          posts.body.children[3].children[0].children[0].children[0].children[0]
-            .children[0].children[0].children;
-        if (contentChildren.length < 5) return [];
-        let postsTransformed =
-          contentChildren[4].innerHTML + contentChildren[5].innerHTML;
-        postsTransformed = postsTransformed.match(
-          /(https:\/\/(www.)?instagram.*?"|\/i>.*?<\/div>)/gm
-        );
-        postsTransformed = postsTransformed.map((elem) => {
-          return elem
-            .replace(/([" ]|\/i>|<\/div>)/g, "")
-            .replace(/&amp;/g, "&");
-        });
-        let postTransformedFinished = [];
-        for (let index = 0; index < postsTransformed.length; index += 4) {
-          //These 2 if exists to skip video posts
-          if (!postsTransformed[index + 3]) {
-            break;
-          }
-          if (
-            !postsTransformed[index].includes("https://instagram") ||
-            !postsTransformed[index + 3].includes("www.instagram.com")
-          ) {
-            index -= 3;
-            continue;
-          }
-          const post = {
-            imageUrl: postsTransformed[index],
-            comments: postsTransformed[index + 1],
-            likes: postsTransformed[index + 2],
-            postUrl: postsTransformed[index + 3],
-          };
-          if (
-            postTransformedFinished.find(
-              (elem) => elem.postUrl === post.postUrl
-            )
-          ) {
-            continue;
-          }
-          postTransformedFinished.push(post);
-        }
-        // console.log("posts after transform: ", postTransformedFinished);
+      const transformPost = (post) => {
+        // console.log("post before transform: ", post);
+        let postTransformedFinished = {
+          imageUrl: post.node.thumbnail_resources[1].src,
+          comments: post.node.edge_media_to_comment.count,
+          likes: post.node.edge_liked_by.count,
+          postUrl: `https://www.instagram.com/p/${post.node.shortcode}/`,
+        };
+        // console.log("post after transform: ", postTransformedFinished);
         return postTransformedFinished;
       };
 
       const instagramPostComparator = (firstPost, secondPost) => {
-        return firstPost.postUrl < secondPost.postUrl ? 1 : -1;
+        return firstPost.comments + firstPost.likes < secondPost.comments + secondPost.likes ? 1 : -1;
       };
 
       const transformInstagramResponse = async (response) => {
+        const ONLY_VALUE = 0, ITEMS = 4;
         // console.log("instagrams before transform: ", response);
         let instagrams =
-          response.body.children[3].children[0].children[2].children[2]
-            .children[0].innerHTML;
-        instagrams = instagrams.match(/\/profile\/.*?"\>Analyze/gm);
-        instagrams = instagrams.map((elem) => {
-          const cutFrom = 0;
-          const cutUntil = elem.indexOf('"', 10);
-          return "https://ingramer.com" + elem.substring(cutFrom, cutUntil);
-        });
+          response.body.children[ITEMS].innerHTML;
+        instagrams = instagrams.match(/{.*}/gm);
+        instagrams = JSON.parse(instagrams[ONLY_VALUE]);
+        let instagramsTransformed = instagrams.entry_data.TagPage[ONLY_VALUE].graphql.hashtag.edge_hashtag_to_top_posts.edges;
+        instagramsTransformed.push(...instagrams.entry_data.TagPage[ONLY_VALUE].graphql.hashtag.edge_hashtag_to_media.edges);
+        instagramsTransformed = instagramsTransformed.map((post) => transformPost(post));
         // console.log("instagrams middle transform: ", instagrams);
-        let instagramsTransformed = [];
-        for (let current = 0; current < instagrams.length; current++) {
-          let postsObtained = await getPosts(instagrams[current]);
-          if (!postsObtained) continue;
-          postsObtained = transformPosts(postsObtained);
-          instagramsTransformed.push(...postsObtained);
-        }
+
         instagramsTransformed = instagramsTransformed.sort(
           instagramPostComparator
         );
@@ -2428,7 +2468,7 @@
       const InstagramInitiator = () => {
         getHTML(
           PROXY_URL +
-            "https://ingramer.com/tools/instagram-search/?InstagramSearchForm%5Busername%5D=bitcoin&InstagramSearchForm%5BprofileGender%5D=&InstagramSearchForm%5Bcategory%5D=&InstagramSearchForm%5BfollowersFrom%5D=1000&InstagramSearchForm%5BfollowersTo%5D=10000000000&_pjax=%23account-pjax",
+            "https://www.instagram.com/explore/tags/bitcoin/",
           updateInstagram
         );
       };
@@ -2438,6 +2478,65 @@
       window.setInterval(() => {
         InstagramInitiator();
       }, 4 * 60 * 60 * 1000);
+    </script>
+
+    <!-- Import Carousel Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+    <!-- Carousel config section -->
+
+    <script type="text/javascript">
+      const cleanPreviousSlider = (className) => {
+        const FIRST = 0,
+          NAV = 2,
+          CONTROLS = 3;
+        let elements = document.getElementsByClassName(className);
+        if (!elements || elements <= 0) return;
+        let selectedElem =
+          elements[FIRST].parentElement.parentElement.parentElement.children;
+        selectedElem[CONTROLS].remove();
+        selectedElem[NAV].remove();
+      };
+
+      let slidersOn = {};
+      setTwitterSlider = () => {
+        if (slidersOn.twitter) {
+          cleanPreviousSlider("twitter-slider");
+        }
+        tns({
+          container: ".twitter-slider",
+          items: 1,
+          slideBy: "page",
+          autoplay: false,
+          controls: true,
+          rewind: true,
+          mouseDrag: true,
+          controlsPosition: "bottom",
+          controlsText: ["❰", "❱"],
+          navPosition: "bottom",
+        });
+        slidersOn.twitter = true;
+      };
+
+      setYoutubeSlider = () => {
+        if (slidersOn.youtube) {
+          cleanPreviousSlider("youtube-slider");
+        }
+        tns({
+          container: ".youtube-slider",
+          items: 1,
+          slideBy: "page",
+          autoplay: false,
+          controls: true,
+          rewind: true,
+          mouseDrag: true,
+          controlsPosition: "bottom",
+          controlsText: ["❰", "❱"],
+          navPosition: "bottom",
+          lazyload: true,
+          lazyloadSelector: ".youtube-video-image",
+        });
+        slidersOn.youtube = true;
+      };
     </script>
   </body>
 </html>
