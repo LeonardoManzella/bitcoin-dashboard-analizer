@@ -2334,8 +2334,20 @@
         });
       };
 
+      const resetBolsaContainer = () => {
+        container = document.getElementById('bolsas-section-container');
+        container.innerHTML = `
+        <div class="bolsas-section-item">
+          <div>BOLSA</div>
+          <div>VARIACIÓN</div>
+          <div>PUNTOS</div>
+        </div>`;
+      };
+
       const updateBolsas = (response) => {
         let bolsasTransformed = transformBolsasResponse(response);
+        if(!bolsasTransformed || bolsasTransformed.length <= 0) return;
+        resetBolsaContainer();
         addSectionBolsas("bolsas-section-container", bolsasTransformed);
       };
 
