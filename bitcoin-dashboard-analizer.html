@@ -2170,7 +2170,7 @@
             const JSON_DATA_START = 5;
             const FIRST = 0;
             response = response.substring(JSON_DATA_START);
-            // console.log("After substring oogle response: ", response);
+            // console.log("After substring google response: ", JSON.parse(response));
             response = JSON.parse(response).storySummaries.trendingStories;
             // console.log("Post send, google response: ", response);
             return response;
