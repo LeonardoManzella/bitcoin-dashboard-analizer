@@ -3068,14 +3068,21 @@
         return instagramsTransformed;
       };
 
-      const getMaxPosts = (posts) => {
-        return posts.slice(0, 5).map((post) => post.likes);
+      const getMaxPostsAudience = (posts) => {
+        const UPDATED_ENGAGEMENT = 1.22;
+        return posts
+          .slice(0, 5)
+          .map((post) =>
+            Math.round(
+              ((post.comments + post.likes) / UPDATED_ENGAGEMENT) * 100
+            )
+          );
       };
 
       const updateInstagram = async (response) => {
         let postsTransformed = await transformInstagramResponse(response);
         addSectionPosts("instagram-section", postsTransformed);
-        setMaximums("instagram", getMaxPosts(postsTransformed));
+        setMaximums("instagram", getMaxPostsAudience(postsTransformed));
         setInstagramSlider();
       };
 
