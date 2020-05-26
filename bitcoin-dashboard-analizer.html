@@ -3278,7 +3278,7 @@
             try {
               fetchData(GOOGLE_SEARCH_BASE_URL(country)).then((data) => {
                 // console.log("search-statistics:", data.bitcoin.search_volume);
-                bitcoinSearchesTotal += data.bitcoin.search_volume;
+                bitcoinSearchesTotal += data.bitcoin ? data.bitcoin.search_volume : 0;
                 // console.log("bitcoinSearchesTotal: ", bitcoinSearchesTotal);
               });
             } catch (error) {
@@ -3324,14 +3324,14 @@
       let bitcoinNewsTotal = 0;
 
       const updateMaxNews = async (url, articleValidator) => {
-        console.log(`calling updateMaxNews ${url}`);
+        // console.log(`calling updateMaxNews ${url}`);
         try {
           let news = await obtainGoogleNews(url);
           if (!news) {
             return;
           }
           news = transformNews(news, articleValidator);
-          console.log("newsTransformed: ", news);
+          // console.log("newsTransformed: ", news);
           bitcoinNewsTotal += news
             .map((news) => getNews(news.searchs))
             .reduce(function (accumulator, currentValue) {
