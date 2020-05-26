@@ -49,17 +49,43 @@
       border-top-left-radius: 40px;
       border-bottom-left-radius: 40px;
     }
-
     div.bitcoin-tradingview {
       --aug-border: 5px;
       /* padding: 10px;  mind the gap */
       text-align: center;
       --aug-border-bg: #131722;
       --aug-inset-bg: #131722;
-      --aug-bl: 30px;
-      --aug-br: 30px;
-      --aug-b-height: 30px;
+      --aug-bl: 20px;
+      --aug-br: 20px;
+      --aug-b-height: 10px;
       --aug-b-width: 20%;
+    }
+    .summary-container {
+      background-color: #131722;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      padding: 2rem 0.5rem 2.5rem 0;
+    }
+    .summary-sources {
+      height: 31rem;
+      width: 52.5rem;
+      background-color: #302f31;
+    }
+    .summary-side-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .summary-side-up,
+    .summary-side-down {
+      height: 15rem;
+      width: 25rem;
+      background-color: #302f31;
+    }
+    .summary-side-up {
+    }
+    .summary-side-down {
     }
     div.google-bitcoin-trends {
       --aug-border: 5px;
@@ -608,13 +634,13 @@
   </style>
 
   <body style="background-color: #131722; margin: 0;">
-    <!-- TradingView Widget BEGIN -->
     <div
       id="bitcoin-tradingview"
       class="bitcoin-tradingview"
       augmented-ui="br-clip b-clip-x bl-clip exe"
       style="z-index: 1000;"
     >
+      <!-- TradingView Widget BEGIN -->
       <div class="tradingview-widget-container">
         <div id="tradingview_4699e"></div>
         <div class="tradingview-widget-copyright">
@@ -646,10 +672,36 @@
             save_image: false,
             container_id: "tradingview_4699e",
           });
+          //Remove copyright
+          document
+            .getElementsByClassName("tradingview-widget-copyright")[0]
+            .remove();
         </script>
+        <!-- TradingView Widget END -->
       </div>
+
+      <!-- Global Summary BEGIN -->
+      <div class="summary-container">
+        <div
+          id="summary-sources"
+          class="summary-sources"
+          augmented-ui="tl-clip bl-clip exe"
+        ></div>
+        <div class="summary-side-container">
+          <div
+            id="summary-side-up"
+            class="summary-side-up"
+            augmented-ui="tr-clip exe"
+          ></div>
+          <div
+            id="summary-side-down"
+            class="summary-side-down"
+            augmented-ui="br-clip exe"
+          ></div>
+        </div>
+      </div>
+      <!-- Global Summary END -->
     </div>
-    <!-- TradingView Widget END -->
 
     <!-- Bitcoin Global Trends Widget BEGIN -->
     <div
@@ -830,9 +882,15 @@
         augmented-ui="tr-clip tl-clip t-clip-x exe"
       >
         <div style="margin-right: 3rem;">Twitter Hashtag</div>
-        <div>Tweets</div>
-        <div>Retweets</div>
-        <div>Exposure / hora</div>
+        <div>
+          Tweets <sub><small>x hora</small></sub>
+        </div>
+        <div>
+          Comparticiones <sub><small>x hora</small></sub>
+        </div>
+        <div>
+          Vistas <sub><small>x hora</small></sub>
+        </div>
       </div>
       <div class="table-section-border">
         <div id="twitter-section" class="twitter-slider">
@@ -1363,10 +1421,16 @@
     >
     </a>
 
-    <!-- TODO la hora esta mal, pero no vi donde, preguntar a Papa, dice 2+ horas adelantadas -->
+    <!-- Moment -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js"></script>
+    <script>
+      moment().format();
+    </script>
 
     <!-- Common functions and constants -->
     <script type="text/javascript">
+      const TODAY = moment().format("YYYY-MM-DD");
+
       const splitDo = (contentArray, step, doFunction) => {
         for (let index = 0; index < contentArray.length; index += step) {
           let subContent = contentArray.slice(
@@ -1395,6 +1459,565 @@
             console.trace();
           });
       };
+
+      const MAXIMUMS = "MAXIMUNS";
+      const getMaximums = () => {
+        let maximums = window.localStorage.getItem(MAXIMUMS);
+        maximums = JSON.parse(maximums);
+
+        if (!maximums) {
+          maximums = {
+            daily: {
+              searchs: {},
+              news: {},
+              youtube: {},
+              twitter: {},
+              instagram: {},
+              tiktok: {},
+            },
+            total: 0,
+          };
+          maximums.daily.searchs[TODAY] = 0;
+          maximums.daily.news[TODAY] = 0;
+          maximums.daily.youtube[TODAY] = 0;
+          maximums.daily.twitter[TODAY] = 0;
+          maximums.daily.instagram[TODAY] = 0;
+          maximums.daily.tiktok[TODAY] = 0;
+        }
+
+        return maximums;
+      };
+
+      const getTotalsNow = () => {
+        let maximums = getMaximums();
+        const getMaxforType = (type) => {
+          return maximums.daily[type][TODAY] ? maximums.daily[type][TODAY] : 0;
+        };
+        return (
+          getMaxforType("searchs") +
+          getMaxforType("news") +
+          getMaxforType("youtube") +
+          getMaxforType("twitter") +
+          getMaxforType("instagram") +
+          getMaxforType("tiktok")
+        );
+      };
+
+      const setMaximums = (type, valueArray) => {
+        let maximums = getMaximums();
+        let maxDayType = Math.max(...valueArray, maximums.daily[type][TODAY]);
+        console.log(`maxDayType ${type}: ${maxDayType}`);
+        maximums.daily[type][TODAY] = maxDayType;
+        maximums.total = Math.max(maximums.total, getTotalsNow());
+        console.log(`Total max updated to: ${maximums.total}`);
+        window.localStorage.setItem(MAXIMUMS, JSON.stringify(maximums));
+      };
+    </script>
+
+    <!-- Import Charting library -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/item-series.js"></script>
+
+    <!-- Generate Charts -->
+    <script type="text/javascript">
+      const substractDay = (day) => {
+        return moment(day).subtract(1, "days").format("YYYY-MM-DD");
+      };
+
+      const transformValue = (value) => {
+        if (!value) return null;
+        return value;
+      };
+
+      const getLastData = (type, count, lastMaximums, day = TODAY) => {
+        const maximums = lastMaximums || getMaximums();
+        if (count == 1) return [transformValue(maximums.daily[type][day])];
+        return [
+          ...getLastData(type, count - 1, maximums, substractDay(day)),
+          transformValue(maximums.daily[type][day]),
+        ];
+      };
+
+      const getSourcesLastData = () => {
+        return {
+          searchs: getLastData("searchs", 10),
+          news: getLastData("news", 10),
+          twitter: getLastData("twitter", 10),
+          youtube: getLastData("youtube", 10),
+          instagram: getLastData("instagram", 10),
+          tiktok: getLastData("tiktok", 10),
+        };
+      };
+      // Set Dark Theme
+      Highcharts.createElement(
+        "link",
+        {
+          href: "https://fonts.googleapis.com/css?family=Unica+One",
+          rel: "stylesheet",
+          type: "text/css",
+        },
+        null,
+        document.getElementsByTagName("head")[0]
+      );
+      Highcharts.theme = {
+        colors: [
+          "#2b908f",
+          "#90ee7e",
+          "#f45b5b",
+          "#7798BF",
+          "#aaeeee",
+          "#ff0066",
+          "#eeaaee",
+          "#55BF3B",
+          "#DF5353",
+          "#7798BF",
+          "#aaeeee",
+        ],
+        chart: {
+          backgroundColor: {
+            linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+            stops: [
+              [0, "#2a2a2b"],
+              [1, "#3e3e40"],
+            ],
+          },
+          style: {
+            fontFamily: "'Unica One', sans-serif",
+          },
+          plotBorderColor: "#606063",
+        },
+        title: {
+          style: {
+            color: "#E0E0E3",
+            textTransform: "uppercase",
+            fontSize: "20px",
+          },
+        },
+        subtitle: {
+          style: {
+            color: "#E0E0E3",
+            textTransform: "uppercase",
+          },
+        },
+        xAxis: {
+          gridLineColor: "#707073",
+          labels: {
+            style: {
+              color: "#E0E0E3",
+            },
+          },
+          lineColor: "#707073",
+          minorGridLineColor: "#505053",
+          tickColor: "#707073",
+          title: {
+            style: {
+              color: "#A0A0A3",
+            },
+          },
+        },
+        yAxis: {
+          gridLineColor: "#707073",
+          labels: {
+            style: {
+              color: "#E0E0E3",
+            },
+          },
+          lineColor: "#707073",
+          minorGridLineColor: "#505053",
+          tickColor: "#707073",
+          tickWidth: 1,
+          title: {
+            style: {
+              color: "#A0A0A3",
+            },
+          },
+        },
+        tooltip: {
+          backgroundColor: "rgba(0, 0, 0, 0.85)",
+          style: {
+            color: "#F0F0F0",
+          },
+        },
+        plotOptions: {
+          series: {
+            dataLabels: {
+              color: "#F0F0F3",
+              style: {
+                fontSize: "13px",
+              },
+            },
+            marker: {
+              lineColor: "#333",
+            },
+          },
+          boxplot: {
+            fillColor: "#505053",
+          },
+          candlestick: {
+            lineColor: "white",
+          },
+          errorbar: {
+            color: "white",
+          },
+        },
+        legend: {
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          itemStyle: {
+            color: "#E0E0E3",
+          },
+          itemHoverStyle: {
+            color: "#FFF",
+          },
+          itemHiddenStyle: {
+            color: "#606063",
+          },
+          title: {
+            style: {
+              color: "#C0C0C0",
+            },
+          },
+        },
+        credits: {
+          style: {
+            color: "#666",
+          },
+        },
+        labels: {
+          style: {
+            color: "#707073",
+          },
+        },
+        drilldown: {
+          activeAxisLabelStyle: {
+            color: "#F0F0F3",
+          },
+          activeDataLabelStyle: {
+            color: "#F0F0F3",
+          },
+        },
+        navigation: {
+          buttonOptions: {
+            symbolStroke: "#DDDDDD",
+            theme: {
+              fill: "#505053",
+            },
+          },
+        },
+        // scroll charts
+        rangeSelector: {
+          buttonTheme: {
+            fill: "#505053",
+            stroke: "#000000",
+            style: {
+              color: "#CCC",
+            },
+            states: {
+              hover: {
+                fill: "#707073",
+                stroke: "#000000",
+                style: {
+                  color: "white",
+                },
+              },
+              select: {
+                fill: "#000003",
+                stroke: "#000000",
+                style: {
+                  color: "white",
+                },
+              },
+            },
+          },
+          inputBoxBorderColor: "#505053",
+          inputStyle: {
+            backgroundColor: "#333",
+            color: "silver",
+          },
+          labelStyle: {
+            color: "silver",
+          },
+        },
+        navigator: {
+          handles: {
+            backgroundColor: "#666",
+            borderColor: "#AAA",
+          },
+          outlineColor: "#CCC",
+          maskFill: "rgba(255,255,255,0.1)",
+          series: {
+            color: "#7798BF",
+            lineColor: "#A6C7ED",
+          },
+          xAxis: {
+            gridLineColor: "#505053",
+          },
+        },
+        scrollbar: {
+          barBackgroundColor: "#808083",
+          barBorderColor: "#808083",
+          buttonArrowColor: "#CCC",
+          buttonBackgroundColor: "#606063",
+          buttonBorderColor: "#606063",
+          rifleColor: "#FFF",
+          trackBackgroundColor: "#404043",
+          trackBorderColor: "#404043",
+        },
+      };
+      // Apply the theme
+      Highcharts.setOptions(Highcharts.theme);
+
+      let sourcesLastData = getSourcesLastData();
+
+      let summarySurces = Highcharts.chart("summary-sources", {
+        chart: {
+          type: "area",
+        },
+        title: {
+          text: "Interes a lo largo del tiempo",
+        },
+        subtitle: {
+          align: "right",
+          verticalAlign: "bottom",
+        },
+        legend: {
+          layout: "vertical",
+          align: "left",
+          verticalAlign: "top",
+          x: 100,
+          y: 10,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || "#FFFFFF",
+        },
+        xAxis: {
+          categories: [
+            "Hace 9 días",
+            "Hace 8 días",
+            "Hace 7 días",
+            "Hace 6 días",
+            "Hace 5 días",
+            "Hace 4 días",
+            "Hace 3 días",
+            "Hace 2 días",
+            "Ayer",
+            "Ahora",
+          ],
+        },
+        yAxis: {
+          title: {
+            text: "N° de personas",
+          },
+          type: "logarithmic",
+        },
+        plotOptions: {
+          area: {
+            fillOpacity: 0.5,
+          },
+        },
+        credits: {
+          enabled: false,
+        },
+        series: [
+          {
+            name: "Busquedas",
+            data: sourcesLastData.searchs,
+            color: "#64A12D",
+          },
+          {
+            name: "Noticias",
+            data: sourcesLastData.news,
+            color: "#FFED00",
+          },
+          {
+            name: "Youtube",
+            data: sourcesLastData.youtube,
+            color: "#EB001F",
+          },
+          {
+            name: "Twitter",
+            data: sourcesLastData.twitter,
+            color: "#008AC5",
+          },
+          {
+            name: "Instagram",
+            data: sourcesLastData.instagram,
+            color: "#BE3075",
+          },
+          {
+            name: "Tiktok",
+            data: sourcesLastData.tiktok,
+            color: "#000000",
+          },
+        ],
+      });
+
+      let gaugeOptions = {
+        chart: {
+          type: "solidgauge",
+        },
+
+        title: null,
+
+        pane: {
+          center: ["50%", "95%"],
+          size: "163%",
+          startAngle: -90,
+          endAngle: 90,
+          background: {
+            backgroundColor:
+              Highcharts.defaultOptions.legend.backgroundColor || "#EEE",
+            innerRadius: "60%",
+            outerRadius: "100%",
+            shape: "arc",
+          },
+        },
+
+        exporting: {
+          enabled: false,
+        },
+
+        tooltip: {
+          enabled: false,
+        },
+
+        // the value axis
+        yAxis: {
+          stops: [
+            [0.1, "#64A12D"], // green
+            [0.5, "#FFED00"], // yellow
+            [0.9, "#EB001F"], // red
+          ],
+          lineWidth: 0,
+          tickWidth: 0,
+          minorTickInterval: null,
+          tickAmount: 2,
+          title: {
+            y: -100,
+          },
+          labels: {
+            y: 16,
+          },
+        },
+
+        plotOptions: {
+          solidgauge: {
+            dataLabels: {
+              y: 10,
+              x: 5,
+              borderWidth: 0,
+              useHTML: true,
+            },
+          },
+        },
+      };
+
+      let summarySideUp = Highcharts.chart(
+        "summary-side-up",
+        Highcharts.merge(gaugeOptions, {
+          yAxis: {
+            min: 0,
+            max: getMaximums().total,
+            title: {
+              text: "Interes actual",
+            },
+          },
+
+          credits: {
+            enabled: false,
+          },
+
+          series: [
+            {
+              name: "Interes actual",
+              data: [getTotalsNow()],
+              dataLabels: {
+                format:
+                  '<div style="text-align:center">' +
+                  '<span style="font-size:25px">{y}</span><br/>' +
+                  '<span style="font-size:12px;opacity:0.4">personas actualmente</span>' +
+                  '<span style="font-size:12px;opacity:0.4"><br>comparado con el maximo</span>' +
+                  '<span style="font-size:12px;opacity:0.4"><br>registrado</span>' +
+                  "</div>",
+              },
+              tooltip: {
+                valueSuffix: " per/max",
+              },
+            },
+          ],
+        })
+      );
+
+      const getParcialTotal = (type) => {
+        return Math.ceil(
+          ((getMaximums().daily[type][TODAY]
+            ? getMaximums().daily[type][TODAY]
+            : 0) /
+            getTotalsNow()) *
+            100
+        );
+      };
+
+      const getParlamentChartData = () => {
+        return [
+          ["Busquedas", getParcialTotal("searchs"), "#64A12D", "Busquedas"],
+          ["Noticias", getParcialTotal("news"), "#FFED00", "Noticias"],
+          ["Twitter", getParcialTotal("twitter"), "#008AC5", "Twitter"],
+          ["Youtube", getParcialTotal("youtube"), "#EB001F", "Youtube"],
+          ["Instagram", getParcialTotal("instagram"), "#BE3075", "Instagram"],
+          ["TikTok", getParcialTotal("tiktok"), "#000000", "TikTok"],
+        ];
+      };
+
+      let summarySideDown = Highcharts.chart("summary-side-down", {
+        chart: {
+          type: "item",
+        },
+
+        title: {
+          text: "",
+        },
+
+        legend: {
+          labelFormat: '{name} <span style="opacity: 0.4">{y}</span>',
+        },
+
+        series: [
+          {
+            name: "% Personas",
+            keys: ["name", "y", "color", "label"],
+            data: getParlamentChartData(),
+            dataLabels: {
+              enabled: false,
+              format: "{point.label*100}",
+            },
+
+            // Circular options
+            center: ["50%", "130%"],
+            size: "290%",
+            startAngle: -90,
+            endAngle: 90,
+          },
+        ],
+      });
+
+      //Remove credits
+      document.getElementsByClassName("highcharts-credits")[0].remove();
+
+      //Update data
+      setTimeout(() => {
+        sourcesLastData = getSourcesLastData();
+        summarySurces.series[0].setData(sourcesLastData.news);
+        summarySurces.series[1].setData(sourcesLastData.searchs);
+        summarySurces.series[2].setData(sourcesLastData.youtube);
+        summarySurces.series[3].setData(sourcesLastData.twitter);
+        summarySurces.series[4].setData(sourcesLastData.instagram);
+        summarySurces.series[5].setData(sourcesLastData.tiktok);
+        summarySideUp.series[0].setData([getTotalsNow()]);
+        summarySideDown.series[0].setData(getParlamentChartData());
+      }, 60 * 60 * 1000);
     </script>
 
     <!-- Dolar prices updater -->
@@ -1547,13 +2170,22 @@
             const JSON_DATA_START = 5;
             const FIRST = 0;
             response = response.substring(JSON_DATA_START);
-            // console.log("After substring oogle response: ", response);
-            response = JSON.parse(response).storySummaries.trendingStories;
-            // console.log("Post send, google response: ", response);
-            return response;
+            // console.log("After substring google response: ", JSON.parse(response));
+            response = JSON.parse(response);
+            let responseToReturn = [];
+            if (response.storySummaries) {
+              responseToReturn = response.storySummaries.trendingStories;
+            } else {
+              response.default.trendingSearchesDays.forEach((searches) => {
+                responseToReturn.push(...searches.trendingSearches);
+              });
+            }
+
+            // console.log("Post send, google response: ", responseToReturn);
+            return responseToReturn;
           })
           .catch(function (error) {
-            console.error("--- Error Detected ---");
+            console.error("--- Error Detected obtainGoogleNews ---");
             console.error(error);
             console.trace();
           });
@@ -1655,14 +2287,18 @@
           .map((news) => {
             const articleSelected = news.articles.find(articleValidator);
             return {
-              imageUrl: "https://" + news.image.imgUrl.substring(IMG_URL_START),
-              title: articleSelected.articleTitle,
+              imageUrl: news.image.imgUrl
+                ? "https://" + news.image.imgUrl.substring(IMG_URL_START)
+                : news.image.imageUrl,
+              title: articleSelected.articleTitle || articleSelected.title,
               url: articleSelected.url,
               source: articleSelected.source,
               time: articleSelected.time,
               snippet: articleSelected.snippet,
-              relatedTerms: news.entityNames,
-              searchs: news.searchs,
+              relatedTerms: news.entityNames
+                ? news.entityNames
+                : news.relatedQueries.map((elem) => elem.query),
+              searchs: news.formattedTraffic,
             };
           });
       };
@@ -1696,7 +2332,8 @@
         return (article) =>
           termsArray.some((term) => {
             return (
-              article.articleTitle.includes(term) ||
+              (article.title && article.title.includes(term)) ||
+              (article.articleTitle && article.articleTitle.includes(term)) ||
               article.url.includes(term) ||
               article.snippet.includes(term)
             );
@@ -1764,7 +2401,7 @@
         );
       };
 
-      setTimeout(updateAllBitcoinNews, 1 * 1000);
+      setTimeout(updateAllBitcoinNews, 1, 5 * 1000);
 
       window.setInterval(() => {
         updateAllBitcoinNews();
@@ -1874,12 +2511,6 @@
       window.setInterval(() => {
         updateExchangePrices();
       }, 30 * 1000);
-    </script>
-
-    <!-- Moment -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js"></script>
-    <script>
-      moment().format();
     </script>
 
     <!-- Youtube section loader -->
@@ -2067,43 +2698,6 @@
         }
       };
 
-      const MAXIMUNS = "MAXIMUNS";
-      const TODAY = moment().format("YYYY-MM-DD");
-      const getMaximuns = () => {
-        let maximuns = window.localStorage.getItem(MAXIMUNS);
-        maximuns = JSON.parse(maximuns);
-
-        if (!maximuns) {
-          maximuns = {
-            daily: {
-              searchs: {},
-              news: {},
-              youtube: {},
-              twitter: {},
-              instagram: {},
-              tiktok: {},
-            },
-            simpleText,
-          };
-          maximuns.daily.searchs[TODAY] = 0;
-          maximuns.daily.news[TODAY] = 0;
-          maximuns.daily.youtube[TODAY] = 0;
-          maximuns.daily.twitter[TODAY] = 0;
-          maximuns.daily.instagram[TODAY] = 0;
-          maximuns.daily.tiktok[TODAY] = 0;
-        }
-
-        return maximuns;
-      };
-
-      const setMaximuns = (type, valueArray) => {
-        let maximuns = getMaximuns();
-        let maxDayType = Math.max(...valueArray, maximuns.daily[type][TODAY]);
-        console.log(`maxDayType ${type}: ${maxDayType}`);
-        maximuns.daily[type][TODAY] = maxDayType;
-        window.localStorage.setItem(MAXIMUNS, JSON.stringify(maximuns));
-      };
-
       const updateYoutubeDaylyVideos = (youtubeResponse) => {
         const FIRST = 0;
         let youtubeVideos = transformYoutubeResponse(youtubeResponse);
@@ -2115,7 +2709,7 @@
             .replace(",", "")
             .replace(" vistas", "")
         );
-        setMaximuns("youtube", youtubeVideos);
+        setMaximums("youtube", youtubeVideos);
       };
 
       const getYoutubeDaylyVideos = () => {
@@ -2130,10 +2724,14 @@
         }
       };
 
-      setTimeout(() => {
-        getYoutubeWeeklyVideos();
-        getYoutubeDaylyVideos();
-      }, 3 * 1000);
+      setTimeout(
+        () => {
+          getYoutubeWeeklyVideos();
+          getYoutubeDaylyVideos();
+        },
+        4,
+        5 * 1000
+      );
 
       window.setInterval(() => {
         getYoutubeWeeklyVideos();
@@ -2238,7 +2836,7 @@
         maxTwitterValues = hashtagsTransformed.map((hashtag) =>
           hashtag.exposure.replace(/,/gi, "")
         );
-        setMaximuns("twitter", maxTwitterValues);
+        setMaximums("twitter", maxTwitterValues);
         addHashtags("twitter-section", hashtagsTransformed);
         setTwitterSlider();
       };
@@ -2250,7 +2848,7 @@
         );
       };
 
-      setTimeout(updateTwitterInitiation, 2 * 1000);
+      setTimeout(updateTwitterInitiation, 3 * 1000);
 
       window.setInterval(() => {
         updateTwitterInitiation();
@@ -2334,8 +2932,20 @@
         });
       };
 
+      const resetBolsaContainer = () => {
+        container = document.getElementById("bolsas-section-container");
+        container.innerHTML = `
+        <div class="bolsas-section-item">
+          <div>BOLSA</div>
+          <div>VARIACIÓN</div>
+          <div>PUNTOS</div>
+        </div>`;
+      };
+
       const updateBolsas = (response) => {
         let bolsasTransformed = transformBolsasResponse(response);
+        if (!bolsasTransformed || bolsasTransformed.length <= 0) return;
+        resetBolsaContainer();
         addSectionBolsas("bolsas-section-container", bolsasTransformed);
       };
 
@@ -2472,14 +3082,21 @@
         return instagramsTransformed;
       };
 
-      const getMaxPosts = (posts) => {
-        return posts.slice(0, 5).map((post) => post.likes);
+      const getMaxPostsAudience = (posts) => {
+        const UPDATED_ENGAGEMENT = 1.22;
+        return posts
+          .slice(0, 5)
+          .map((post) =>
+            Math.round(
+              ((post.comments + post.likes) / UPDATED_ENGAGEMENT) * 100
+            )
+          );
       };
 
       const updateInstagram = async (response) => {
         let postsTransformed = await transformInstagramResponse(response);
         addSectionPosts("instagram-section", postsTransformed);
-        setMaximuns("instagram", getMaxPosts(postsTransformed));
+        setMaximums("instagram", getMaxPostsAudience(postsTransformed));
         setInstagramSlider();
       };
 
@@ -2490,17 +3107,18 @@
         );
       };
 
-      setTimeout(InstagramInitiator, 3 * 1000);
+      //TODO uncomment
+      // setTimeout(InstagramInitiator, 5 * 1000);
 
-      window.setInterval(() => {
-        InstagramInitiator();
-      }, 4 * 60 * 60 * 1000);
+      // window.setInterval(() => {
+      //   InstagramInitiator();
+      // }, 4 * 60 * 60 * 1000);
     </script>
 
     <!-- Import Carousel Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-    <!-- Carousel config section -->
 
+    <!-- Carousel config section -->
     <script type="text/javascript">
       const cleanPreviousSlider = (className) => {
         const FIRST = 0,
@@ -2575,6 +3193,183 @@
         });
         slidersOn.instagram = true;
       };
+    </script>
+
+    <!-- Google Search statistics -->
+    <script type="text/javascript">
+      const GOOGLE_SEARCH_BASE_URL = (countryCode) =>
+        `https://db3.surferseo.com/keyword_surfer_keywords?country=${countryCode}&keywords=%5B%22bitcoin%22%5D`;
+      const GOOGLE_SEARCH_STATISTICS_COUNTRIES = [
+        "AR",
+        "US",
+        "AE",
+        "AT",
+        "AU",
+        "BD",
+        "BE",
+        "BG",
+        "BO",
+        "BR",
+        "CA",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CZ",
+        "DE",
+        "DK",
+        "DZ",
+        "EC",
+        "EE",
+        "EG",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GT",
+        "HK",
+        "HR",
+        "HU",
+        "ID",
+        "IE",
+        "IL",
+        "IN",
+        "IT",
+        "JP",
+        "LK",
+        "MX",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PE",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "RS",
+        "RU",
+        "SA",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TH",
+        "TN",
+        "TR",
+        "TW",
+        "UA",
+        "UY",
+        "VE",
+        "VN",
+        "ZA",
+      ];
+      let bitcoinSearchesTotal = 0;
+
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+      }
+
+      const getMaximumSearches = () => {
+        GOOGLE_SEARCH_STATISTICS_COUNTRIES.forEach((country) => {
+          setTimeout(() => {
+            try {
+              fetchData(GOOGLE_SEARCH_BASE_URL(country)).then((data) => {
+                // console.log("search-statistics:", data.bitcoin.search_volume);
+                bitcoinSearchesTotal += data.bitcoin ? data.bitcoin.search_volume : 0;
+                // console.log("bitcoinSearchesTotal: ", bitcoinSearchesTotal);
+              });
+            } catch (error) {
+              console.error(
+                `Error al obtener searchs data del pais ${country}`
+              );
+              console.error(error);
+              console.trace();
+            }
+          }, getRandomInt(4) * 1000);
+        });
+
+        setTimeout(() => {
+          setMaximums("searchs", [bitcoinSearchesTotal]);
+        }, GOOGLE_SEARCH_STATISTICS_COUNTRIES.length * 3 * 1000);
+      };
+
+      setTimeout(getMaximumSearches, 10 * 1000);
+
+      window.setInterval(() => {
+        getMaximumSearches();
+      }, 4 * 60 * 60 * 1000);
+    </script>
+
+    <!-- Google News statistics -->
+    <script type="text/javascript">
+      const GOOGLE_NEWS_BASE_URL = (countryCode) =>
+        `https://trends.google.com.ar/trends/api/dailytrends?hl=es-419&tz=180&geo=${countryCode}&ns=15`;
+      const GOOGLE_NEWS_STATISTICS_COUNTRIES = [
+        "AR",
+        "AU",
+        "CA",
+        "US",
+        "MX",
+        "NZ",
+        "GB",
+      ];
+
+      const getNews = (searchesText) => {
+        return parseInt(searchesText.replace(' K+','000').replace(' M+','000000'))
+      };
+
+      let bitcoinNewsTotal = 0;
+
+      const updateMaxNews = async (url, articleValidator) => {
+        // console.log(`calling updateMaxNews ${url}`);
+        try {
+          let news = await obtainGoogleNews(url);
+          if (!news) {
+            return;
+          }
+          news = transformNews(news, articleValidator);
+          // console.log("newsTransformed: ", news);
+          bitcoinNewsTotal += news
+            .map((news) => getNews(news.searchs))
+            .reduce(function (accumulator, currentValue) {
+              return accumulator + currentValue;
+            }, 0);
+        } catch (error) {
+          console.error("=== Error al updateNews ===");
+          console.error(error);
+          console.trace();
+        }
+      };
+
+      const getMaximumNews = () => {
+        GOOGLE_NEWS_STATISTICS_COUNTRIES.forEach((country) => {
+          setTimeout(() => {
+            try {
+              updateMaxNews(
+                GOOGLE_NEWS_BASE_URL(country),
+                validateArticleHasTerms(bitcoinTerms)
+              );
+            } catch (error) {
+              console.error(`Error al obtener news data del pais ${country}`);
+              console.error(error);
+              console.trace();
+            }
+          }, getRandomInt(3) * 1000);
+        });
+
+        setTimeout(() => {
+          setMaximums("news", [bitcoinNewsTotal]);
+        }, GOOGLE_NEWS_STATISTICS_COUNTRIES.length * 2 * 1000);
+      };
+
+      setTimeout(getMaximumNews, 10 * 1000);
+
+      window.setInterval(() => {
+        getMaximumNews();
+      }, 1 * 60 * 60 * 1000);
     </script>
   </body>
 </html>
