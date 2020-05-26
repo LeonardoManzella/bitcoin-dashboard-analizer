@@ -2171,12 +2171,21 @@
             const FIRST = 0;
             response = response.substring(JSON_DATA_START);
             // console.log("After substring google response: ", JSON.parse(response));
-            response = JSON.parse(response).storySummaries.trendingStories;
-            // console.log("Post send, google response: ", response);
-            return response;
+            response = JSON.parse(response);
+            let responseToReturn = [];
+            if (response.storySummaries) {
+              responseToReturn = response.storySummaries.trendingStories;
+            } else {
+              response.default.trendingSearchesDays.forEach((searches) => {
+                responseToReturn.push(...searches.trendingSearches);
+              });
+            }
+
+            // console.log("Post send, google response: ", responseToReturn);
+            return responseToReturn;
           })
           .catch(function (error) {
-            console.error("--- Error Detected ---");
+            console.error("--- Error Detected obtainGoogleNews ---");
             console.error(error);
             console.trace();
           });
@@ -2278,14 +2287,18 @@
           .map((news) => {
             const articleSelected = news.articles.find(articleValidator);
             return {
-              imageUrl: "https://" + news.image.imgUrl.substring(IMG_URL_START),
-              title: articleSelected.articleTitle,
+              imageUrl: news.image.imgUrl
+                ? "https://" + news.image.imgUrl.substring(IMG_URL_START)
+                : news.image.imageUrl,
+              title: articleSelected.articleTitle || articleSelected.title,
               url: articleSelected.url,
               source: articleSelected.source,
               time: articleSelected.time,
               snippet: articleSelected.snippet,
-              relatedTerms: news.entityNames,
-              searchs: news.searchs,
+              relatedTerms: news.entityNames
+                ? news.entityNames
+                : news.relatedQueries.map((elem) => elem.query),
+              searchs: news.formattedTraffic,
             };
           });
       };
@@ -2319,7 +2332,8 @@
         return (article) =>
           termsArray.some((term) => {
             return (
-              article.articleTitle.includes(term) ||
+              (article.title && article.title.includes(term)) ||
+              (article.articleTitle && article.articleTitle.includes(term)) ||
               article.url.includes(term) ||
               article.snippet.includes(term)
             );
@@ -3183,9 +3197,9 @@
 
     <!-- Google Search statistics -->
     <script type="text/javascript">
-      const BASE_URL = (countryCode) =>
+      const GOOGLE_SEARCH_BASE_URL = (countryCode) =>
         `https://db3.surferseo.com/keyword_surfer_keywords?country=${countryCode}&keywords=%5B%22bitcoin%22%5D`;
-      const ALL_COUNTRIES = [
+      const GOOGLE_SEARCH_STATISTICS_COUNTRIES = [
         "AR",
         "US",
         "AE",
@@ -3259,24 +3273,27 @@
       }
 
       const getMaximumSearches = () => {
-        ALL_COUNTRIES.forEach((country) => {
+        GOOGLE_SEARCH_STATISTICS_COUNTRIES.forEach((country) => {
           setTimeout(() => {
             try {
-              fetchData(BASE_URL(country)).then((data) => {
+              fetchData(GOOGLE_SEARCH_BASE_URL(country)).then((data) => {
                 // console.log("search-statistics:", data.bitcoin.search_volume);
                 bitcoinSearchesTotal += data.bitcoin.search_volume;
                 // console.log("bitcoinSearchesTotal: ", bitcoinSearchesTotal);
               });
             } catch (error) {
-              console.error(`Error al obtener data del pais ${country}`);
+              console.error(
+                `Error al obtener searchs data del pais ${country}`
+              );
               console.error(error);
               console.trace();
             }
           }, getRandomInt(4) * 1000);
         });
+
         setTimeout(() => {
           setMaximums("searchs", [bitcoinSearchesTotal]);
-        }, ALL_COUNTRIES.length * 3 * 1000);
+        }, GOOGLE_SEARCH_STATISTICS_COUNTRIES.length * 3 * 1000);
       };
 
       setTimeout(getMaximumSearches, 10 * 1000);
@@ -3284,6 +3301,75 @@
       window.setInterval(() => {
         getMaximumSearches();
       }, 4 * 60 * 60 * 1000);
+    </script>
+
+    <!-- Google News statistics -->
+    <script type="text/javascript">
+      const GOOGLE_NEWS_BASE_URL = (countryCode) =>
+        `https://trends.google.com.ar/trends/api/dailytrends?hl=es-419&tz=180&geo=${countryCode}&ns=15`;
+      const GOOGLE_NEWS_STATISTICS_COUNTRIES = [
+        "AR",
+        "AU",
+        "CA",
+        "US",
+        "MX",
+        "NZ",
+        "GB",
+      ];
+
+      const getNews = (searchesText) => {
+        return parseInt(searchesText.replace(' K+','000').replace(' M+','000000'))
+      };
+
+      let bitcoinNewsTotal = 0;
+
+      const updateMaxNews = async (url, articleValidator) => {
+        console.log(`calling updateMaxNews ${url}`);
+        try {
+          let news = await obtainGoogleNews(url);
+          if (!news) {
+            return;
+          }
+          news = transformNews(news, articleValidator);
+          console.log("newsTransformed: ", news);
+          bitcoinNewsTotal += news
+            .map((news) => getNews(news.searchs))
+            .reduce(function (accumulator, currentValue) {
+              return accumulator + currentValue;
+            }, 0);
+        } catch (error) {
+          console.error("=== Error al updateNews ===");
+          console.error(error);
+          console.trace();
+        }
+      };
+
+      const getMaximumNews = () => {
+        GOOGLE_NEWS_STATISTICS_COUNTRIES.forEach((country) => {
+          setTimeout(() => {
+            try {
+              updateMaxNews(
+                GOOGLE_NEWS_BASE_URL(country),
+                validateArticleHasTerms(bitcoinTerms)
+              );
+            } catch (error) {
+              console.error(`Error al obtener news data del pais ${country}`);
+              console.error(error);
+              console.trace();
+            }
+          }, getRandomInt(3) * 1000);
+        });
+
+        setTimeout(() => {
+          setMaximums("news", [bitcoinNewsTotal]);
+        }, GOOGLE_NEWS_STATISTICS_COUNTRIES.length * 2 * 1000);
+      };
+
+      setTimeout(getMaximumNews, 10 * 1000);
+
+      window.setInterval(() => {
+        getMaximumNews();
+      }, 1 * 60 * 60 * 1000);
     </script>
   </body>
 </html>
