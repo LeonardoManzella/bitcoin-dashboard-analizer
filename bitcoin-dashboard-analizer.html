@@ -3087,7 +3087,7 @@
       };
 
       //TODO uncomment
-      // setTimeout(InstagramInitiator, 5, 5 * 1000);
+      // setTimeout(InstagramInitiator, 5 * 1000);
 
       // window.setInterval(() => {
       //   InstagramInitiator();
@@ -3096,8 +3096,8 @@
 
     <!-- Import Carousel Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-    <!-- Carousel config section -->
 
+    <!-- Carousel config section -->
     <script type="text/javascript">
       const cleanPreviousSlider = (className) => {
         const FIRST = 0,
@@ -3172,6 +3172,111 @@
         });
         slidersOn.instagram = true;
       };
+    </script>
+
+    <!-- Google Search statistics -->
+    <script type="text/javascript">
+      const BASE_URL = (countryCode) =>
+        `https://db3.surferseo.com/keyword_surfer_keywords?country=${countryCode}&keywords=%5B%22bitcoin%22%5D`;
+      const ALL_COUNTRIES = [
+        "AR",
+        "US",
+        "AE",
+        "AT",
+        "AU",
+        "BD",
+        "BE",
+        "BG",
+        "BO",
+        "BR",
+        "CA",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CZ",
+        "DE",
+        "DK",
+        "DZ",
+        "EC",
+        "EE",
+        "EG",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GT",
+        "HK",
+        "HR",
+        "HU",
+        "ID",
+        "IE",
+        "IL",
+        "IN",
+        "IT",
+        "JP",
+        "LK",
+        "MX",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PE",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "RS",
+        "RU",
+        "SA",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TH",
+        "TN",
+        "TR",
+        "TW",
+        "UA",
+        "UY",
+        "VE",
+        "VN",
+        "ZA",
+      ];
+      let bitcoinSearchesTotal = 0;
+
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+      }
+
+      const getMaximumSearches = () => {
+        ALL_COUNTRIES.forEach((country) => {
+          setTimeout(() => {
+            try {
+              fetchData(BASE_URL(country)).then((data) => {
+                // console.log("search-statistics:", data.bitcoin.search_volume);
+                bitcoinSearchesTotal += data.bitcoin.search_volume;
+                // console.log("bitcoinSearchesTotal: ", bitcoinSearchesTotal);
+              });
+            } catch (error) {
+              console.error(`Error al obtener data del pais ${country}`);
+              console.error(error);
+              console.trace();
+            }
+          }, getRandomInt(4) * 1000);
+        });
+        setTimeout(() => {
+          setMaximums("searchs", [bitcoinSearchesTotal]);
+        }, ALL_COUNTRIES.length * 3 * 1000);
+      };
+
+      setTimeout(getMaximumSearches, 10 * 1000);
+
+      window.setInterval(() => {
+        getMaximumSearches();
+      }, 4 * 60 * 60 * 1000);
     </script>
   </body>
 </html>
