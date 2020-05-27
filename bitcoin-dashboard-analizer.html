@@ -1505,7 +1505,8 @@
 
       const setMaximums = (type, valueArray) => {
         let maximums = getMaximums();
-        let maxDayType = Math.max(...valueArray, maximums.daily[type][TODAY]);
+        const maxRegistered = maximums.daily[type][TODAY] || 0;
+        let maxDayType = Math.max(...valueArray, maxRegistered);
         console.log(`maxDayType ${type}: ${maxDayType}`);
         maximums.daily[type][TODAY] = maxDayType;
         maximums.total = Math.max(maximums.total, getTotalsNow());
@@ -3060,6 +3061,7 @@
         // console.log("instagrams before transform: ", response);
         let instagrams = response.body.children[ITEMS].innerHTML;
         instagrams = instagrams.match(/{.*}/gm);
+        // console.log("instagrams middle transform: ", instagrams);
         instagrams = JSON.parse(instagrams[ONLY_VALUE]);
         let instagramsTransformed =
           instagrams.entry_data.TagPage[ONLY_VALUE].graphql.hashtag
@@ -3278,7 +3280,9 @@
             try {
               fetchData(GOOGLE_SEARCH_BASE_URL(country)).then((data) => {
                 // console.log("search-statistics:", data.bitcoin.search_volume);
-                bitcoinSearchesTotal += data.bitcoin ? data.bitcoin.search_volume : 0;
+                bitcoinSearchesTotal += data.bitcoin
+                  ? data.bitcoin.search_volume
+                  : 0;
                 // console.log("bitcoinSearchesTotal: ", bitcoinSearchesTotal);
               });
             } catch (error) {
@@ -3318,7 +3322,9 @@
       ];
 
       const getNews = (searchesText) => {
-        return parseInt(searchesText.replace(' K+','000').replace(' M+','000000'))
+        return parseInt(
+          searchesText.replace(" K+", "000").replace(" M+", "000000")
+        );
       };
 
       let bitcoinNewsTotal = 0;
