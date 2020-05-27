@@ -2007,18 +2007,21 @@
       //Remove credits
       document.getElementsByClassName("highcharts-credits")[0].remove();
 
-      //Update data
-      setTimeout(() => {
+      const updateChartsData = () => {
         sourcesLastData = getSourcesLastData();
-        summarySurces.series[0].setData(sourcesLastData.news);
-        summarySurces.series[1].setData(sourcesLastData.searchs);
+        summarySurces.series[0].setData(sourcesLastData.searchs);
+        summarySurces.series[1].setData(sourcesLastData.news);
         summarySurces.series[2].setData(sourcesLastData.youtube);
         summarySurces.series[3].setData(sourcesLastData.twitter);
         summarySurces.series[4].setData(sourcesLastData.instagram);
         summarySurces.series[5].setData(sourcesLastData.tiktok);
         summarySideUp.series[0].setData([getTotalsNow()]);
         summarySideDown.series[0].setData(getParlamentChartData());
-      }, 60 * 60 * 1000);
+      };
+
+      //Update data
+      setTimeout(updateChartsData, 60 * 1000);
+      setTimeout(updateChartsData, 60 * 60 * 1000);
     </script>
 
     <!-- Dolar prices updater -->
@@ -3132,11 +3135,11 @@
       };
 
       //TODO uncomment
-      // setTimeout(InstagramInitiator, 5 * 1000);
+      setTimeout(InstagramInitiator, 5 * 1000);
 
-      // window.setInterval(() => {
-      //   InstagramInitiator();
-      // }, 4 * 60 * 60 * 1000);
+      window.setInterval(() => {
+        InstagramInitiator();
+      }, 4 * 60 * 60 * 1000);
     </script>
 
     <!-- Import Carousel Library -->
