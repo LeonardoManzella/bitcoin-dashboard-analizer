@@ -2244,9 +2244,11 @@
           });
         }
 
+        let searchsElement = document.createElement("div");
         if (article.searchs) {
-          let searchsElement = document.createElement("img");
-          searchsElement.appendChild(document.createTextNode(article.searchs));
+          searchsElement.appendChild(
+            document.createTextNode(article.searchs + " personas")
+          );
         }
 
         let sourceElement = document.createElement("div");
@@ -2281,7 +2283,7 @@
         });
       };
 
-      const transformNews = (newsArray, articleValidator) => {
+      const transformNews = (newsArray, country, articleValidator) => {
         const IMG_URL_START = 2;
         return newsArray
           .filter((news) => news.articles.some(articleValidator))
@@ -2293,6 +2295,11 @@
                 : news.image.imageUrl,
               title: articleSelected.articleTitle || articleSelected.title,
               url: articleSelected.url,
+              formattedUrl: articleSelected.url
+                .replace("https://", "")
+                .replace("http://", "")
+                .replace("www.", "")
+                .replace(/\/.*/, ""),
               source: articleSelected.source,
               time: articleSelected.time,
               snippet: articleSelected.snippet,
@@ -2300,6 +2307,7 @@
                 ? news.entityNames
                 : news.relatedQueries.map((elem) => elem.query),
               searchs: news.formattedTraffic,
+              country: country,
             };
           });
       };
@@ -2311,15 +2319,57 @@
         }
       };
 
-      const updateNews = async (sectionID, url, articleValidator) => {
+      const TRAFFIC_URL = (domainsArray, country) =>
+        `https://db3.surferseo.com/keyword_surfer_domains?country=${country}&domains=${encodeURI(
+          JSON.stringify(domainsArray)
+        )}`;
+
+      const setMaxAudience = async (newsArray, country) => {
+        const domainsArray = newsArray.map((news) => news.formattedUrl);
+        const audienceObject = await fetch(
+          TRAFFIC_URL(domainsArray, country)
+        ).then(function (response) {
+          return response.json();
+        });
+        // console.log("audienceObject: ", audienceObject);
+        return newsArray.map((news) => {
+          news.searchs = audienceObject[news.formattedUrl]
+            ? audienceObject[news.formattedUrl].traffic
+            : 0;
+          return news;
+        });
+      };
+
+      const BUSINESS_NEWS = (country) =>
+        `https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=${country}&ri=300&rs=20&sort=0`;
+
+      let maxBitcoinNews = 0;
+
+      const updateNews = async (
+        sectionID,
+        country,
+        articleValidator,
+        updateMax = false
+      ) => {
         // console.log(`calling updateNews ${sectionID}`);
         try {
-          let news = await obtainGoogleNews(url);
+          let news = await obtainGoogleNews(BUSINESS_NEWS(country));
           if (!news) {
             return;
           }
-          news = transformNews(news, articleValidator);
+          news = transformNews(news, country, articleValidator);
+          if (!news.length) {
+            return;
+          }
+          news = await setMaxAudience(news, country);
           // console.log("newsTransformed: ", news);
+          if (updateMax) {
+            maxBitcoinNews += news
+              .map((news) => news.searchs)
+              .reduce(function (accumulator, currentValue) {
+                return accumulator + currentValue;
+              }, 0);
+          }
           clearSection(sectionID);
           addSectionNews(sectionID, news);
         } catch (error) {
@@ -2341,65 +2391,37 @@
           });
       };
 
-      const ARG_BUSINESS_NEWS =
-        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=AR&ri=300&rs=20&sort=0";
       updateNews(
         "dolar-news-section",
-        ARG_BUSINESS_NEWS,
+        "AR",
         validateArticleHasTerms(["dolar", "dólar"])
       );
 
-      const AUS_BUSINESS_NEWS =
-        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=AU&ri=300&rs=20&sort=0";
-      const CAN_BUSINESS_NEWS =
-        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=CA&ri=300&rs=20&sort=0";
-      const USA_BUSINESS_NEWS =
-        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=US&ri=300&rs=20&sort=0";
-      const MEX_BUSINESS_NEWS =
-        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=MX&ri=300&rs=20&sort=0";
-      const NZ_BUSINESS_NEWS =
-        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=NZ&ri=300&rs=20&sort=0";
-      const UK_BUSINESS_NEWS =
-        "https://trends.google.com/trends/api/realtimetrends?hl=es-419&tz=180&cat=b&fi=0&fs=0&geo=GB&ri=300&rs=20&sort=0";
+      const BITCOIN_BUSINESS_NEWS_COUNTRIES = [
+        "AR",
+        "AU",
+        "CA",
+        "US",
+        "MX",
+        "NZ",
+        "GB",
+      ];
 
       const bitcoinTerms = ["bitcoin", "btc", "cripto", "crypto", "altcoin"];
 
       const updateAllBitcoinNews = () => {
-        updateNews(
-          "bitcoin-news-section",
-          ARG_BUSINESS_NEWS,
-          validateArticleHasTerms(bitcoinTerms)
-        );
-        updateNews(
-          "bitcoin-news-section",
-          AUS_BUSINESS_NEWS,
-          validateArticleHasTerms(bitcoinTerms)
-        );
-        updateNews(
-          "bitcoin-news-section",
-          CAN_BUSINESS_NEWS,
-          validateArticleHasTerms(bitcoinTerms)
-        );
-        updateNews(
-          "bitcoin-news-section",
-          USA_BUSINESS_NEWS,
-          validateArticleHasTerms(bitcoinTerms)
-        );
-        updateNews(
-          "bitcoin-news-section",
-          MEX_BUSINESS_NEWS,
-          validateArticleHasTerms(bitcoinTerms)
-        );
-        updateNews(
-          "bitcoin-news-section",
-          NZ_BUSINESS_NEWS,
-          validateArticleHasTerms(bitcoinTerms)
-        );
-        updateNews(
-          "bitcoin-news-section",
-          UK_BUSINESS_NEWS,
-          validateArticleHasTerms(bitcoinTerms)
-        );
+        BITCOIN_BUSINESS_NEWS_COUNTRIES.forEach((country) => {
+          updateNews(
+            "bitcoin-news-section",
+            country,
+            validateArticleHasTerms(bitcoinTerms),
+            true
+          );
+        });
+
+        setTimeout(() => {
+          setMaximums("news", [maxBitcoinNews]);
+        }, BITCOIN_BUSINESS_NEWS_COUNTRIES.length * 2 * 1000);
       };
 
       setTimeout(updateAllBitcoinNews, 1, 5 * 1000);
@@ -2521,7 +2543,7 @@
       //   "__stripe_mid=fc07ee05-c462-4105-a97f-20dfe441cc60; __stripe_sid=7e628cb8-2bcc-4a80-8e84-e6470f6d8bf3; driftt_aid=bcb64773-ff8c-44c6-8144-b81658c72680; driftt_sid=ad0c28e2-a9d0-4671-bdc2-c02c501f2eb1; DFTT_END_USER_PREV_BOOTSTRAPPED=true; XSRF-TOKEN=eyJpdiI6Ik5ldWxOc25PWXROUHZSSGZkYkZpM3c9PSIsInZhbHVlIjoiUWlnY0JkS09ycWlxNXF6a3VXZVVpMTdob2xqT3ZWekFJZTFVN1NQTlZ4TkFOZ0llNTl0Mnd1aWZ0d1FwdmxveCIsIm1hYyI6IjZmMTBlMmIwMmRlZThiZmFkMmI1MzM3MjE1OTg2NDZlOGMwMmY2NzVlZmZkZWU0ZWIxZDE3OGMxMmY2YWI2MGMifQ%3D%3D; trackmyhashtag_session=eyJpdiI6Im8zS21SdWJLWjRkaXhLMkZHQ2xnR2c9PSIsInZhbHVlIjoidUViR0Zsd3JPNlF6ZjM5c0tiUFwvcWZyWTFDVml5M3E4RWFVb3VkXC8weW42MnRZNEk2WnpRRHRHV202bnpoK3BaIiwibWFjIjoiMmU2NDBiZjhhNmU1Y2ZiZDAxZmQ1YmY0YjMwNTBhNDE4YzEwOWMyNTRhY2Q0MDc5M2FiYTMyYTEwMDY2NDVjNyJ9; driftt_wmd=true";
       // fetchData(
       //   PROXY_URL +
-      //     "https://www.instagram.com/explore/tags/bitcoin/"
+      //     "https://m.tiktok.com/share/item/list?secUid=&id=25059719&type=3&count=30&minCursor=0&maxCursor=0&shareUid=&lang=&verifyFp=verify_kacjmr7r_6Tl4P2yI_WQfs_4Cpp_Bxif_4zuy3Gy4VzSw&_signature=k01BFAAgEBFsC92iA9dJGJNNQAAAM2N"
       // ,{
       //   credentials: "same-origin",
       // }
@@ -3305,77 +3327,6 @@
       window.setInterval(() => {
         getMaximumSearches();
       }, 4 * 60 * 60 * 1000);
-    </script>
-
-    <!-- Google News statistics -->
-    <script type="text/javascript">
-      const GOOGLE_NEWS_BASE_URL = (countryCode) =>
-        `https://trends.google.com.ar/trends/api/dailytrends?hl=es-419&tz=180&geo=${countryCode}&ns=15`;
-      const GOOGLE_NEWS_STATISTICS_COUNTRIES = [
-        "AR",
-        "AU",
-        "CA",
-        "US",
-        "MX",
-        "NZ",
-        "GB",
-      ];
-
-      const getNews = (searchesText) => {
-        return parseInt(
-          searchesText.replace(" K+", "000").replace(" M+", "000000")
-        );
-      };
-
-      let bitcoinNewsTotal = 0;
-
-      const updateMaxNews = async (url, articleValidator) => {
-        // console.log(`calling updateMaxNews ${url}`);
-        try {
-          let news = await obtainGoogleNews(url);
-          if (!news) {
-            return;
-          }
-          news = transformNews(news, articleValidator);
-          // console.log("newsTransformed: ", news);
-          bitcoinNewsTotal += news
-            .map((news) => getNews(news.searchs))
-            .reduce(function (accumulator, currentValue) {
-              return accumulator + currentValue;
-            }, 0);
-        } catch (error) {
-          console.error("=== Error al updateNews ===");
-          console.error(error);
-          console.trace();
-        }
-      };
-
-      const getMaximumNews = () => {
-        GOOGLE_NEWS_STATISTICS_COUNTRIES.forEach((country) => {
-          setTimeout(() => {
-            try {
-              updateMaxNews(
-                GOOGLE_NEWS_BASE_URL(country),
-                validateArticleHasTerms(bitcoinTerms)
-              );
-            } catch (error) {
-              console.error(`Error al obtener news data del pais ${country}`);
-              console.error(error);
-              console.trace();
-            }
-          }, getRandomInt(3) * 1000);
-        });
-
-        setTimeout(() => {
-          setMaximums("news", [bitcoinNewsTotal]);
-        }, GOOGLE_NEWS_STATISTICS_COUNTRIES.length * 2 * 1000);
-      };
-
-      setTimeout(getMaximumNews, 10 * 1000);
-
-      window.setInterval(() => {
-        getMaximumNews();
-      }, 1 * 60 * 60 * 1000);
     </script>
   </body>
 </html>
