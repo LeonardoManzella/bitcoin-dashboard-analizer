@@ -2605,6 +2605,7 @@
         const cleanText = (video) => {
           return getPublishedTime(video)
             .replace("Transmitido ", "")
+            .replace("Emitido ", "")
             .replace(/. semana/, "9 semana");
         };
 
