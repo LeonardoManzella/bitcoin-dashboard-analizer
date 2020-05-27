@@ -2734,7 +2734,9 @@
             video.viewCountText.runs[FIRST].text
           )
             .replace(",", "")
+            .replace(".", "")
             .replace(" vistas", "")
+            .replace(" visualizaciones", "")
         );
         setMaximums("youtube", youtubeVideos);
       };
