@@ -3334,5 +3334,47 @@
         getMaximumSearches();
       }, 4 * 60 * 60 * 1000);
     </script>
+
+    <!-- Tiktok statistics -->
+    <script type="text/javascript">
+      const TIKTOK_BITCOIN_LAST = "TIKTOK_BITCOIN_LAST";
+
+      const getTiktokReach = (audienceNow) => {
+        let audienceBefore = JSON.parse(window.localStorage.getItem(TIKTOK_BITCOIN_LAST)) || {};
+        if (!audienceBefore || !audienceBefore[TODAY]) {
+          audienceBefore[TODAY] = audienceNow;
+          window.localStorage.setItem(
+            TIKTOK_BITCOIN_LAST,
+            JSON.stringify(audienceBefore)
+          );
+        }
+        return audienceNow - audienceBefore[TODAY];
+      };
+
+      const updateTikttokAnalytics = async () => {
+        const TIKTOK_BITCOIN_URL =
+          "https://m.tiktok.com/api/challenge/detail/?challengeName=bitcoin&language=es&verifyFp=verify_kacjmr7r_6Tl4P2yI_WQfs_4Cpp_Bxif_4zuy3Gy4VzSw&_signature=k01BFAAgEBFsC92iA9cO.JNNQAAAM2N";
+
+        try {
+          const audienceNow = await fetch(PROXY_URL + TIKTOK_BITCOIN_URL).then(function (
+            response
+          ) {
+            return response.json();
+          });
+          const maxAudience = getTiktokReach(audienceNow.challengeInfo.stats.viewCount);
+          setMaximums("tiktok", [maxAudience]);
+        } catch (error) {
+          console.error(" === Error al obtener estadisticas de tiktok ===");
+          console.error(error);
+          console.trace();
+        }
+      };
+
+      setTimeout(updateTikttokAnalytics, NEXT_JS_CYCLE);
+
+      window.setInterval(() => {
+        updateTikttokAnalytics();
+      }, 4 * 60 * 60 * 1000);
+    </script>
   </body>
 </html>
