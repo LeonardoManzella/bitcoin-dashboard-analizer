@@ -530,7 +530,7 @@
       font-size: 100%;
       text-transform: uppercase;
       color: #f7f7f7;
-      width: 100%;
+      /* width: 100%; */
       margin-top: 0.6rem;
     }
     .hashtag-section-item:nth-child(even) {
@@ -547,7 +547,11 @@
       width: fit-content;
     }
     .hashtag-section-item-cell {
-      width: 14.5rem;
+      width: 11rem;
+      text-align: right;
+    }
+    .hashtag-section-item-cell-mini {
+      width: 4.5rem;
       text-align: right;
     }
     .instagram-section-container {
@@ -2541,30 +2545,6 @@
 
     <!-- Youtube section loader -->
     <script type="text/javascript">
-      //TODO probar pueda obtener datos de URLs
-      // document.cookie =
-      //   "__stripe_mid=fc07ee05-c462-4105-a97f-20dfe441cc60; __stripe_sid=7e628cb8-2bcc-4a80-8e84-e6470f6d8bf3; driftt_aid=bcb64773-ff8c-44c6-8144-b81658c72680; driftt_sid=ad0c28e2-a9d0-4671-bdc2-c02c501f2eb1; DFTT_END_USER_PREV_BOOTSTRAPPED=true; XSRF-TOKEN=eyJpdiI6Ik5ldWxOc25PWXROUHZSSGZkYkZpM3c9PSIsInZhbHVlIjoiUWlnY0JkS09ycWlxNXF6a3VXZVVpMTdob2xqT3ZWekFJZTFVN1NQTlZ4TkFOZ0llNTl0Mnd1aWZ0d1FwdmxveCIsIm1hYyI6IjZmMTBlMmIwMmRlZThiZmFkMmI1MzM3MjE1OTg2NDZlOGMwMmY2NzVlZmZkZWU0ZWIxZDE3OGMxMmY2YWI2MGMifQ%3D%3D; trackmyhashtag_session=eyJpdiI6Im8zS21SdWJLWjRkaXhLMkZHQ2xnR2c9PSIsInZhbHVlIjoidUViR0Zsd3JPNlF6ZjM5c0tiUFwvcWZyWTFDVml5M3E4RWFVb3VkXC8weW42MnRZNEk2WnpRRHRHV202bnpoK3BaIiwibWFjIjoiMmU2NDBiZjhhNmU1Y2ZiZDAxZmQ1YmY0YjMwNTBhNDE4YzEwOWMyNTRhY2Q0MDc5M2FiYTMyYTEwMDY2NDVjNyJ9; driftt_wmd=true";
-      // fetchData(
-      //   PROXY_URL +
-      //     "https://m.tiktok.com/share/item/list?secUid=&id=25059719&type=3&count=30&minCursor=0&maxCursor=0&shareUid=&lang=&verifyFp=verify_kacjmr7r_6Tl4P2yI_WQfs_4Cpp_Bxif_4zuy3Gy4VzSw&_signature=k01BFAAgEBFsC92iA9dJGJNNQAAAM2N"
-      // ,{
-      //   credentials: "same-origin",
-      // }
-      // ,{
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     param1: "Prueba enviar algo",
-      //     param2: "otro mas"
-      //   }),
-      // }
-      // ).then(function (response) {
-      //   // The API call was successful!
-      //   return response.text();
-      // }
-      // ).then((response) => {
-      //   console.log("fuente: ", response);
-      // });
-
       /**
        * Get HTML asynchronously
        * @param  {String}   url      The URL to get HTML from
@@ -2589,6 +2569,37 @@
         xhr.responseType = "document";
         xhr.send();
       };
+
+      //TODO probar pueda obtener datos de URLs
+      // document.cookie =
+      //   "__stripe_mid=fc07ee05-c462-4105-a97f-20dfe441cc60; __stripe_sid=7e628cb8-2bcc-4a80-8e84-e6470f6d8bf3; driftt_aid=bcb64773-ff8c-44c6-8144-b81658c72680; driftt_sid=ad0c28e2-a9d0-4671-bdc2-c02c501f2eb1; DFTT_END_USER_PREV_BOOTSTRAPPED=true; XSRF-TOKEN=eyJpdiI6Ik5ldWxOc25PWXROUHZSSGZkYkZpM3c9PSIsInZhbHVlIjoiUWlnY0JkS09ycWlxNXF6a3VXZVVpMTdob2xqT3ZWekFJZTFVN1NQTlZ4TkFOZ0llNTl0Mnd1aWZ0d1FwdmxveCIsIm1hYyI6IjZmMTBlMmIwMmRlZThiZmFkMmI1MzM3MjE1OTg2NDZlOGMwMmY2NzVlZmZkZWU0ZWIxZDE3OGMxMmY2YWI2MGMifQ%3D%3D; trackmyhashtag_session=eyJpdiI6Im8zS21SdWJLWjRkaXhLMkZHQ2xnR2c9PSIsInZhbHVlIjoidUViR0Zsd3JPNlF6ZjM5c0tiUFwvcWZyWTFDVml5M3E4RWFVb3VkXC8weW42MnRZNEk2WnpRRHRHV202bnpoK3BaIiwibWFjIjoiMmU2NDBiZjhhNmU1Y2ZiZDAxZmQ1YmY0YjMwNTBhNDE4YzEwOWMyNTRhY2Q0MDc5M2FiYTMyYTEwMDY2NDVjNyJ9; driftt_wmd=true";
+      // fetchData(
+      //   PROXY_URL + "https://www.alexa.com/siteinfo/tiendamia.com"
+      // ,{
+      //   credentials: "same-origin",
+      // }
+      // ,{
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     param1: "Prueba enviar algo",
+      //     param2: "otro mas"
+      //   }),
+      // }
+      // )
+      // .then(function (response) {
+      //   // The API call was successful!
+      //   return response.text();
+      // })
+      // .then((response) => {
+      //   console.log("fuente: ", response);
+      // });
+
+      //Probar getHtml
+      // getHTML(
+      //   PROXY_URL +
+      //     "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
+      //   (response) => console.log("fuente html: ", response)
+      // );
 
       const getPublishedTime = (video) => {
         try {
@@ -2822,10 +2833,38 @@
           document.createTextNode(decodeHTML(hashtag.tweets))
         );
 
+        let tweetsVariationElement = document.createElement("td");
+        tweetsVariationElement.classList.add("hashtag-section-item-cell-mini");
+        tweetsVariationElement.classList.add(
+          classByNumber(hashtag.tweetsVariation)
+        );
+        tweetsVariationElement.appendChild(
+          document.createTextNode(
+            addNumSymbol(hashtag.tweetsVariation) +
+              decodeHTML(parseFloat(hashtag.tweetsVariation).toFixed(2)) +
+              "%"
+          )
+        );
+
         let retweetsElement = document.createElement("td");
         retweetsElement.classList.add("hashtag-section-item-cell");
         retweetsElement.appendChild(
           document.createTextNode(decodeHTML(hashtag.retweets))
+        );
+
+        let retweetsVariationElement = document.createElement("td");
+        retweetsVariationElement.classList.add(
+          "hashtag-section-item-cell-mini"
+        );
+        retweetsVariationElement.classList.add(
+          classByNumber(hashtag.retweetsVariation)
+        );
+        retweetsVariationElement.appendChild(
+          document.createTextNode(
+            addNumSymbol(hashtag.retweetsVariation) +
+              decodeHTML(parseFloat(hashtag.retweetsVariation).toFixed(2)) +
+              "%"
+          )
         );
 
         let exposureElement = document.createElement("td");
@@ -2834,12 +2873,30 @@
           document.createTextNode(decodeHTML(hashtag.exposure))
         );
 
+        let exposureVariationElement = document.createElement("td");
+        exposureVariationElement.classList.add(
+          "hashtag-section-item-cell-mini"
+        );
+        exposureVariationElement.classList.add(
+          classByNumber(hashtag.exposureVariation)
+        );
+        exposureVariationElement.appendChild(
+          document.createTextNode(
+            addNumSymbol(hashtag.exposureVariation) +
+              decodeHTML(parseFloat(hashtag.exposureVariation).toFixed(2)) +
+              "%"
+          )
+        );
+
         let containerElement = document.createElement("tr");
         containerElement.classList.add("hashtag-section-item");
         containerElement.appendChild(containerNameElement);
         containerElement.appendChild(tweetsElement);
+        containerElement.appendChild(tweetsVariationElement);
         containerElement.appendChild(retweetsElement);
+        containerElement.appendChild(retweetsVariationElement);
         containerElement.appendChild(exposureElement);
+        containerElement.appendChild(exposureVariationElement);
 
         return containerElement;
       };
@@ -2858,10 +2915,46 @@
         });
       };
 
+      const getVariations = (originalHashtags) => {
+        const YESTERDAY = substractDay(TODAY);
+        const LAST_TWITTER_HASHTAGS = "LAST_TWITTER_HASHTAGS";
+        let lastHashtags =
+          JSON.parse(window.localStorage.getItem(LAST_TWITTER_HASHTAGS)) || {};
+        lastHashtags[TODAY] = originalHashtags;
+        window.localStorage.setItem(
+          LAST_TWITTER_HASHTAGS,
+          JSON.stringify(lastHashtags)
+        );
+        let hashtagsWithVariations = [];
+        originalHashtags.forEach((hashtag) => {
+          const previous =
+            (lastHashtags[YESTERDAY] &&
+              lastHashtags[YESTERDAY].find(
+                (prev) => prev.name == hashtag.name
+              )) ||
+            hashtag;
+          const transformedHashtag = {
+            ...hashtag,
+            tweetsVariation:
+              (hashtag.tweets / previous.tweets) * 100 - 100 || 0,
+            retweetsVariation:
+              (hashtag.retweets / previous.retweets) * 100 - 100 || 0,
+            exposureVariation:
+              (hashtag.exposure.replace(/,/g, "") /
+                previous.exposure.replace(/,/g, "")) *
+                100 -
+                100 || 0,
+          };
+          hashtagsWithVariations.push(transformedHashtag);
+        });
+        return hashtagsWithVariations;
+      };
+
       const updateTwitterHashtags = (response) => {
         let hashtagsTransformed = transformTwitterBestHashtagsResponse(
           response
         );
+        hashtagsTransformed = getVariations(hashtagsTransformed);
         maxTwitterValues = hashtagsTransformed.map((hashtag) =>
           hashtag.exposure.replace(/,/gi, "")
         );
@@ -3340,7 +3433,8 @@
       const TIKTOK_BITCOIN_LAST = "TIKTOK_BITCOIN_LAST";
 
       const getTiktokReach = (audienceNow) => {
-        let audienceBefore = JSON.parse(window.localStorage.getItem(TIKTOK_BITCOIN_LAST)) || {};
+        let audienceBefore =
+          JSON.parse(window.localStorage.getItem(TIKTOK_BITCOIN_LAST)) || {};
         if (!audienceBefore || !audienceBefore[TODAY]) {
           audienceBefore[TODAY] = audienceNow;
           window.localStorage.setItem(
@@ -3356,12 +3450,14 @@
           "https://m.tiktok.com/api/challenge/detail/?challengeName=bitcoin&language=es&verifyFp=verify_kacjmr7r_6Tl4P2yI_WQfs_4Cpp_Bxif_4zuy3Gy4VzSw&_signature=k01BFAAgEBFsC92iA9cO.JNNQAAAM2N";
 
         try {
-          const audienceNow = await fetch(PROXY_URL + TIKTOK_BITCOIN_URL).then(function (
-            response
-          ) {
-            return response.json();
-          });
-          const maxAudience = getTiktokReach(audienceNow.challengeInfo.stats.viewCount);
+          const audienceNow = await fetch(PROXY_URL + TIKTOK_BITCOIN_URL).then(
+            function (response) {
+              return response.json();
+            }
+          );
+          const maxAudience = getTiktokReach(
+            audienceNow.challengeInfo.stats.viewCount
+          );
           setMaximums("tiktok", [maxAudience]);
         } catch (error) {
           console.error(" === Error al obtener estadisticas de tiktok ===");
