@@ -515,6 +515,7 @@
       margin-right: 1px;
       margin-left: 1px;
       margin-top: -1px;
+      overflow-x: hidden;
     }
     .table-section-container,
     .instagram-section-container {
@@ -2936,12 +2937,13 @@
           const transformedHashtag = {
             ...hashtag,
             tweetsVariation:
-              (hashtag.tweets / previous.tweets) * 100 - 100 || 0,
+              (hashtag.tweets / Math.max(previous.tweets, 1)) * 100 - 100 || 0,
             retweetsVariation:
-              (hashtag.retweets / previous.retweets) * 100 - 100 || 0,
+              (hashtag.retweets / Math.max(previous.retweets, 1)) * 100 - 100 ||
+              0,
             exposureVariation:
               (hashtag.exposure.replace(/,/g, "") /
-                previous.exposure.replace(/,/g, "")) *
+                Math.max(previous.exposure.replace(/,/g, ""), 1)) *
                 100 -
                 100 || 0,
           };
