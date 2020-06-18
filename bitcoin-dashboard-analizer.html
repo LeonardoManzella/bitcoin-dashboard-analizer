@@ -2141,7 +2141,7 @@
           // console.log("paypal dolar: ", data);
 
           let paypalData = {
-            venta: (1 / data.all.banco.change.palpal.amount).toFixed(2),
+            venta: ((1 / data.all.banco.change.palpal.amount)*1.055).toFixed(2),
             compra: data.all.palpal.change.banco.amount.toFixed(2),
             variacion: 0,
           };
