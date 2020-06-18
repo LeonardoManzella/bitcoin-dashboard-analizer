@@ -2138,7 +2138,7 @@
         };
 
         fetchData(PROXY_URL_WORKER + URL_PAYPAL).then((data) => {
-          console.log("paypal dolar: ", data);
+          // console.log("paypal dolar: ", data);
 
           let paypalData = {
             venta: (1 / data.all.banco.change.palpal.amount).toFixed(2),
@@ -2153,7 +2153,7 @@
               ? "down"
               : "equal";
 
-          console.log("paypal dolar transformed: ", paypalData);
+          // console.log("paypal dolar transformed: ", paypalData);
           updateElements(
             ["dolar-paypal-buy", "dolar-paypal-sell"],
             [paypalData.compra, paypalData.venta],
