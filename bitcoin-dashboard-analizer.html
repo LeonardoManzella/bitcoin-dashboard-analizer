@@ -825,6 +825,25 @@
           </tr>
         </table>
 
+        <table class="dolar-table">
+          <tr class="dolar-table-top-row">
+            <td class="dolar-table-top-row-title">
+              Paypal
+            </td>
+            <td class="dolar-table-top-row-difference" id="dolar-paypal-diff">
+              ⌛
+            </td>
+          </tr>
+          <tr class="dolar-table-values-row">
+            <td id="dolar-paypal-buy">⌛</td>
+            <td id="dolar-paypal-sell">⌛</td>
+          </tr>
+          <tr>
+            <td>Compra</td>
+            <td>Venta</td>
+          </tr>
+        </table>
+
         <table class="dolar-table" augmented-ui="br-clip exe">
           <tr class="dolar-table-top-row">
             <td class="dolar-table-top-row-title">
@@ -2033,6 +2052,7 @@
     <script type="text/javascript">
       const URL_OFICIAL =
         "https://mercados.ambito.com//dolar/oficial/variacion";
+      const URL_PAYPAL = "https://saldo.com.ar/info/json/";
       const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
       const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
 
@@ -2055,9 +2075,9 @@
 
             //Update official dolar tax
             if (id === "dolar-of-sell")
-              element.innerText = `${element.innerText} (${
-                (parseInt(element.innerText) * 1.3).toFixed(2)
-              })`;
+              element.innerText = `${element.innerText} (${(
+                parseInt(element.innerText) * 1.3
+              ).toFixed(2)})`;
           }
           element = document.getElementById(idDiff);
           element.classList.add(classDiff);
@@ -2110,6 +2130,39 @@
           );
         });
 
+        const getPaypalVariation = (valueNow) => {
+          const PAYPAL_LAST_PRICE = "PAYPAL_LAST_PRICE";
+          const lastPrice = window.localStorage.getItem(PAYPAL_LAST_PRICE) || 1;
+          window.localStorage.setItem(PAYPAL_LAST_PRICE, valueNow);
+          return ((valueNow / lastPrice) * 100 - 100).toFixed(2);
+        };
+
+        fetchData(PROXY_URL_WORKER + URL_PAYPAL).then((data) => {
+          // console.log("paypal dolar: ", data);
+
+          let paypalData = {
+            venta: ((1 / data.all.banco.change.palpal.amount)*1.055).toFixed(2),
+            compra: data.all.palpal.change.banco.amount.toFixed(2),
+            variacion: 0,
+          };
+          paypalData.variacion = getPaypalVariation(paypalData.compra);
+          paypalData["class-variacion"] =
+            paypalData.variacion > 0
+              ? "up"
+              : paypalData.variacion < 0
+              ? "down"
+              : "equal";
+
+          // console.log("paypal dolar transformed: ", paypalData);
+          updateElements(
+            ["dolar-paypal-buy", "dolar-paypal-sell"],
+            [paypalData.compra, paypalData.venta],
+            "dolar-paypal-diff",
+            paypalData["class-variacion"],
+            paypalData.variacion
+          );
+        });
+
         console.groupEnd();
       };
 
@@ -2126,6 +2179,8 @@
     <!-- Bitcoin price updated -->
     <script type="text/javascript">
       const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+      const PROXY_URL_WORKER =
+        "https://proxy-worker.leonardo-manzella.workers.dev/corsproxy/?apiurl=";
       const BITCOIN_PRICE_URL =
         "https://www.google.com/async/currency_v2_update?vet=12ahUKEwjT_e-hkJHpAhVtCrkGHZoHCwIQ_sIDMAB6BAgVEAE..i&ei=iEerXtOZBO2U5OUPmo-sEA&yv=3&async=source_amount:1,source_currency:%2Fm%2F05p0rrx,target_currency:%2Fm%2F09nqf,lang:es-419,country:ar,disclaimer_url:https%3A%2F%2Fwww.google.com%2Fintl%2Fes%2Fgooglefinance%2Fdisclaimer%2F,period:1M,interval:86400,_id:currency-v2-updatable_85,_pms:s,_fmt:pc";
 
@@ -3226,10 +3281,23 @@
       };
 
       const InstagramInitiator = () => {
-        getHTML(
-          PROXY_URL + "https://www.instagram.com/explore/tags/bitcoin/",
-          updateInstagram
-        );
+        try {
+          getHTML(
+            PROXY_URL_WORKER +
+              "https://www.instagram.com/explore/tags/bitcoin/",
+            updateInstagram
+          );
+        } catch (error) {
+          console.warn(
+            "!! Failed to fetch using own proxy, using heroku proxy !!"
+          );
+          console.warn("Error detected: ", error);
+
+          getHTML(
+            PROXY_URL + "https://www.instagram.com/explore/tags/bitcoin/",
+            updateInstagram
+          );
+        }
       };
 
       //TODO uncomment
