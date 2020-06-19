@@ -2145,7 +2145,7 @@
             compra: data.all.palpal.change.banco.amount.toFixed(2),
             variacion: 0,
           };
-          paypalData.variacion = getPaypalVariation(paypalData.compra);
+          paypalData.variacion = getPaypalVariation(paypalData.venta);
           paypalData["class-variacion"] =
             paypalData.variacion > 0
               ? "up"
