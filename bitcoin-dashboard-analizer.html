@@ -2056,6 +2056,13 @@
       const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
       const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
 
+      const getUpdateDolarPrice = (TYPE, valueNow) => {
+        let lastPrice = JSON.parse(window.localStorage.getItem(TYPE)) || {};
+        lastPrice[TODAY] = valueNow;
+        window.localStorage.setItem(TYPE, JSON.stringify(lastPrice));
+        return lastPrice;
+      };
+
       const updateDolarIndicators = () => {
         console.group("updateDolarIndicators");
 
@@ -2106,6 +2113,12 @@
             data["class-variacion"],
             data.variacion
           );
+
+          const DOLAR_OFICIAL = "DOLAR_OFICIAL";
+          getUpdateDolarPrice(
+            DOLAR_OFICIAL,
+            (parseInt(data.venta) * 1.3).toFixed(2)
+          );
         });
 
         fetchData(URL_LIQUI).then((data) => {
@@ -2117,6 +2130,9 @@
             data["class-variacion"],
             data.variacion
           );
+
+          const DOLAR_LIQUI = "DOLAR_LIQUI";
+          getUpdateDolarPrice(DOLAR_LIQUI, data.venta);
         });
 
         fetchData(URL_BLUE).then((data) => {
@@ -2128,13 +2144,18 @@
             data["class-variacion"],
             data.variacion
           );
+
+          const DOLAR_BLUE = "DOLAR_BLUE";
+          getUpdateDolarPrice(DOLAR_BLUE, data.venta);
         });
 
         const getPaypalVariation = (valueNow) => {
-          const PAYPAL_LAST_PRICE = "PAYPAL_LAST_PRICE";
-          const lastPrice = window.localStorage.getItem(PAYPAL_LAST_PRICE) || 1;
-          window.localStorage.setItem(PAYPAL_LAST_PRICE, valueNow);
-          return ((valueNow / lastPrice) * 100 - 100).toFixed(2);
+          const DOLAR_PAYPAL = "DOLAR_PAYPAL";
+          const lastPrice = getUpdateDolarPrice(DOLAR_PAYPAL, valueNow);
+          return (
+            (valueNow / (lastPrice[substractDay(TODAY)] || 1)) * 100 -
+            100
+          ).toFixed(2);
         };
 
         fetchData(PROXY_URL_WORKER + URL_PAYPAL).then((data) => {
