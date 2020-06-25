@@ -2587,7 +2587,7 @@
           let ripioData = {};
           ripioData.price =
             obtainRipioPrice(JSON.parse(atob(JSON.parse(event.data).payload))) *
-            1.04;
+            0.94;
           if (!ripioData.price) return;
           ripioData.variation = calcVariation(ripioData.price);
           if (!first_load && Math.abs(ripioData.variation) >= 5) return; //Skip weird numbers
