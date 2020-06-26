@@ -224,7 +224,8 @@
       width: 100%;
       height: 20rem;
       background-color: darkgray;
-      margin-bottom: 1rem;
+      margin-bottom: 2.5rem;
+      margin-top: 1rem;
     }
     div.bolsas-section-item {
       display: flex;
@@ -3196,9 +3197,15 @@
     <script type="text/javascript">
       const transformBolsasResponse = (response) => {
         // console.log("bolsas before transform: ", response);
-        let bolsas =
-          response.body.children[4].children[0].children[2].children[1]
+        let bolsas = null
+        try {
+          bolsas = response.body.children[4].children[0].children[2].children[1]
             .children[1].children[1].children[0].children[5].innerHTML;
+        } catch (error) {
+          bolsas = response.body.children[5].children[0].children[2].children[1]
+            .children[1].children[1].children[0].children[5].innerHTML;
+        }
+          
         bolsas = bolsas.match(/\>[^"]+?\<\/(a>|span)/g);
         bolsas = bolsas.filter(
           (elem) => elem !== "></span> </span" && elem !== ">BOLSAS</a>"
