@@ -222,7 +222,7 @@
     }
     div.dolars-chart-container {
       width: 100%;
-      height: 20rem;
+      height: 21em;
       background-color: darkgray;
       margin-bottom: 2.5rem;
       margin-top: 1rem;
@@ -1608,10 +1608,10 @@
      
       const getLastDolars = (type, count, lastDolars, day = TODAY) => {
         const lastDolarsData = lastDolars || getLastDolarsData();
-        if (count == 1) return [parseInt(transformValue(lastDolarsData[type][day]))];
+        if (count == 1) return [parseFloat(transformValue(lastDolarsData[type][day]))];
         return [
           ...getLastDolars(type, count - 1, lastDolarsData, substractDay(day)),
-          parseInt(transformValue(lastDolarsData[type][day])),
+          parseFloat(transformValue(lastDolarsData[type][day])),
         ];
       };
 
