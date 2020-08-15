@@ -3399,7 +3399,7 @@
 
       const transformInstagramResponse = async (response) => {
         const ONLY_VALUE = 0,
-          ITEMS = 4;
+          ITEMS = 3;
         // console.log("instagrams before transform: ", response);
         let instagrams = response.body.children[ITEMS].innerHTML;
         instagrams = instagrams.match(/{.*}/gm);
