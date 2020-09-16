@@ -2221,7 +2221,7 @@
             //Update official dolar tax
             if (id === "dolar-of-sell")
               element.innerText = `${element.innerText} (${(
-                parseInt(element.innerText) * 1.3
+                parseInt(element.innerText) * 1.65
               ).toFixed(2)})`;
           }
           element = document.getElementById(idDiff);
@@ -2253,7 +2253,7 @@
           );
           setDolarsData(
             DOLAR_OFICIAL,
-            (parseInt(data.venta) * 1.3).toFixed(2)
+            (parseInt(data.venta) * 1.65).toFixed(2)
           );
         });
 
