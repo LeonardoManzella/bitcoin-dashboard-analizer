@@ -1647,7 +1647,7 @@
         type,
         count,
         lastSourceData = getLastDolarsData(),
-        day = TODAY,
+        day = TODAY
       ) => {
         if (count == 1)
           return [parseFloat(transformValue(lastSourceData[type][day]))];
@@ -1677,9 +1677,21 @@
           dolarUphold: getHistoricData(DOLAR_UPHOLD, 20),
           dolarPaypalAirtm: getHistoricData(DOLAR_PAYPAL_AIRTM, 20),
           dolarUpholdAirtm: getHistoricData(DOLAR_UPHOLD_AIRTM, 20),
-          criptoBitcoinRipio: getHistoricData(CRYPTOS_BITCOIN_RIPIO, 20, getLastCryptoData()),
-          criptoBitcoinSatoshi: getHistoricData(CRYPTOS_BITCOIN_SATOSHI, 20, getLastCryptoData()),
-          criptoBitcoinAirtm: getHistoricData(CRYPTOS_BITCOIN_AIRTM, 20, getLastCryptoData()),
+          criptoBitcoinRipio: getHistoricData(
+            CRYPTOS_BITCOIN_RIPIO,
+            20,
+            getLastCryptoData()
+          ),
+          criptoBitcoinSatoshi: getHistoricData(
+            CRYPTOS_BITCOIN_SATOSHI,
+            20,
+            getLastCryptoData()
+          ),
+          criptoBitcoinAirtm: getHistoricData(
+            CRYPTOS_BITCOIN_AIRTM,
+            20,
+            getLastCryptoData()
+          ),
         };
       };
       // Set Dark Theme
@@ -2507,7 +2519,12 @@
           const bitcoinAirtm = (
             data.today["ARS_E-TRANSFER"].buy * data.today.BTC_CRYPTO.buy
           ).toFixed(2);
-          setHistoricData(CRYPTOS_BITCOIN_AIRTM, bitcoinAirtm, getLastCryptoData(), LAST_CRYPTOS);
+          setHistoricData(
+            CRYPTOS_BITCOIN_AIRTM,
+            bitcoinAirtm,
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
         });
 
         console.groupEnd();
@@ -2917,7 +2934,12 @@
           if (!first_load && Math.abs(ripioData.variation) >= 5) return; //Skip weird numbers
           first_load = false;
           window.localStorage.setItem(RIPIO_LAST_PRICE, ripioData.price);
-          setHistoricData(CRYPTOS_BITCOIN_RIPIO, ripioData.price.toFixed(2), getLastCryptoData(), LAST_CRYPTOS);
+          setHistoricData(
+            CRYPTOS_BITCOIN_RIPIO,
+            ripioData.price.toFixed(2),
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
           console.log("ripioData: ", ripioData);
           updateExchange(ripioData, "ripio-price", "ripio-variation");
         };
@@ -2934,7 +2956,12 @@
             satoshiData.variation = data.data.graph.BTC.change;
             // console.log("satoshiData.variation: ", satoshiData.variation);
             updateExchange(satoshiData, "satoshi-price", "satoshi-variation");
-            setHistoricData(CRYPTOS_BITCOIN_SATOSHI, satoshiData.price, getLastCryptoData(), LAST_CRYPTOS);
+            setHistoricData(
+              CRYPTOS_BITCOIN_SATOSHI,
+              satoshiData.price,
+              getLastCryptoData(),
+              LAST_CRYPTOS
+            );
           });
         });
       };
