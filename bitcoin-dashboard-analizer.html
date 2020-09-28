@@ -220,7 +220,7 @@
       --aug-b-height: 15px;
       --aug-b-width: 48%;
     }
-    div.dolars-chart-container {
+    div.dolars-chart-container, div.bitcoin-chart-container {
       width: 100%;
       height: 21em;
       background-color: darkgray;
@@ -871,6 +871,11 @@
       <div
         id="dolars-chart-container"
         class="dolars-chart-container"
+        augmented-ui="tl-clip tr-clip br-clip bl-clip exe"
+      ></div>
+      <div
+        id="bitcoin-chart-container"
+        class="bitcoin-chart-container"
         augmented-ui="tl-clip tr-clip br-clip bl-clip exe"
       ></div>
       <div
@@ -1600,23 +1605,47 @@
         return dolarsData;
       };
 
-      const setDolarsData = (type, value) => {
-        let dolarsData = getLastDolarsData();
-        if (!dolarsData[type]) {
-          dolarsData[type] = {};
+
+
+      const LAST_CRYPTOS = "LAST_CRYPTOS";
+      const CRYPTOS_BITCOIN_RIPIO = "bitcoin_ripio";
+      const CRYPTOS_BITCOIN_SATOSHI = "bitcoin_satoshi";
+      const CRYPTOS_BITCOIN_AIRTM = "bitcoin_airtm";
+
+      const getLastCryptoData = () => {
+        let cryptoData = window.localStorage.getItem(LAST_CRYPTOS);
+        cryptoData = JSON.parse(cryptoData);
+
+        if (!cryptoData) {
+          cryptoData = {};
+          cryptoData.bitcoin_ripio = {};
+          cryptoData.bitcoin_satoshi = {};
+          cryptoData.bitcoin_airtm = {};
+          cryptoData.bitcoin_ripio[TODAY] = 0;
+          cryptoData.bitcoin_satoshi[TODAY] = 0;
+          cryptoData.bitcoin_airtm[TODAY] = 0;
         }
-        dolarsData[type][TODAY] = value;
-        console.log(`setDolarsData ${type}: ${value}`);
-        window.localStorage.setItem(LAST_DOLARS, JSON.stringify(dolarsData));
+
+        return cryptoData;
       };
 
-      const getLastDolars = (type, count, lastDolars, day = TODAY) => {
-        const lastDolarsData = lastDolars || getLastDolarsData();
+      const setHistoricData = (type, value, source=getLastDolarsData(), saveTo=LAST_DOLARS ) => {
+        let sourceData = source;
+        if (!sourceData[type]) {
+          sourceData[type] = {};
+        }
+        sourceData[type][TODAY] = value;
+        console.log(`setHistoricData ${type}: ${value}`);
+        window.localStorage.setItem(saveTo, JSON.stringify(sourceData));
+      };
+
+      const getHistoricData = (type, count, lastSource, day = TODAY, source=getLastDolarsData()) => {
+        const lastSourceData = lastSource || source;
         if (count == 1)
-          return [parseFloat(transformValue(lastDolarsData[type][day]))];
+          return [parseFloat(transformValue(lastSourceData[type][day]))];
         return [
-          ...getLastDolars(type, count - 1, lastDolarsData, substractDay(day)),
-          parseFloat(transformValue(lastDolarsData[type][day])),
+          ...getHistoricData(type, count - 1, lastSourceData, substractDay(day)),
+          parseFloat(transformValue(lastSourceData[type][day])),
         ];
       };
 
@@ -1628,13 +1657,13 @@
           youtube: getLastData("youtube", 10),
           instagram: getLastData("instagram", 10),
           tiktok: getLastData("tiktok", 10),
-          dolarLiqui: getLastDolars(DOLAR_LIQUI, 20),
-          dolarBlue: getLastDolars(DOLAR_BLUE, 20),
-          dolarPaypal: getLastDolars(DOLAR_PAYPAL, 20),
-          dolarOficial: getLastDolars(DOLAR_OFICIAL, 20),
-          dolarUphold: getLastDolars(DOLAR_UPHOLD, 20),
-          dolarPaypalAirtm: getLastDolars(DOLAR_PAYPAL_AIRTM, 20),
-          dolarUpholdAirtm: getLastDolars(DOLAR_UPHOLD_AIRTM, 20),
+          dolarLiqui: getHistoricData(DOLAR_LIQUI, 20),
+          dolarBlue: getHistoricData(DOLAR_BLUE, 20),
+          dolarPaypal: getHistoricData(DOLAR_PAYPAL, 20),
+          dolarOficial: getHistoricData(DOLAR_OFICIAL, 20),
+          dolarUphold: getHistoricData(DOLAR_UPHOLD, 20),
+          dolarPaypalAirtm: getHistoricData(DOLAR_PAYPAL_AIRTM, 20),
+          dolarUpholdAirtm: getHistoricData(DOLAR_UPHOLD_AIRTM, 20),
         };
       };
       // Set Dark Theme
@@ -2041,6 +2070,107 @@
         ],
       });
 
+      let summaryBitcoin = Highcharts.chart("bitcoin-chart-container", {
+        chart: {
+          type: "area",
+          backgroundColor: "#797979",
+        },
+        title: {
+          text: "Precio bitcoin a lo largo del tiempo",
+        },
+        subtitle: {
+          align: "right",
+          verticalAlign: "bottom",
+        },
+        legend: {
+          layout: "vertical",
+          align: "left",
+          verticalAlign: "top",
+          x: 100,
+          y: 10,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || "#FFFFFF",
+        },
+        xAxis: {
+          categories: [
+            "Hace 19 días",
+            "Hace 18 días",
+            "Hace 17 días",
+            "Hace 16 días",
+            "Hace 15 días",
+            "Hace 14 días",
+            "Hace 13 días",
+            "Hace 12 días",
+            "Hace 11 días",
+            "Hace 10 días",
+            "Hace 9 días",
+            "Hace 8 días",
+            "Hace 7 días",
+            "Hace 6 días",
+            "Hace 5 días",
+            "Hace 4 días",
+            "Hace 3 días",
+            "Hace 2 días",
+            "Ayer",
+            "Ahora",
+          ],
+        },
+        yAxis: {
+          title: {
+            text: "Precio del bitcoin",
+          },
+          type: "logarithmic",
+        },
+        plotOptions: {
+          area: {
+            fillOpacity: 0.5,
+          },
+        },
+        credits: {
+          enabled: false,
+        },
+        series: [
+          //TODO modify data
+          {
+            name: "Uphold (Saldo.com.ar)",
+            data: sourcesLastData.dolarUphold,
+            color: "#19FFBA",
+          },
+          {
+            name: "Uphold (AirTM)",
+            data: sourcesLastData.dolarUpholdAirtm,
+            color: "#9700E8",
+          },
+          {
+            name: "Blue",
+            data: sourcesLastData.dolarBlue,
+            color: "#008AC5",
+          },
+          {
+            name: "Paypal (AirTM)",
+            data: sourcesLastData.dolarPaypalAirtm,
+            color: "#EBB817",
+          },
+          {
+            name: "C. Liqui",
+            data: sourcesLastData.dolarLiqui,
+            color: "#EB001F",
+          },
+          {
+            name: "Paypal (Saldo.com.ar)",
+            data: sourcesLastData.dolarPaypal,
+            color: "#64A12D",
+          },
+          {
+            name: "Oficial",
+            data: sourcesLastData.dolarOficial,
+            color: "#FFED00",
+          },
+        ],
+      });
+
       let gaugeOptions = {
         chart: {
           type: "solidgauge",
@@ -2210,6 +2340,8 @@
         summaryDolars.series[4].setData(sourcesLastData.dolarLiqui);
         summaryDolars.series[5].setData(sourcesLastData.dolarPaypal);
         summaryDolars.series[6].setData(sourcesLastData.dolarOficial);
+
+        //TODO update summaryBitcoin data
       };
 
       //Update data
@@ -2278,7 +2410,7 @@
             data["class-variacion"],
             data.variacion
           );
-          setDolarsData(
+          setHistoricData(
             DOLAR_OFICIAL,
             (parseInt(data.venta) * 1.65).toFixed(2)
           );
@@ -2293,7 +2425,7 @@
             data["class-variacion"],
             data.variacion
           );
-          setDolarsData(DOLAR_LIQUI, data.venta);
+          setHistoricData(DOLAR_LIQUI, data.venta);
         });
 
         fetchData(URL_BLUE).then((data) => {
@@ -2305,12 +2437,12 @@
             data["class-variacion"],
             data.variacion
           );
-          setDolarsData(DOLAR_BLUE, data.venta);
+          setHistoricData(DOLAR_BLUE, data.venta);
         });
 
         const getPaypalVariation = (valueNow) => {
           let lastPrice = getLastDolarsData();
-          setDolarsData(DOLAR_PAYPAL, valueNow);
+          setHistoricData(DOLAR_PAYPAL, valueNow);
           const dayBefore = substractDay(TODAY);
           lastPrice = lastPrice.paypal[dayBefore] || valueNow;
           return ((valueNow / lastPrice) * 100 - 100).toFixed(2);
@@ -2348,7 +2480,7 @@
           const upholdDolar = (1 / data.all.banco.change.aphold.amount).toFixed(
             2
           );
-          setDolarsData(DOLAR_UPHOLD, upholdDolar);
+          setHistoricData(DOLAR_UPHOLD, upholdDolar);
         });
 
         //AirTM
@@ -2367,13 +2499,13 @@
             data.today["ARS_E-TRANSFER"].buy *
             1.02
           ).toFixed(2); //Dont really know if it includes the 5% of paypal or not
-          setDolarsData(DOLAR_PAYPAL_AIRTM, paypalDolarAirtm);
+          setHistoricData(DOLAR_PAYPAL_AIRTM, paypalDolarAirtm);
 
           const upholdDolarAirtm = (
             data.today["ARS_E-TRANSFER"].buy *
             1.05
           ).toFixed(2);
-          setDolarsData(DOLAR_UPHOLD_AIRTM, upholdDolarAirtm);
+          setHistoricData(DOLAR_UPHOLD_AIRTM, upholdDolarAirtm);
         });
 
         console.groupEnd();
