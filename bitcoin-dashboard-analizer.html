@@ -2519,6 +2519,11 @@
             data.today["ARS_E-TRANSFER"].buy * 1.05
           ).toFixed(2);
           setHistoricData(DOLAR_UPHOLD_AIRTM, upholdDolarAirtm);
+
+          const bitcoinAirtm = (
+            data.today["ARS_E-TRANSFER"].buy * data.today.BTC_CRYPTO.buy
+          ).toFixed(2);
+          setHistoricData(CRYPTOS_BITCOIN_AIRTM, bitcoinAirtm, getLastCryptoData(), LAST_CRYPTOS);
         });
 
         console.groupEnd();
@@ -2928,6 +2933,7 @@
           if (!first_load && Math.abs(ripioData.variation) >= 5) return; //Skip weird numbers
           first_load = false;
           window.localStorage.setItem(RIPIO_LAST_PRICE, ripioData.price);
+          setHistoricData(CRYPTOS_BITCOIN_RIPIO, ripioData.price.toFixed(2), getLastCryptoData(), LAST_CRYPTOS);
           console.log("ripioData: ", ripioData);
           updateExchange(ripioData, "ripio-price", "ripio-variation");
         };
@@ -2944,6 +2950,7 @@
             satoshiData.variation = data.data.graph.BTC.change;
             // console.log("satoshiData.variation: ", satoshiData.variation);
             updateExchange(satoshiData, "satoshi-price", "satoshi-variation");
+            setHistoricData(CRYPTOS_BITCOIN_SATOSHI, satoshiData.price, getLastCryptoData(), LAST_CRYPTOS);
           });
         });
       };
