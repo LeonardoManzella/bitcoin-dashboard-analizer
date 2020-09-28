@@ -220,7 +220,8 @@
       --aug-b-height: 15px;
       --aug-b-width: 48%;
     }
-    div.dolars-chart-container, div.bitcoin-chart-container {
+    div.dolars-chart-container,
+    div.bitcoin-chart-container {
       width: 100%;
       height: 21em;
       background-color: darkgray;
@@ -1605,8 +1606,6 @@
         return dolarsData;
       };
 
-
-
       const LAST_CRYPTOS = "LAST_CRYPTOS";
       const CRYPTOS_BITCOIN_RIPIO = "bitcoin_ripio";
       const CRYPTOS_BITCOIN_SATOSHI = "bitcoin_satoshi";
@@ -1629,7 +1628,12 @@
         return cryptoData;
       };
 
-      const setHistoricData = (type, value, source=getLastDolarsData(), saveTo=LAST_DOLARS ) => {
+      const setHistoricData = (
+        type,
+        value,
+        source = getLastDolarsData(),
+        saveTo = LAST_DOLARS
+      ) => {
         let sourceData = source;
         if (!sourceData[type]) {
           sourceData[type] = {};
@@ -1639,12 +1643,23 @@
         window.localStorage.setItem(saveTo, JSON.stringify(sourceData));
       };
 
-      const getHistoricData = (type, count, lastSource, day = TODAY, source=getLastDolarsData()) => {
+      const getHistoricData = (
+        type,
+        count,
+        lastSource,
+        day = TODAY,
+        source = getLastDolarsData()
+      ) => {
         const lastSourceData = lastSource || source;
         if (count == 1)
           return [parseFloat(transformValue(lastSourceData[type][day]))];
         return [
-          ...getHistoricData(type, count - 1, lastSourceData, substractDay(day)),
+          ...getHistoricData(
+            type,
+            count - 1,
+            lastSourceData,
+            substractDay(day)
+          ),
           parseFloat(transformValue(lastSourceData[type][day])),
         ];
       };
@@ -2496,14 +2511,12 @@
           console.log("AirTM data: ", data);
 
           const paypalDolarAirtm = (
-            data.today["ARS_E-TRANSFER"].buy *
-            1.02
+            data.today["ARS_E-TRANSFER"].buy * 1.02
           ).toFixed(2); //Dont really know if it includes the 5% of paypal or not
           setHistoricData(DOLAR_PAYPAL_AIRTM, paypalDolarAirtm);
 
           const upholdDolarAirtm = (
-            data.today["ARS_E-TRANSFER"].buy *
-            1.05
+            data.today["ARS_E-TRANSFER"].buy * 1.05
           ).toFixed(2);
           setHistoricData(DOLAR_UPHOLD_AIRTM, upholdDolarAirtm);
         });
