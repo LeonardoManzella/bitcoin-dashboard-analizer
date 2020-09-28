@@ -1646,11 +1646,9 @@
       const getHistoricData = (
         type,
         count,
-        lastSource,
+        lastSourceData = getLastDolarsData(),
         day = TODAY,
-        source = getLastDolarsData()
       ) => {
-        const lastSourceData = lastSource || source;
         if (count == 1)
           return [parseFloat(transformValue(lastSourceData[type][day]))];
         return [
@@ -1679,6 +1677,9 @@
           dolarUphold: getHistoricData(DOLAR_UPHOLD, 20),
           dolarPaypalAirtm: getHistoricData(DOLAR_PAYPAL_AIRTM, 20),
           dolarUpholdAirtm: getHistoricData(DOLAR_UPHOLD_AIRTM, 20),
+          criptoBitcoinRipio: getHistoricData(CRYPTOS_BITCOIN_RIPIO, 20, getLastCryptoData()),
+          criptoBitcoinSatoshi: getHistoricData(CRYPTOS_BITCOIN_SATOSHI, 20, getLastCryptoData()),
+          criptoBitcoinAirtm: getHistoricData(CRYPTOS_BITCOIN_AIRTM, 20, getLastCryptoData()),
         };
       };
       // Set Dark Theme
@@ -2091,7 +2092,7 @@
           backgroundColor: "#797979",
         },
         title: {
-          text: "Precio bitcoin a lo largo del tiempo",
+          text: "Precio del bitcoin en pesos a lo largo del tiempo",
         },
         subtitle: {
           align: "right",
@@ -2147,40 +2148,19 @@
           enabled: false,
         },
         series: [
-          //TODO modify data
           {
-            name: "Uphold (Saldo.com.ar)",
-            data: sourcesLastData.dolarUphold,
-            color: "#19FFBA",
-          },
-          {
-            name: "Uphold (AirTM)",
-            data: sourcesLastData.dolarUpholdAirtm,
-            color: "#9700E8",
-          },
-          {
-            name: "Blue",
-            data: sourcesLastData.dolarBlue,
-            color: "#008AC5",
-          },
-          {
-            name: "Paypal (AirTM)",
-            data: sourcesLastData.dolarPaypalAirtm,
-            color: "#EBB817",
-          },
-          {
-            name: "C. Liqui",
-            data: sourcesLastData.dolarLiqui,
+            name: "AirTM",
+            data: sourcesLastData.criptoBitcoinAirtm,
             color: "#EB001F",
           },
           {
-            name: "Paypal (Saldo.com.ar)",
-            data: sourcesLastData.dolarPaypal,
+            name: "Satoshi Tango",
+            data: sourcesLastData.criptoBitcoinSatoshi,
             color: "#64A12D",
           },
           {
-            name: "Oficial",
-            data: sourcesLastData.dolarOficial,
+            name: "Ripio",
+            data: sourcesLastData.criptoBitcoinRipio,
             color: "#FFED00",
           },
         ],
@@ -2346,8 +2326,10 @@
         summarySources.series[3].setData(sourcesLastData.twitter);
         summarySources.series[4].setData(sourcesLastData.instagram);
         summarySources.series[5].setData(sourcesLastData.tiktok);
+
         summarySideUp.series[0].setData([getTotalsNow()]);
         summarySideDown.series[0].setData(getParlamentChartData());
+
         summaryDolars.series[0].setData(sourcesLastData.dolarUphold);
         summaryDolars.series[1].setData(sourcesLastData.dolarUpholdAirtm);
         summaryDolars.series[2].setData(sourcesLastData.dolarBlue);
@@ -2356,7 +2338,9 @@
         summaryDolars.series[5].setData(sourcesLastData.dolarPaypal);
         summaryDolars.series[6].setData(sourcesLastData.dolarOficial);
 
-        //TODO update summaryBitcoin data
+        summaryBitcoin.series[0].setData(sourcesLastData.criptoBitcoinAirtm);
+        summaryBitcoin.series[1].setData(sourcesLastData.criptoBitcoinSatoshi);
+        summaryBitcoin.series[2].setData(sourcesLastData.criptoBitcoinRipio);
       };
 
       //Update data
