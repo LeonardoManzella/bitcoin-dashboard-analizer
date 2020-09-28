@@ -220,7 +220,8 @@
       --aug-b-height: 15px;
       --aug-b-width: 48%;
     }
-    div.dolars-chart-container {
+    div.dolars-chart-container,
+    div.bitcoin-chart-container {
       width: 100%;
       height: 21em;
       background-color: darkgray;
@@ -645,12 +646,12 @@
     }
   </style>
 
-  <body style="background-color: #131722; margin: 0;">
+  <body style="background-color: #131722; margin: 0">
     <div
       id="bitcoin-tradingview"
       class="bitcoin-tradingview"
       augmented-ui="br-clip b-clip-x bl-clip exe"
-      style="z-index: 1000;"
+      style="z-index: 1000"
     >
       <!-- TradingView Widget BEGIN -->
       <div class="tradingview-widget-container">
@@ -719,7 +720,7 @@
     <div
       class="google-bitcoin-trends"
       augmented-ui="bl-clip-x br-clip-x exe"
-      style="margin-top: -6rem; z-index: 10;"
+      style="margin-top: -6rem; z-index: 10"
     >
       <iframe
         id="trends-widget-1"
@@ -727,17 +728,13 @@
         width="100%"
         frameborder="0"
         scrolling="0"
-        style="height: 100rem;"
+        style="height: 100rem"
       ></iframe>
     </div>
     <!-- Bitcoin Global Trends Widget END -->
 
     <div
-      style="
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      "
+      style="display: flex; flex-direction: row; justify-content: space-between"
     >
       <!-- TradingView Widget BEGIN -->
       <div
@@ -798,7 +795,7 @@
       >
         <table class="dolar-table" augmented-ui="tl-clip exe">
           <tr class="dolar-table-top-row">
-            <td class="dolar-table-top-row-title" style="font-size: 120%;">
+            <td class="dolar-table-top-row-title" style="font-size: 120%">
               Contado con liquidacion
             </td>
             <td class="dolar-table-top-row-difference" id="dolar-cl-diff">
@@ -815,9 +812,7 @@
 
         <table class="dolar-table">
           <tr class="dolar-table-top-row">
-            <td class="dolar-table-top-row-title">
-              Blue
-            </td>
+            <td class="dolar-table-top-row-title">Blue</td>
             <td class="dolar-table-top-row-difference" id="dolar-blue-diff">
               ⌛
             </td>
@@ -834,9 +829,7 @@
 
         <table class="dolar-table">
           <tr class="dolar-table-top-row">
-            <td class="dolar-table-top-row-title">
-              Paypal
-            </td>
+            <td class="dolar-table-top-row-title">Paypal</td>
             <td class="dolar-table-top-row-difference" id="dolar-paypal-diff">
               ⌛
             </td>
@@ -853,9 +846,7 @@
 
         <table class="dolar-table" augmented-ui="br-clip exe">
           <tr class="dolar-table-top-row">
-            <td class="dolar-table-top-row-title">
-              Oficial
-            </td>
+            <td class="dolar-table-top-row-title">Oficial</td>
             <td class="dolar-table-top-row-difference" id="dolar-of-diff">
               ⌛
             </td>
@@ -874,9 +865,20 @@
     </div>
 
     <!-- Extra financial data Widget BEGIN -->
-    <div class="financial-section" augmented-ui="tl-clip-x tr-clip-x b-clip-x exe">
-      <div id="dolars-chart-container" class="dolars-chart-container" augmented-ui="tl-clip tr-clip br-clip bl-clip exe">
-      </div>
+    <div
+      class="financial-section"
+      augmented-ui="tl-clip-x tr-clip-x b-clip-x exe"
+    >
+      <div
+        id="dolars-chart-container"
+        class="dolars-chart-container"
+        augmented-ui="tl-clip tr-clip br-clip bl-clip exe"
+      ></div>
+      <div
+        id="bitcoin-chart-container"
+        class="bitcoin-chart-container"
+        augmented-ui="tl-clip tr-clip br-clip bl-clip exe"
+      ></div>
       <div
         id="bolsas-section-container"
         style="
@@ -895,13 +897,13 @@
     <!-- Bolsas Widget END -->
 
     <!-- Global Bitcoin News Widget BEGIN -->
-    <div class="news-section-title" style="margin-top: 2rem;">
+    <div class="news-section-title" style="margin-top: 2rem">
       <p>Noticias sobre el Bitcoin</p>
-      <div augmented-ui="br-clip-x exe" style="width: 33rem;"></div>
+      <div augmented-ui="br-clip-x exe" style="width: 33rem"></div>
     </div>
     <div id="bitcoin-news-section" class="news-section">
       <a class="news-article">
-        <div class="news-article-title" style="padding: 0.5rem;">
+        <div class="news-article-title" style="padding: 0.5rem">
           👍 No hay novedades
         </div>
       </a>
@@ -914,7 +916,7 @@
         class="table-section-title"
         augmented-ui="tr-clip tl-clip t-clip-x exe"
       >
-        <div style="margin-right: 3rem;">Twitter Hashtag</div>
+        <div style="margin-right: 3rem">Twitter Hashtag</div>
         <div>
           Tweets <sub><small>x hora</small></sub>
         </div>
@@ -1087,18 +1089,18 @@
     <!-- Bitcoin related hashtags Widget END -->
 
     <!-- Bitcoin top seen videos by influencers Widget BEGIN -->
-    <div class="news-section-title" style="margin-top: 2rem;">
+    <div class="news-section-title" style="margin-top: 2rem">
       <p>Videos mas vistos sobre el Bitcoin</p>
-      <div augmented-ui="br-clip-x exe" style="width: 46rem;"></div>
+      <div augmented-ui="br-clip-x exe" style="width: 46rem"></div>
     </div>
-    <div style="overflow-x: hidden;">
+    <div style="overflow-x: hidden">
       <div id="youtube-section" class="youtube-slider">
         <div class="news-section">
           <div class="loader" augmented-ui="br-clip tl-clip exe">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
-              style="margin: -70px 0; background: transparent; display: block;"
+              style="margin: -70px 0; background: transparent; display: block"
               width="151px"
               height="151px"
               viewBox="0 0 100 100"
@@ -1258,11 +1260,7 @@
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                style="
-                  margin: -70px 0;
-                  background: transparent;
-                  display: block;
-                "
+                style="margin: -70px 0; background: transparent; display: block"
                 width="151px"
                 height="151px"
                 viewBox="0 0 100 100"
@@ -1411,7 +1409,7 @@
     <!-- Section Divider BEGIN -->
     <div
       class="section-divider"
-      style="z-index: 1000;"
+      style="z-index: 1000"
       augmented-ui="br-clip b-clip-x bl-clip exe"
     ></div>
     <!-- Section Divider END -->
@@ -1419,7 +1417,7 @@
     <!-- Dolar Argentinian Trends Widget BEGIN -->
     <div
       class="google-dolar-trends"
-      style="margin-top: -6rem; z-index: 10;"
+      style="margin-top: -6rem; z-index: 10"
       augmented-ui="b-clip-x exe"
     >
       <iframe
@@ -1428,7 +1426,7 @@
         width="100%"
         frameborder="0"
         scrolling="0"
-        style="height: 100rem;"
+        style="height: 100rem"
       ></iframe>
     </div>
     <!-- Dolar Argentinian Trends Widget END -->
@@ -1440,7 +1438,7 @@
     </div>
     <div id="dolar-news-section" class="news-section">
       <a class="news-article">
-        <div class="news-article-title" style="padding: 0.5rem;">
+        <div class="news-article-title" style="padding: 0.5rem">
           👍 No hay novedades
         </div>
       </a>
@@ -1579,39 +1577,88 @@
       const DOLAR_BLUE = "blue";
       const DOLAR_PAYPAL = "paypal";
       const DOLAR_OFICIAL = "oficial";
+      const DOLAR_UPHOLD = "uphold";
+      const DOLAR_PAYPAL_AIRTM = "paypal_airtm";
+      const DOLAR_UPHOLD_AIRTM = "uphold_airtm";
 
       const getLastDolarsData = () => {
         let dolarsData = window.localStorage.getItem(LAST_DOLARS);
         dolarsData = JSON.parse(dolarsData);
 
         if (!dolarsData) {
-          dolarsData = { };
+          dolarsData = {};
           dolarsData.liqui = {};
           dolarsData.blue = {};
           dolarsData.paypal = {};
           dolarsData.oficial = {};
+          dolarsData.uphold = {};
+          dolarsData.paypal_airtm = {};
+          dolarsData.uphold_airtm = {};
           dolarsData.liqui[TODAY] = 0;
           dolarsData.blue[TODAY] = 0;
           dolarsData.paypal[TODAY] = 0;
           dolarsData.oficial[TODAY] = 0;
+          dolarsData.uphold[TODAY] = 0;
+          dolarsData.paypal_airtm[TODAY] = 0;
+          dolarsData.uphold_airtm[TODAY] = 0;
         }
 
         return dolarsData;
       };
 
-      const setDolarsData = (type, value) => {
-        let dolarsData = getLastDolarsData();
-        dolarsData[type][TODAY] = value;
-        console.log(`setDolarsData ${type}: ${value}`);
-        window.localStorage.setItem(LAST_DOLARS, JSON.stringify(dolarsData));
+      const LAST_CRYPTOS = "LAST_CRYPTOS";
+      const CRYPTOS_BITCOIN_RIPIO = "bitcoin_ripio";
+      const CRYPTOS_BITCOIN_SATOSHI = "bitcoin_satoshi";
+      const CRYPTOS_BITCOIN_AIRTM = "bitcoin_airtm";
+
+      const getLastCryptoData = () => {
+        let cryptoData = window.localStorage.getItem(LAST_CRYPTOS);
+        cryptoData = JSON.parse(cryptoData);
+
+        if (!cryptoData) {
+          cryptoData = {};
+          cryptoData.bitcoin_ripio = {};
+          cryptoData.bitcoin_satoshi = {};
+          cryptoData.bitcoin_airtm = {};
+          cryptoData.bitcoin_ripio[TODAY] = 0;
+          cryptoData.bitcoin_satoshi[TODAY] = 0;
+          cryptoData.bitcoin_airtm[TODAY] = 0;
+        }
+
+        return cryptoData;
       };
-     
-      const getLastDolars = (type, count, lastDolars, day = TODAY) => {
-        const lastDolarsData = lastDolars || getLastDolarsData();
-        if (count == 1) return [parseFloat(transformValue(lastDolarsData[type][day]))];
+
+      const setHistoricData = (
+        type,
+        value,
+        source = getLastDolarsData(),
+        saveTo = LAST_DOLARS
+      ) => {
+        let sourceData = source;
+        if (!sourceData[type]) {
+          sourceData[type] = {};
+        }
+        sourceData[type][TODAY] = value;
+        console.log(`setHistoricData ${type}: ${value}`);
+        window.localStorage.setItem(saveTo, JSON.stringify(sourceData));
+      };
+
+      const getHistoricData = (
+        type,
+        count,
+        lastSourceData = getLastDolarsData(),
+        day = TODAY
+      ) => {
+        if (count == 1)
+          return [parseFloat(transformValue(lastSourceData[type][day]))];
         return [
-          ...getLastDolars(type, count - 1, lastDolarsData, substractDay(day)),
-          parseFloat(transformValue(lastDolarsData[type][day])),
+          ...getHistoricData(
+            type,
+            count - 1,
+            lastSourceData,
+            substractDay(day)
+          ),
+          parseFloat(transformValue(lastSourceData[type][day])),
         ];
       };
 
@@ -1623,10 +1670,28 @@
           youtube: getLastData("youtube", 10),
           instagram: getLastData("instagram", 10),
           tiktok: getLastData("tiktok", 10),
-          dolarLiqui: getLastDolars(DOLAR_LIQUI, 20),
-          dolarBlue: getLastDolars(DOLAR_BLUE, 20),
-          dolarPaypal: getLastDolars(DOLAR_PAYPAL, 20),
-          dolarOficial: getLastDolars(DOLAR_OFICIAL, 20),
+          dolarLiqui: getHistoricData(DOLAR_LIQUI, 20),
+          dolarBlue: getHistoricData(DOLAR_BLUE, 20),
+          dolarPaypal: getHistoricData(DOLAR_PAYPAL, 20),
+          dolarOficial: getHistoricData(DOLAR_OFICIAL, 20),
+          dolarUphold: getHistoricData(DOLAR_UPHOLD, 20),
+          dolarPaypalAirtm: getHistoricData(DOLAR_PAYPAL_AIRTM, 20),
+          dolarUpholdAirtm: getHistoricData(DOLAR_UPHOLD_AIRTM, 20),
+          criptoBitcoinRipio: getHistoricData(
+            CRYPTOS_BITCOIN_RIPIO,
+            20,
+            getLastCryptoData()
+          ),
+          criptoBitcoinSatoshi: getHistoricData(
+            CRYPTOS_BITCOIN_SATOSHI,
+            20,
+            getLastCryptoData()
+          ),
+          criptoBitcoinAirtm: getHistoricData(
+            CRYPTOS_BITCOIN_AIRTM,
+            20,
+            getLastCryptoData()
+          ),
         };
       };
       // Set Dark Theme
@@ -1996,19 +2061,34 @@
         },
         series: [
           {
+            name: "Uphold (Saldo.com.ar)",
+            data: sourcesLastData.dolarUphold,
+            color: "#19FFBA",
+          },
+          {
+            name: "Uphold (AirTM)",
+            data: sourcesLastData.dolarUpholdAirtm,
+            color: "#9700E8",
+          },
+          {
             name: "Blue",
             data: sourcesLastData.dolarBlue,
             color: "#008AC5",
           },
           {
-            name: "Paypal",
-            data: sourcesLastData.dolarPaypal,
-            color: "#64A12D",
+            name: "Paypal (AirTM)",
+            data: sourcesLastData.dolarPaypalAirtm,
+            color: "#EBB817",
           },
           {
             name: "C. Liqui",
             data: sourcesLastData.dolarLiqui,
             color: "#EB001F",
+          },
+          {
+            name: "Paypal (Saldo.com.ar)",
+            data: sourcesLastData.dolarPaypal,
+            color: "#64A12D",
           },
           {
             name: "Oficial",
@@ -2018,6 +2098,85 @@
         ],
       });
 
+      let summaryBitcoin = Highcharts.chart("bitcoin-chart-container", {
+        chart: {
+          type: "area",
+          backgroundColor: "#797979",
+        },
+        title: {
+          text: "Precio del bitcoin en pesos a lo largo del tiempo",
+        },
+        subtitle: {
+          align: "right",
+          verticalAlign: "bottom",
+        },
+        legend: {
+          layout: "vertical",
+          align: "left",
+          verticalAlign: "top",
+          x: 100,
+          y: 10,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || "#FFFFFF",
+        },
+        xAxis: {
+          categories: [
+            "Hace 19 días",
+            "Hace 18 días",
+            "Hace 17 días",
+            "Hace 16 días",
+            "Hace 15 días",
+            "Hace 14 días",
+            "Hace 13 días",
+            "Hace 12 días",
+            "Hace 11 días",
+            "Hace 10 días",
+            "Hace 9 días",
+            "Hace 8 días",
+            "Hace 7 días",
+            "Hace 6 días",
+            "Hace 5 días",
+            "Hace 4 días",
+            "Hace 3 días",
+            "Hace 2 días",
+            "Ayer",
+            "Ahora",
+          ],
+        },
+        yAxis: {
+          title: {
+            text: "Precio del bitcoin",
+          },
+          type: "logarithmic",
+        },
+        plotOptions: {
+          area: {
+            fillOpacity: 0.5,
+          },
+        },
+        credits: {
+          enabled: false,
+        },
+        series: [
+          {
+            name: "AirTM",
+            data: sourcesLastData.criptoBitcoinAirtm,
+            color: "#EB001F",
+          },
+          {
+            name: "Satoshi Tango",
+            data: sourcesLastData.criptoBitcoinSatoshi,
+            color: "#64A12D",
+          },
+          {
+            name: "Ripio",
+            data: sourcesLastData.criptoBitcoinRipio,
+            color: "#FFED00",
+          },
+        ],
+      });
 
       let gaugeOptions = {
         chart: {
@@ -2179,17 +2338,26 @@
         summarySources.series[3].setData(sourcesLastData.twitter);
         summarySources.series[4].setData(sourcesLastData.instagram);
         summarySources.series[5].setData(sourcesLastData.tiktok);
+
         summarySideUp.series[0].setData([getTotalsNow()]);
         summarySideDown.series[0].setData(getParlamentChartData());
-        summaryDolars.series[0].setData(sourcesLastData.dolarBlue);
-        summaryDolars.series[1].setData(sourcesLastData.dolarPaypal);
-        summaryDolars.series[2].setData(sourcesLastData.dolarLiqui);
-        summaryDolars.series[3].setData(sourcesLastData.dolarOficial);
+
+        summaryDolars.series[0].setData(sourcesLastData.dolarUphold);
+        summaryDolars.series[1].setData(sourcesLastData.dolarUpholdAirtm);
+        summaryDolars.series[2].setData(sourcesLastData.dolarBlue);
+        summaryDolars.series[3].setData(sourcesLastData.dolarPaypalAirtm);
+        summaryDolars.series[4].setData(sourcesLastData.dolarLiqui);
+        summaryDolars.series[5].setData(sourcesLastData.dolarPaypal);
+        summaryDolars.series[6].setData(sourcesLastData.dolarOficial);
+
+        summaryBitcoin.series[0].setData(sourcesLastData.criptoBitcoinAirtm);
+        summaryBitcoin.series[1].setData(sourcesLastData.criptoBitcoinSatoshi);
+        summaryBitcoin.series[2].setData(sourcesLastData.criptoBitcoinRipio);
       };
 
       //Update data
       setTimeout(updateChartsData, 60 * 1000);
-      setTimeout(updateChartsData,  2 * 60 * 1000);
+      setTimeout(updateChartsData, 2 * 60 * 1000);
       setTimeout(updateChartsData, 60 * 60 * 1000);
     </script>
 
@@ -2197,9 +2365,11 @@
     <script type="text/javascript">
       const URL_OFICIAL =
         "https://mercados.ambito.com//dolar/oficial/variacion";
-      const URL_PAYPAL = "https://panel.saldo.com.ar/info/json/"; //"https://saldo.com.ar/info/json/";
+      const URL_SALDO_COM = "https://panel.saldo.com.ar/info/json/"; //"https://saldo.com.ar/info/json/";
       const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
       const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
+      const URL_AIRTM = (day_now) =>
+        `https://rates.airtm.com/rates.json?d=${day_now}`;
 
       const updateDolarIndicators = () => {
         console.group("updateDolarIndicators");
@@ -2251,7 +2421,7 @@
             data["class-variacion"],
             data.variacion
           );
-          setDolarsData(
+          setHistoricData(
             DOLAR_OFICIAL,
             (parseInt(data.venta) * 1.65).toFixed(2)
           );
@@ -2266,7 +2436,7 @@
             data["class-variacion"],
             data.variacion
           );
-          setDolarsData(DOLAR_LIQUI, data.venta);
+          setHistoricData(DOLAR_LIQUI, data.venta);
         });
 
         fetchData(URL_BLUE).then((data) => {
@@ -2278,22 +2448,20 @@
             data["class-variacion"],
             data.variacion
           );
-          setDolarsData(DOLAR_BLUE, data.venta);
+          setHistoricData(DOLAR_BLUE, data.venta);
         });
 
         const getPaypalVariation = (valueNow) => {
           let lastPrice = getLastDolarsData();
-          setDolarsData(DOLAR_PAYPAL, valueNow);
+          setHistoricData(DOLAR_PAYPAL, valueNow);
           const dayBefore = substractDay(TODAY);
-          lastPrice = (lastPrice.paypal[dayBefore] || valueNow);
-          return (
-            (valueNow / lastPrice)  * 100 -
-            100
-          ).toFixed(2);
+          lastPrice = lastPrice.paypal[dayBefore] || valueNow;
+          return ((valueNow / lastPrice) * 100 - 100).toFixed(2);
         };
 
-        fetchData(PROXY_URL_WORKER + URL_PAYPAL).then((data) => {
-          // console.log("paypal dolar: ", data);
+        //Saldo.com.ar
+        fetchData(PROXY_URL_WORKER + URL_SALDO_COM).then((data) => {
+          // console.log("saldo.com.ar data: ", data);
 
           let paypalData = {
             venta: ((1 / data.all.banco.change.palpal.amount) * 1.055).toFixed(
@@ -2317,6 +2485,45 @@
             "dolar-paypal-diff",
             paypalData["class-variacion"],
             paypalData.variacion + "%"
+          );
+
+          //Uphold
+          const upholdDolar = (1 / data.all.banco.change.aphold.amount).toFixed(
+            2
+          );
+          setHistoricData(DOLAR_UPHOLD, upholdDolar);
+        });
+
+        //AirTM
+        let now = new Date(Date.now());
+        now.setUTCHours(13);
+        now.setUTCMinutes(0);
+        now.setUTCSeconds(0);
+        now.setUTCMilliseconds(0);
+        let nowFromEpoch = Date.parse(now).toString();
+        nowFromEpoch = nowFromEpoch.slice(0, nowFromEpoch.length - 3);
+
+        fetchData(PROXY_URL_WORKER + URL_AIRTM(nowFromEpoch)).then((data) => {
+          console.log("AirTM data: ", data);
+
+          const paypalDolarAirtm = (
+            data.today["ARS_E-TRANSFER"].buy * 1.02
+          ).toFixed(2); //Dont really know if it includes the 5% of paypal or not
+          setHistoricData(DOLAR_PAYPAL_AIRTM, paypalDolarAirtm);
+
+          const upholdDolarAirtm = (
+            data.today["ARS_E-TRANSFER"].buy * 1.05
+          ).toFixed(2);
+          setHistoricData(DOLAR_UPHOLD_AIRTM, upholdDolarAirtm);
+
+          const bitcoinAirtm = (
+            data.today["ARS_E-TRANSFER"].buy * data.today.BTC_CRYPTO.buy
+          ).toFixed(2);
+          setHistoricData(
+            CRYPTOS_BITCOIN_AIRTM,
+            bitcoinAirtm,
+            getLastCryptoData(),
+            LAST_CRYPTOS
           );
         });
 
@@ -2727,6 +2934,12 @@
           if (!first_load && Math.abs(ripioData.variation) >= 5) return; //Skip weird numbers
           first_load = false;
           window.localStorage.setItem(RIPIO_LAST_PRICE, ripioData.price);
+          setHistoricData(
+            CRYPTOS_BITCOIN_RIPIO,
+            ripioData.price.toFixed(2),
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
           console.log("ripioData: ", ripioData);
           updateExchange(ripioData, "ripio-price", "ripio-variation");
         };
@@ -2743,6 +2956,12 @@
             satoshiData.variation = data.data.graph.BTC.change;
             // console.log("satoshiData.variation: ", satoshiData.variation);
             updateExchange(satoshiData, "satoshi-price", "satoshi-variation");
+            setHistoricData(
+              CRYPTOS_BITCOIN_SATOSHI,
+              satoshiData.price,
+              getLastCryptoData(),
+              LAST_CRYPTOS
+            );
           });
         });
       };
@@ -2838,8 +3057,7 @@
 
       const transformYoutubeResponse = (youtubeResponse) => {
         // console.log("youtubeVideos before transform: ", youtubeResponse);
-        let youtubeVideos =
-          youtubeResponse.body.innerText;
+        let youtubeVideos = youtubeResponse.body.innerText;
         youtubeVideos = youtubeVideos.match(
           /{"videoRenderer.*?("enableOverlay":true}}}|Reproduciendo"}]}}}]}})/gm
         );
@@ -3196,15 +3414,17 @@
     <script type="text/javascript">
       const transformBolsasResponse = (response) => {
         // console.log("bolsas before transform: ", response);
-        let bolsas = null
+        let bolsas = null;
         try {
-          bolsas = response.body.children[4].children[0].children[2].children[1]
-            .children[1].children[1].children[0].children[5].innerHTML;
+          bolsas =
+            response.body.children[4].children[0].children[2].children[1]
+              .children[1].children[1].children[0].children[5].innerHTML;
         } catch (error) {
-          bolsas = response.body.children[5].children[0].children[2].children[1]
-            .children[1].children[1].children[0].children[5].innerHTML;
+          bolsas =
+            response.body.children[5].children[0].children[2].children[1]
+              .children[1].children[1].children[0].children[5].innerHTML;
         }
-          
+
         bolsas = bolsas.match(/\>[^"]+?\<\/(a>|span)/g);
         bolsas = bolsas.filter(
           (elem) => elem !== "></span> </span" && elem !== ">BOLSAS</a>"
