@@ -1580,6 +1580,7 @@
       const DOLAR_UPHOLD = "uphold";
       const DOLAR_PAYPAL_AIRTM = "paypal_airtm";
       const DOLAR_UPHOLD_AIRTM = "uphold_airtm";
+      const DOLAR_DAI_BUENBIT = "dai_buenbit";
 
       const getLastDolarsData = () => {
         let dolarsData = window.localStorage.getItem(LAST_DOLARS);
@@ -1594,6 +1595,7 @@
           dolarsData.uphold = {};
           dolarsData.paypal_airtm = {};
           dolarsData.uphold_airtm = {};
+          dolarsData.dai_buenbit = {};
           dolarsData.liqui[TODAY] = 0;
           dolarsData.blue[TODAY] = 0;
           dolarsData.paypal[TODAY] = 0;
@@ -1601,6 +1603,7 @@
           dolarsData.uphold[TODAY] = 0;
           dolarsData.paypal_airtm[TODAY] = 0;
           dolarsData.uphold_airtm[TODAY] = 0;
+          dolarsData.dai_buenbit[TODAY] = 0;
         }
 
         return dolarsData;
@@ -1680,6 +1683,7 @@
           dolarUphold: getHistoricData(DOLAR_UPHOLD, 20),
           dolarPaypalAirtm: getHistoricData(DOLAR_PAYPAL_AIRTM, 20),
           dolarUpholdAirtm: getHistoricData(DOLAR_UPHOLD_AIRTM, 20),
+          dolarDaiBuenBit: getHistoricData(DOLAR_DAI_BUENBIT, 20),
           criptoBitcoinRipio: getHistoricData(
             CRYPTOS_BITCOIN_RIPIO,
             20,
@@ -2089,6 +2093,11 @@
             color: "#EBB817",
           },
           {
+            name: "Dai (BuenBit)",
+            data: sourcesLastData.dolarDaiBuenBit,
+            color: "#EB7CA4",
+          },
+          {
             name: "C. Liqui",
             data: sourcesLastData.dolarLiqui,
             color: "#EB001F",
@@ -2181,7 +2190,7 @@
           {
             name: "BuenBit",
             data: sourcesLastData.criptoBitcoinBuenBit,
-            color: "#9700E8",
+            color: "#EB7CA4",
           },
           {
             name: "Ripio",
@@ -2359,9 +2368,10 @@
         summaryDolars.series[1].setData(sourcesLastData.dolarUpholdAirtm);
         summaryDolars.series[2].setData(sourcesLastData.dolarBlue);
         summaryDolars.series[3].setData(sourcesLastData.dolarPaypalAirtm);
-        summaryDolars.series[4].setData(sourcesLastData.dolarLiqui);
-        summaryDolars.series[5].setData(sourcesLastData.dolarPaypal);
-        summaryDolars.series[6].setData(sourcesLastData.dolarOficial);
+        summaryDolars.series[4].setData(sourcesLastData.dolarDaiBuenBit);
+        summaryDolars.series[5].setData(sourcesLastData.dolarLiqui);
+        summaryDolars.series[6].setData(sourcesLastData.dolarPaypal);
+        summaryDolars.series[7].setData(sourcesLastData.dolarOficial);
 
         summaryBitcoin.series[0].setData(sourcesLastData.criptoBitcoinAirtm);
         summaryBitcoin.series[1].setData(sourcesLastData.criptoBitcoinSatoshi);
@@ -2544,6 +2554,11 @@
         //BuenBit
         fetchData(PROXY_URL_WORKER + URL_BUEN_BIT).then((data) => {
           console.log("BuenBit data: ", data);
+
+          const daiDolarBuenBit = parseFloat(
+            data.object.daiars.selling_price
+          ).toFixed(2);
+          setHistoricData(DOLAR_DAI_BUENBIT, daiDolarBuenBit);
 
           const bitcoinBuenBit = parseFloat(
             data.object.btcars.selling_price
