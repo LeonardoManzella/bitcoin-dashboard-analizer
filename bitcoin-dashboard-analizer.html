@@ -2545,7 +2545,9 @@
         fetchData(PROXY_URL_WORKER + URL_BUEN_BIT).then((data) => {
           console.log("BuenBit data: ", data);
 
-          const bitcoinBuenBit = parseFloat(data.object.btcars.selling_price).toFixed(2);
+          const bitcoinBuenBit = parseFloat(
+            data.object.btcars.selling_price
+          ).toFixed(2);
           setHistoricData(
             CRYPTOS_BITCOIN_BUENBIT,
             bitcoinBuenBit,
