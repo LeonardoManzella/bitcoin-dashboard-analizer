@@ -1610,6 +1610,7 @@
       const CRYPTOS_BITCOIN_RIPIO = "bitcoin_ripio";
       const CRYPTOS_BITCOIN_SATOSHI = "bitcoin_satoshi";
       const CRYPTOS_BITCOIN_AIRTM = "bitcoin_airtm";
+      const CRYPTOS_BITCOIN_BUENBIT = "bitcoin_buenbit";
 
       const getLastCryptoData = () => {
         let cryptoData = window.localStorage.getItem(LAST_CRYPTOS);
@@ -1620,9 +1621,11 @@
           cryptoData.bitcoin_ripio = {};
           cryptoData.bitcoin_satoshi = {};
           cryptoData.bitcoin_airtm = {};
+          cryptoData.bitcoin_buenbit = {};
           cryptoData.bitcoin_ripio[TODAY] = 0;
           cryptoData.bitcoin_satoshi[TODAY] = 0;
           cryptoData.bitcoin_airtm[TODAY] = 0;
+          cryptoData.bitcoin_buenbit[TODAY] = 0;
         }
 
         return cryptoData;
@@ -1689,6 +1692,11 @@
           ),
           criptoBitcoinAirtm: getHistoricData(
             CRYPTOS_BITCOIN_AIRTM,
+            20,
+            getLastCryptoData()
+          ),
+          criptoBitcoinBuenBit: getHistoricData(
+            CRYPTOS_BITCOIN_BUENBIT,
             20,
             getLastCryptoData()
           ),
@@ -2171,6 +2179,11 @@
             color: "#64A12D",
           },
           {
+            name: "BuenBit",
+            data: sourcesLastData.criptoBitcoinBuenBit,
+            color: "#9700E8",
+          },
+          {
             name: "Ripio",
             data: sourcesLastData.criptoBitcoinRipio,
             color: "#FFED00",
@@ -2352,7 +2365,8 @@
 
         summaryBitcoin.series[0].setData(sourcesLastData.criptoBitcoinAirtm);
         summaryBitcoin.series[1].setData(sourcesLastData.criptoBitcoinSatoshi);
-        summaryBitcoin.series[2].setData(sourcesLastData.criptoBitcoinRipio);
+        summaryBitcoin.series[2].setData(sourcesLastData.criptoBitcoinBuenBit);
+        summaryBitcoin.series[3].setData(sourcesLastData.criptoBitcoinRipio);
       };
 
       //Update data
@@ -2370,6 +2384,7 @@
       const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
       const URL_AIRTM = (day_now) =>
         `https://rates.airtm.com/rates.json?d=${day_now}`;
+      const URL_BUEN_BIT = "https://be.buenbit.com/api/market/tickers/";
 
       const updateDolarIndicators = () => {
         console.group("updateDolarIndicators");
@@ -2521,6 +2536,19 @@
           setHistoricData(
             CRYPTOS_BITCOIN_AIRTM,
             bitcoinAirtm,
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
+        });
+
+        //BuenBit
+        fetchData(PROXY_URL_WORKER + URL_BUEN_BIT).then((data) => {
+          console.log("BuenBit data: ", data);
+
+          const bitcoinBuenBit = parseFloat(data.object.btcars.selling_price).toFixed(2);
+          setHistoricData(
+            CRYPTOS_BITCOIN_BUENBIT,
+            bitcoinBuenBit,
             getLastCryptoData(),
             LAST_CRYPTOS
           );
