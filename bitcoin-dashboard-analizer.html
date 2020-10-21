@@ -223,10 +223,13 @@
     div.dolars-chart-container,
     div.bitcoin-chart-container {
       width: 100%;
-      height: 21em;
+      height: 25em;
       background-color: darkgray;
       margin-bottom: 2.5rem;
       margin-top: 1rem;
+    }
+    div.dolars-chart-container {
+      height: 35em;
     }
     div.bolsas-section-item {
       display: flex;
@@ -2380,9 +2383,11 @@
       };
 
       //Update data
-      setTimeout(updateChartsData, 60 * 1000);
-      setTimeout(updateChartsData, 2 * 60 * 1000);
-      setTimeout(updateChartsData, 60 * 60 * 1000);
+      setTimeout(updateChartsData, 20 * 1000);
+
+      window.setInterval(() => {
+        updateChartsData();
+      }, 5 * 61 * 1000);
     </script>
 
     <!-- Dolar prices updater -->
