@@ -500,11 +500,22 @@
       --aug-br-height: 70px;
       --aug-tl-height: 70px;
     }
-    .table-section {
-      width: 80%;
-      margin: auto;
+    .twitter-widgets{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
       margin-top: 3rem;
       margin-bottom: 3rem;
+    }
+    .twitter-posts-widget{
+      width: 30vw;
+    }
+    .twitter-hashtag-widget{
+      width: 60vw;
+    }
+    .table-section {
+      width: 100%;
+      margin: auto;
     }
     div.table-section-title {
       font-family: BlenderProBold, sans-serif;
@@ -564,11 +575,11 @@
       width: fit-content;
     }
     .hashtag-section-item-cell {
-      width: 11rem;
+      width: 6rem;
       text-align: right;
     }
     .hashtag-section-item-cell-mini {
-      width: 4.5rem;
+      width: 4rem;
       text-align: right;
     }
     .instagram-section-container {
@@ -924,210 +935,217 @@
     </div>
     <!-- Global Bitcoin News Widget END -->
 
-    <!-- Bitcoin related hashtags Widget BEGIN -->
-    <div class="table-section">
-      <div
-        class="table-section-title"
-        augmented-ui="tr-clip tl-clip t-clip-x exe"
-      >
-        <div style="margin-right: 3rem">Twitter Hashtag</div>
-        <div>
-          Tweets <sub><small>x hora</small></sub>
+    <!-- Bitcoin twitter Widgets BEGIN -->
+    <div class="twitter-widgets">
+      <div class="twitter-posts-widget">
+        <!-- Bitcoin top twitter posts Widget BEGIN -->
+        <div
+        class="table-section"
+        >
+        <div
+          class="table-section-title"
+          augmented-ui="tr-clip tl-clip t-clip-x exe"
+          style="z-index: 100;"
+        >
+        <div>Twitter Top Posts</div>
         </div>
-        <div>
-          Comparticiones <sub><small>x hora</small></sub>
+        <div 
+        class="table-section-border"
+        style="padding: 0; overflow-y: hidden;">
+          <iframe
+            src="https://twitter.com/hashtag/Bitcoin?src=hashtag_click"
+            width="125%"
+            frameborder="0"
+            scrolling="yes"
+            style="height: 100rem; z-index: 10; clip-path: inset(7rem 1rem 4.5rem 5rem); margin: -7rem -1rem -5rem -5rem;"
+          ></iframe>
         </div>
-        <div>
-          Vistas <sub><small>x hora</small></sub>
-        </div>
+        </div> 
+        <!-- Bitcoin top twitter posts Widget END -->
       </div>
-      <div class="table-section-border">
-        <div id="twitter-section" class="twitter-slider">
-          <table class="table-section-container noselect">
-            <tr>
-              <td>
-                <div class="loader" augmented-ui="br-clip tl-clip exe">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    style="
-                      margin: -70px 0;
-                      background: transparent;
-                      display: block;
-                    "
-                    width="151px"
-                    height="151px"
-                    viewBox="0 0 100 100"
-                    preserveAspectRatio="xMidYMid"
-                  >
-                    <defs>
-                      <pattern
-                        id="ldio-op5tqvy0lkf-pattern"
-                        patternUnits="userSpaceOnUse"
-                        x="0"
-                        y="0"
-                        width="100"
-                        height="100"
-                      >
-                        <g transform="translate(18.6061 0)">
-                          <g transform="rotate(20 50 50) scale(1.2)">
-                            <rect
-                              x="-20"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="-10"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
+      <div class="twitter-hashtag-widget">
+        <!-- Bitcoin related hashtags Widget BEGIN -->
+          <div class="table-section">
+            <div
+              class="table-section-title"
+              augmented-ui="tr-clip tl-clip t-clip-x exe"
+            >
+              <div style="margin-right: 3rem">Twitter Hashtag</div>
+              <div>
+                Tweets <sub><small>x hora</small></sub>
+              </div>
+              <div>
+                Comparticiones <sub><small>x hora</small></sub>
+              </div>
+              <div>
+                Vistas <sub><small>x hora</small></sub>
+              </div>
+            </div>
+            <div class="table-section-border">
+              <div id="twitter-section" class="twitter-slider">
+                <table class="table-section-container noselect">
+                  <tr>
+                    <td>
+                      <div class="loader" augmented-ui="br-clip tl-clip exe">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          style="
+                            margin: -70px 0;
+                            background: transparent;
+                            display: block;
+                          "
+                          width="151px"
+                          height="151px"
+                          viewBox="0 0 100 100"
+                          preserveAspectRatio="xMidYMid"
+                        >
+                          <defs>
+                            <pattern
+                              id="ldio-op5tqvy0lkf-pattern"
+                              patternUnits="userSpaceOnUse"
                               x="0"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="10"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="20"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="30"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="40"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="50"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="60"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="70"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="80"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="90"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="100"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="110"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                          </g>
-                          <animateTransform
-                            attributeName="transform"
-                            type="translate"
-                            values="0 0;26 0"
-                            keyTimes="0;1"
-                            dur="0.28328611898017s"
-                            repeatCount="indefinite"
-                          ></animateTransform>
-                        </g>
-                      </pattern>
-                    </defs>
-                    <rect
-                      rx="0"
-                      ry="0"
-                      x="3.5"
-                      y="42"
-                      stroke="#131722"
-                      stroke-width="2.5"
-                      width="93"
-                      height="16"
-                      fill="url(#ldio-op5tqvy0lkf-pattern)"
-                    ></rect>
-                  </svg>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
+                              y="0"
+                              width="100"
+                              height="100"
+                            >
+                              <g transform="translate(18.6061 0)">
+                                <g transform="rotate(20 50 50) scale(1.2)">
+                                  <rect
+                                    x="-20"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="-10"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="0"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="10"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="20"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="30"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="40"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="50"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="60"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="70"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="80"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="90"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="100"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="110"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                </g>
+                                <animateTransform
+                                  attributeName="transform"
+                                  type="translate"
+                                  values="0 0;26 0"
+                                  keyTimes="0;1"
+                                  dur="0.28328611898017s"
+                                  repeatCount="indefinite"
+                                ></animateTransform>
+                              </g>
+                            </pattern>
+                          </defs>
+                          <rect
+                            rx="0"
+                            ry="0"
+                            x="3.5"
+                            y="42"
+                            stroke="#131722"
+                            stroke-width="2.5"
+                            width="93"
+                            height="16"
+                            fill="url(#ldio-op5tqvy0lkf-pattern)"
+                          ></rect>
+                        </svg>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Bitcoin related hashtags Widget END -->
       </div>
     </div>
-    <!-- Bitcoin related hashtags Widget END -->
+    <!-- Bitcoin twitter Widgets END -->
 
-    <!-- Bitcoin top twitter posts Widget BEGIN -->
-    <div
-      class="table-section"
-      style="margin: 0 20vw"
-    >
-      <div
-        class="table-section-title"
-        augmented-ui="tr-clip tl-clip t-clip-x exe"
-        style="margin-left: 0.05rem; margin-right: -0.2rem; z-index: 100;"
-      >
-      <div>Twitter Top Posts</div>
-      </div>
-      <div 
-      class="table-section-border"
-      style="padding: 0; overflow-y: hidden;">
-        <iframe
-          src="https://twitter.com/hashtag/Bitcoin?src=hashtag_click"
-          width="70%"
-          frameborder="0"
-          scrolling="yes"
-          style="height: 100rem; z-index: 10; clip-path: inset(7rem 1rem 4.5rem 6rem); margin: -7rem -1rem -5rem -6rem;"
-        ></iframe>
-      </div>
-    </div> 
-    <!-- Bitcoin top twitter posts Widget END -->
-
+ 
     <!-- Bitcoin top seen videos by influencers Widget BEGIN -->
     <div class="news-section-title" style="margin-top: 2rem">
       <p>Videos mas vistos sobre el Bitcoin</p>
@@ -3542,7 +3560,7 @@
         element = document.getElementById(sectionID);
         element.innerHTML = "";
 
-        splitDo(hashtagsArray, 8, (array) => {
+        splitDo(hashtagsArray, 25, (array) => {
           let container = generateSliderContainer();
           array.forEach((hashtag) => {
             container.appendChild(generateHashtagItem(hashtag));
