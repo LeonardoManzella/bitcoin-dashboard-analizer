@@ -60,12 +60,17 @@
       --aug-b-height: 10px;
       --aug-b-width: 20%;
     }
+    .bitcoin-fees-chart-container{
+      background-color: #131722;
+      margin: 2rem 1.5rem 0rem 0.9rem;
+      height: 15rem;
+    }
     .summary-container {
       background-color: #131722;
       display: flex;
       flex-direction: row;
       justify-content: space-evenly;
-      padding: 2rem 0.5rem 2.5rem 0;
+      padding: 1rem 0.5rem 2.5rem 0;
     }
     .summary-sources {
       height: 31rem;
@@ -223,10 +228,13 @@
     div.dolars-chart-container,
     div.bitcoin-chart-container {
       width: 100%;
-      height: 21em;
+      height: 25em;
       background-color: darkgray;
       margin-bottom: 2.5rem;
       margin-top: 1rem;
+    }
+    div.dolars-chart-container {
+      height: 35em;
     }
     div.bolsas-section-item {
       display: flex;
@@ -492,11 +500,22 @@
       --aug-br-height: 70px;
       --aug-tl-height: 70px;
     }
-    .table-section {
-      width: 80%;
-      margin: auto;
+    .twitter-widgets{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
       margin-top: 3rem;
       margin-bottom: 3rem;
+    }
+    .twitter-posts-widget{
+      width: 30vw;
+    }
+    .twitter-hashtag-widget{
+      width: 60vw;
+    }
+    .table-section {
+      width: 100%;
+      margin: auto;
     }
     div.table-section-title {
       font-family: BlenderProBold, sans-serif;
@@ -556,11 +575,11 @@
       width: fit-content;
     }
     .hashtag-section-item-cell {
-      width: 11rem;
+      width: 6rem;
       text-align: right;
     }
     .hashtag-section-item-cell-mini {
-      width: 4.5rem;
+      width: 4rem;
       text-align: right;
     }
     .instagram-section-container {
@@ -693,18 +712,24 @@
         <!-- TradingView Widget END -->
       </div>
 
+      <!-- Bitcoin Fees -->
+      <div
+        id="bitcoin-fees-chart-container"
+        class="bitcoin-fees-chart-container"
+        augmented-ui="tl-clip tr-clip exe"
+      ></div>
+
       <!-- Global Summary BEGIN -->
       <div class="summary-container">
         <div
           id="summary-sources"
           class="summary-sources"
-          augmented-ui="tl-clip bl-clip exe"
+          augmented-ui="bl-clip exe"
         ></div>
         <div class="summary-side-container">
           <div
             id="summary-side-up"
             class="summary-side-up"
-            augmented-ui="tr-clip exe"
           ></div>
           <div
             id="summary-side-down"
@@ -910,184 +935,217 @@
     </div>
     <!-- Global Bitcoin News Widget END -->
 
-    <!-- Bitcoin related hashtags Widget BEGIN -->
-    <div class="table-section">
-      <div
-        class="table-section-title"
-        augmented-ui="tr-clip tl-clip t-clip-x exe"
-      >
-        <div style="margin-right: 3rem">Twitter Hashtag</div>
-        <div>
-          Tweets <sub><small>x hora</small></sub>
+    <!-- Bitcoin twitter Widgets BEGIN -->
+    <div class="twitter-widgets">
+      <div class="twitter-posts-widget">
+        <!-- Bitcoin top twitter posts Widget BEGIN -->
+        <div
+        class="table-section"
+        >
+        <div
+          class="table-section-title"
+          augmented-ui="tr-clip tl-clip t-clip-x exe"
+          style="z-index: 100;"
+        >
+        <div>Twitter Top Posts</div>
         </div>
-        <div>
-          Comparticiones <sub><small>x hora</small></sub>
+        <div 
+        class="table-section-border"
+        style="padding: 0; overflow-y: hidden;">
+          <iframe
+            src="https://twitter.com/hashtag/Bitcoin?src=hashtag_click"
+            width="125%"
+            frameborder="0"
+            scrolling="yes"
+            style="height: 100rem; z-index: 10; clip-path: inset(7rem 1rem 4.5rem 5rem); margin: -7rem -1rem -5rem -5rem;"
+          ></iframe>
         </div>
-        <div>
-          Vistas <sub><small>x hora</small></sub>
-        </div>
+        </div> 
+        <!-- Bitcoin top twitter posts Widget END -->
       </div>
-      <div class="table-section-border">
-        <div id="twitter-section" class="twitter-slider">
-          <table class="table-section-container noselect">
-            <tr>
-              <td>
-                <div class="loader" augmented-ui="br-clip tl-clip exe">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    style="
-                      margin: -70px 0;
-                      background: transparent;
-                      display: block;
-                    "
-                    width="151px"
-                    height="151px"
-                    viewBox="0 0 100 100"
-                    preserveAspectRatio="xMidYMid"
-                  >
-                    <defs>
-                      <pattern
-                        id="ldio-op5tqvy0lkf-pattern"
-                        patternUnits="userSpaceOnUse"
-                        x="0"
-                        y="0"
-                        width="100"
-                        height="100"
-                      >
-                        <g transform="translate(18.6061 0)">
-                          <g transform="rotate(20 50 50) scale(1.2)">
-                            <rect
-                              x="-20"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="-10"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
+      <div class="twitter-hashtag-widget">
+        <!-- Bitcoin related hashtags Widget BEGIN -->
+          <div class="table-section">
+            <div
+              class="table-section-title"
+              augmented-ui="tr-clip tl-clip t-clip-x exe"
+            >
+              <div style="margin-right: 3rem">Twitter Hashtag</div>
+              <div>
+                Tweets <sub><small>x hora</small></sub>
+              </div>
+              <div>
+                Comparticiones <sub><small>x hora</small></sub>
+              </div>
+              <div>
+                Vistas <sub><small>x hora</small></sub>
+              </div>
+            </div>
+            <div class="table-section-border">
+              <div id="twitter-section" class="twitter-slider">
+                <table class="table-section-container noselect">
+                  <tr>
+                    <td>
+                      <div class="loader" augmented-ui="br-clip tl-clip exe">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          style="
+                            margin: -70px 0;
+                            background: transparent;
+                            display: block;
+                          "
+                          width="151px"
+                          height="151px"
+                          viewBox="0 0 100 100"
+                          preserveAspectRatio="xMidYMid"
+                        >
+                          <defs>
+                            <pattern
+                              id="ldio-op5tqvy0lkf-pattern"
+                              patternUnits="userSpaceOnUse"
                               x="0"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="10"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="20"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="30"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="40"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="50"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="60"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="70"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="80"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="90"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#2f96f3"
-                            ></rect>
-                            <rect
-                              x="100"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                            <rect
-                              x="110"
-                              y="-10"
-                              width="10"
-                              height="120"
-                              fill="#131722"
-                            ></rect>
-                          </g>
-                          <animateTransform
-                            attributeName="transform"
-                            type="translate"
-                            values="0 0;26 0"
-                            keyTimes="0;1"
-                            dur="0.28328611898017s"
-                            repeatCount="indefinite"
-                          ></animateTransform>
-                        </g>
-                      </pattern>
-                    </defs>
-                    <rect
-                      rx="0"
-                      ry="0"
-                      x="3.5"
-                      y="42"
-                      stroke="#131722"
-                      stroke-width="2.5"
-                      width="93"
-                      height="16"
-                      fill="url(#ldio-op5tqvy0lkf-pattern)"
-                    ></rect>
-                  </svg>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
+                              y="0"
+                              width="100"
+                              height="100"
+                            >
+                              <g transform="translate(18.6061 0)">
+                                <g transform="rotate(20 50 50) scale(1.2)">
+                                  <rect
+                                    x="-20"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="-10"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="0"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="10"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="20"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="30"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="40"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="50"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="60"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="70"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="80"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="90"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#2f96f3"
+                                  ></rect>
+                                  <rect
+                                    x="100"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                  <rect
+                                    x="110"
+                                    y="-10"
+                                    width="10"
+                                    height="120"
+                                    fill="#131722"
+                                  ></rect>
+                                </g>
+                                <animateTransform
+                                  attributeName="transform"
+                                  type="translate"
+                                  values="0 0;26 0"
+                                  keyTimes="0;1"
+                                  dur="0.28328611898017s"
+                                  repeatCount="indefinite"
+                                ></animateTransform>
+                              </g>
+                            </pattern>
+                          </defs>
+                          <rect
+                            rx="0"
+                            ry="0"
+                            x="3.5"
+                            y="42"
+                            stroke="#131722"
+                            stroke-width="2.5"
+                            width="93"
+                            height="16"
+                            fill="url(#ldio-op5tqvy0lkf-pattern)"
+                          ></rect>
+                        </svg>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Bitcoin related hashtags Widget END -->
       </div>
     </div>
-    <!-- Bitcoin related hashtags Widget END -->
+    <!-- Bitcoin twitter Widgets END -->
 
+ 
     <!-- Bitcoin top seen videos by influencers Widget BEGIN -->
     <div class="news-section-title" style="margin-top: 2rem">
       <p>Videos mas vistos sobre el Bitcoin</p>
@@ -1580,6 +1638,7 @@
       const DOLAR_UPHOLD = "uphold";
       const DOLAR_PAYPAL_AIRTM = "paypal_airtm";
       const DOLAR_UPHOLD_AIRTM = "uphold_airtm";
+      const DOLAR_DAI_BUENBIT = "dai_buenbit";
 
       const getLastDolarsData = () => {
         let dolarsData = window.localStorage.getItem(LAST_DOLARS);
@@ -1594,6 +1653,7 @@
           dolarsData.uphold = {};
           dolarsData.paypal_airtm = {};
           dolarsData.uphold_airtm = {};
+          dolarsData.dai_buenbit = {};
           dolarsData.liqui[TODAY] = 0;
           dolarsData.blue[TODAY] = 0;
           dolarsData.paypal[TODAY] = 0;
@@ -1601,6 +1661,7 @@
           dolarsData.uphold[TODAY] = 0;
           dolarsData.paypal_airtm[TODAY] = 0;
           dolarsData.uphold_airtm[TODAY] = 0;
+          dolarsData.dai_buenbit[TODAY] = 0;
         }
 
         return dolarsData;
@@ -1610,6 +1671,8 @@
       const CRYPTOS_BITCOIN_RIPIO = "bitcoin_ripio";
       const CRYPTOS_BITCOIN_SATOSHI = "bitcoin_satoshi";
       const CRYPTOS_BITCOIN_AIRTM = "bitcoin_airtm";
+      const CRYPTOS_BITCOIN_BUENBIT = "bitcoin_buenbit";
+      const CRYPTOS_BITCOIN_FEES = "bitcoin_fees";
 
       const getLastCryptoData = () => {
         let cryptoData = window.localStorage.getItem(LAST_CRYPTOS);
@@ -1620,9 +1683,13 @@
           cryptoData.bitcoin_ripio = {};
           cryptoData.bitcoin_satoshi = {};
           cryptoData.bitcoin_airtm = {};
+          cryptoData.bitcoin_buenbit = {};
+          cryptoData[CRYPTOS_BITCOIN_FEES] = {};
           cryptoData.bitcoin_ripio[TODAY] = 0;
           cryptoData.bitcoin_satoshi[TODAY] = 0;
           cryptoData.bitcoin_airtm[TODAY] = 0;
+          cryptoData.bitcoin_buenbit[TODAY] = 0;
+          cryptoData[CRYPTOS_BITCOIN_FEES][TODAY] = 0;
         }
 
         return cryptoData;
@@ -1677,6 +1744,7 @@
           dolarUphold: getHistoricData(DOLAR_UPHOLD, 20),
           dolarPaypalAirtm: getHistoricData(DOLAR_PAYPAL_AIRTM, 20),
           dolarUpholdAirtm: getHistoricData(DOLAR_UPHOLD_AIRTM, 20),
+          dolarDaiBuenBit: getHistoricData(DOLAR_DAI_BUENBIT, 20),
           criptoBitcoinRipio: getHistoricData(
             CRYPTOS_BITCOIN_RIPIO,
             20,
@@ -1689,6 +1757,16 @@
           ),
           criptoBitcoinAirtm: getHistoricData(
             CRYPTOS_BITCOIN_AIRTM,
+            20,
+            getLastCryptoData()
+          ),
+          criptoBitcoinBuenBit: getHistoricData(
+            CRYPTOS_BITCOIN_BUENBIT,
+            20,
+            getLastCryptoData()
+          ),
+          criptoBitcoinFees: getHistoricData(
+            CRYPTOS_BITCOIN_FEES,
             20,
             getLastCryptoData()
           ),
@@ -1998,6 +2076,75 @@
         ],
       });
 
+      let bitcoinFees = Highcharts.chart("bitcoin-fees-chart-container", {
+        chart: {
+          type: "area",
+        },
+        title: {
+          text: "Bitcoin Fees por transacción a lo largo del tiempo (en dolares)",
+        },
+        subtitle: {
+          align: "right",
+          verticalAlign: "bottom",
+        },
+        legend: {
+          layout: "vertical",
+          align: "left",
+          verticalAlign: "top",
+          x: 100,
+          y: 10,
+          floating: true,
+          borderWidth: 1,
+          backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || "#FFFFFF",
+        },
+        xAxis: {
+          categories: [
+            "19 días",
+            "18 días",
+            "17 días",
+            "16 días",
+            "15 días",
+            "14 días",
+            "13 días",
+            "12 días",
+            "11 días",
+            "10 días",
+            "9 días",
+            "8 días",
+            "7 días",
+            "6 días",
+            "5 días",
+            "4 días",
+            "3 días",
+            "2 días",
+            "Ayer",
+            "Ahora",
+          ],
+        },
+        yAxis: {
+          title: {
+            text: "Fees en dolares",
+          },
+          type: "logarithmic", //TODO chek if this is neccesary
+        },
+        plotOptions: {
+          area: {
+            fillOpacity: 0.5,
+          },
+        },
+        credits: {
+          enabled: false,
+        },
+        series: [
+          {
+            name: "Bitcoin Fees",
+            data: sourcesLastData.criptoBitcoinFees,
+            color: "#19FFBA",
+          },
+        ],
+      });
+
       let summaryDolars = Highcharts.chart("dolars-chart-container", {
         chart: {
           type: "area",
@@ -2079,6 +2226,11 @@
             name: "Paypal (AirTM)",
             data: sourcesLastData.dolarPaypalAirtm,
             color: "#EBB817",
+          },
+          {
+            name: "Dai (BuenBit)",
+            data: sourcesLastData.dolarDaiBuenBit,
+            color: "#EB7CA4",
           },
           {
             name: "C. Liqui",
@@ -2169,6 +2321,11 @@
             name: "Satoshi Tango",
             data: sourcesLastData.criptoBitcoinSatoshi,
             color: "#64A12D",
+          },
+          {
+            name: "BuenBit",
+            data: sourcesLastData.criptoBitcoinBuenBit,
+            color: "#EB7CA4",
           },
           {
             name: "Ripio",
@@ -2332,6 +2489,9 @@
 
       const updateChartsData = () => {
         sourcesLastData = getSourcesLastData();
+
+        bitcoinFees.series[0].setData(sourcesLastData.criptoBitcoinFees);
+
         summarySources.series[0].setData(sourcesLastData.searchs);
         summarySources.series[1].setData(sourcesLastData.news);
         summarySources.series[2].setData(sourcesLastData.youtube);
@@ -2346,19 +2506,86 @@
         summaryDolars.series[1].setData(sourcesLastData.dolarUpholdAirtm);
         summaryDolars.series[2].setData(sourcesLastData.dolarBlue);
         summaryDolars.series[3].setData(sourcesLastData.dolarPaypalAirtm);
-        summaryDolars.series[4].setData(sourcesLastData.dolarLiqui);
-        summaryDolars.series[5].setData(sourcesLastData.dolarPaypal);
-        summaryDolars.series[6].setData(sourcesLastData.dolarOficial);
+        summaryDolars.series[4].setData(sourcesLastData.dolarDaiBuenBit);
+        summaryDolars.series[5].setData(sourcesLastData.dolarLiqui);
+        summaryDolars.series[6].setData(sourcesLastData.dolarPaypal);
+        summaryDolars.series[7].setData(sourcesLastData.dolarOficial);
 
         summaryBitcoin.series[0].setData(sourcesLastData.criptoBitcoinAirtm);
         summaryBitcoin.series[1].setData(sourcesLastData.criptoBitcoinSatoshi);
-        summaryBitcoin.series[2].setData(sourcesLastData.criptoBitcoinRipio);
+        summaryBitcoin.series[2].setData(sourcesLastData.criptoBitcoinBuenBit);
+        summaryBitcoin.series[3].setData(sourcesLastData.criptoBitcoinRipio);
       };
 
       //Update data
-      setTimeout(updateChartsData, 60 * 1000);
-      setTimeout(updateChartsData, 2 * 60 * 1000);
-      setTimeout(updateChartsData, 60 * 60 * 1000);
+      setTimeout(updateChartsData, 20 * 1000);
+
+      window.setInterval(() => {
+        updateChartsData();
+      }, 5 * 61 * 1000);
+    </script>
+
+
+    <!-- Fees prices updater -->
+    <script type="text/javascript">
+      /**
+       * Get HTML asynchronously
+       * @param  {String}   url      The URL to get HTML from
+       * @param  {Function} callback A callback funtion. Pass in "response" variable to use returned HTML.
+       */
+       var getHTML = function (url, callback) {
+        // Feature detection
+        if (!window.XMLHttpRequest) return;
+
+        // Create new request
+        var xhr = new XMLHttpRequest();
+
+        // Setup callback
+        xhr.onload = function () {
+          if (callback && typeof callback === "function") {
+            callback(this.responseXML);
+          }
+        };
+
+        // Get the HTML
+        xhr.open("GET", url);
+        xhr.responseType = "document";
+        xhr.send();
+      };
+
+      const URL_BITCOIN_FEES = "https://bitinfocharts.com/comparison/bitcoin-transactionfees.html";
+      const updateFeesIndicators = () => {
+        
+        const updateBitcoinFees = (response) => {
+          console.group("updateFeesIndicators - Bitcoin");
+          const SECTION_LOCATION = 4, DATA_LOCATION = 1
+          // console.log("Bitcoin fees: ", response);
+          let bitcoinFees = response.body.children[SECTION_LOCATION].children[DATA_LOCATION].innerHTML;
+          // console.log("bitcoinFeesFound: ", bitcoinFees);
+          bitcoinFees = bitcoinFees.match(/\$.* USD/);
+          bitcoinFees = bitcoinFees.toString().replace('$','').replace('USD','');
+          // console.log("bitcoinFeesFound: ", bitcoinFees);
+          
+          setHistoricData(
+            CRYPTOS_BITCOIN_FEES,
+            parseFloat(bitcoinFees).toFixed(2),
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
+          console.groupEnd();
+        };
+
+        getHTML(PROXY_URL_WORKER + URL_BITCOIN_FEES, updateBitcoinFees);
+      };
+
+      const NEXT_JS_CYCLE = 0;
+      setTimeout(() => {
+        updateFeesIndicators();
+      }, NEXT_JS_CYCLE);
+
+      window.setInterval(() => {
+        updateFeesIndicators();
+      }, 4 * 60 * 60 * 1000);
     </script>
 
     <!-- Dolar prices updater -->
@@ -2370,6 +2597,7 @@
       const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
       const URL_AIRTM = (day_now) =>
         `https://rates.airtm.com/rates.json?d=${day_now}`;
+      const URL_BUEN_BIT = "https://be.buenbit.com/api/market/tickers/";
 
       const updateDolarIndicators = () => {
         console.group("updateDolarIndicators");
@@ -2521,6 +2749,26 @@
           setHistoricData(
             CRYPTOS_BITCOIN_AIRTM,
             bitcoinAirtm,
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
+        });
+
+        //BuenBit
+        fetchData(PROXY_URL_WORKER + URL_BUEN_BIT).then((data) => {
+          console.log("BuenBit data: ", data);
+
+          const daiDolarBuenBit = parseFloat(
+            data.object.daiars.selling_price
+          ).toFixed(2);
+          setHistoricData(DOLAR_DAI_BUENBIT, daiDolarBuenBit);
+
+          const bitcoinBuenBit = parseFloat(
+            data.object.btcars.selling_price
+          ).toFixed(2);
+          setHistoricData(
+            CRYPTOS_BITCOIN_BUENBIT,
+            bitcoinBuenBit,
             getLastCryptoData(),
             LAST_CRYPTOS
           );
@@ -2976,31 +3224,6 @@
 
     <!-- Youtube section loader -->
     <script type="text/javascript">
-      /**
-       * Get HTML asynchronously
-       * @param  {String}   url      The URL to get HTML from
-       * @param  {Function} callback A callback funtion. Pass in "response" variable to use returned HTML.
-       */
-      var getHTML = function (url, callback) {
-        // Feature detection
-        if (!window.XMLHttpRequest) return;
-
-        // Create new request
-        var xhr = new XMLHttpRequest();
-
-        // Setup callback
-        xhr.onload = function () {
-          if (callback && typeof callback === "function") {
-            callback(this.responseXML);
-          }
-        };
-
-        // Get the HTML
-        xhr.open("GET", url);
-        xhr.responseType = "document";
-        xhr.send();
-      };
-
       //TODO probar pueda obtener datos de URLs
       // document.cookie =
       //   "__stripe_mid=fc07ee05-c462-4105-a97f-20dfe441cc60; __stripe_sid=7e628cb8-2bcc-4a80-8e84-e6470f6d8bf3; driftt_aid=bcb64773-ff8c-44c6-8144-b81658c72680; driftt_sid=ad0c28e2-a9d0-4671-bdc2-c02c501f2eb1; DFTT_END_USER_PREV_BOOTSTRAPPED=true; XSRF-TOKEN=eyJpdiI6Ik5ldWxOc25PWXROUHZSSGZkYkZpM3c9PSIsInZhbHVlIjoiUWlnY0JkS09ycWlxNXF6a3VXZVVpMTdob2xqT3ZWekFJZTFVN1NQTlZ4TkFOZ0llNTl0Mnd1aWZ0d1FwdmxveCIsIm1hYyI6IjZmMTBlMmIwMmRlZThiZmFkMmI1MzM3MjE1OTg2NDZlOGMwMmY2NzVlZmZkZWU0ZWIxZDE3OGMxMmY2YWI2MGMifQ%3D%3D; trackmyhashtag_session=eyJpdiI6Im8zS21SdWJLWjRkaXhLMkZHQ2xnR2c9PSIsInZhbHVlIjoidUViR0Zsd3JPNlF6ZjM5c0tiUFwvcWZyWTFDVml5M3E4RWFVb3VkXC8weW42MnRZNEk2WnpRRHRHV202bnpoK3BaIiwibWFjIjoiMmU2NDBiZjhhNmU1Y2ZiZDAxZmQ1YmY0YjMwNTBhNDE4YzEwOWMyNTRhY2Q0MDc5M2FiYTMyYTEwMDY2NDVjNyJ9; driftt_wmd=true";
@@ -3337,7 +3560,7 @@
         element = document.getElementById(sectionID);
         element.innerHTML = "";
 
-        splitDo(hashtagsArray, 8, (array) => {
+        splitDo(hashtagsArray, 25, (array) => {
           let container = generateSliderContainer();
           array.forEach((hashtag) => {
             container.appendChild(generateHashtagItem(hashtag));
