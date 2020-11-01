@@ -1617,6 +1617,7 @@
       const CRYPTOS_BITCOIN_SATOSHI = "bitcoin_satoshi";
       const CRYPTOS_BITCOIN_AIRTM = "bitcoin_airtm";
       const CRYPTOS_BITCOIN_BUENBIT = "bitcoin_buenbit";
+      const CRYPTOS_BITCOIN_FEES = "bitcoin_fees";
 
       const getLastCryptoData = () => {
         let cryptoData = window.localStorage.getItem(LAST_CRYPTOS);
@@ -1628,10 +1629,12 @@
           cryptoData.bitcoin_satoshi = {};
           cryptoData.bitcoin_airtm = {};
           cryptoData.bitcoin_buenbit = {};
+          cryptoData[CRYPTOS_BITCOIN_FEES] = {};
           cryptoData.bitcoin_ripio[TODAY] = 0;
           cryptoData.bitcoin_satoshi[TODAY] = 0;
           cryptoData.bitcoin_airtm[TODAY] = 0;
           cryptoData.bitcoin_buenbit[TODAY] = 0;
+          cryptoData[CRYPTOS_BITCOIN_FEES][TODAY] = 0;
         }
 
         return cryptoData;
@@ -2390,6 +2393,69 @@
       }, 5 * 61 * 1000);
     </script>
 
+
+    <!-- Fees prices updater -->
+    <script type="text/javascript">
+      /**
+       * Get HTML asynchronously
+       * @param  {String}   url      The URL to get HTML from
+       * @param  {Function} callback A callback funtion. Pass in "response" variable to use returned HTML.
+       */
+       var getHTML = function (url, callback) {
+        // Feature detection
+        if (!window.XMLHttpRequest) return;
+
+        // Create new request
+        var xhr = new XMLHttpRequest();
+
+        // Setup callback
+        xhr.onload = function () {
+          if (callback && typeof callback === "function") {
+            callback(this.responseXML);
+          }
+        };
+
+        // Get the HTML
+        xhr.open("GET", url);
+        xhr.responseType = "document";
+        xhr.send();
+      };
+
+      const URL_BITCOIN_FEES = "https://bitinfocharts.com/comparison/bitcoin-transactionfees.html";
+      const updateFeesIndicators = () => {
+        
+        const updateBitcoinFees = (response) => {
+          console.group("updateFeesIndicators - Bitcoin");
+          const SECTION_LOCATION = 4, DATA_LOCATION = 1
+          // console.log("Bitcoin fees: ", response);
+          let bitcoinFees = response.body.children[SECTION_LOCATION].children[DATA_LOCATION].innerHTML;
+          // console.log("bitcoinFeesFound: ", bitcoinFees);
+          bitcoinFees = bitcoinFees.match(/\$.* USD/);
+          bitcoinFees = bitcoinFees.toString().replace('$','').replace('USD','');
+          // console.log("bitcoinFeesFound: ", bitcoinFees);
+          
+          setHistoricData(
+            CRYPTOS_BITCOIN_FEES,
+            parseFloat(bitcoinFees).toFixed(2),
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
+          console.groupEnd();
+        };
+
+        getHTML(PROXY_URL_WORKER + URL_BITCOIN_FEES, updateBitcoinFees);
+      };
+
+      const NEXT_JS_CYCLE = 0;
+      setTimeout(() => {
+        updateFeesIndicators();
+      }, NEXT_JS_CYCLE);
+
+      window.setInterval(() => {
+        updateFeesIndicators();
+      }, 4 * 60 * 60 * 1000);
+    </script>
+
     <!-- Dolar prices updater -->
     <script type="text/javascript">
       const URL_OFICIAL =
@@ -3026,31 +3092,6 @@
 
     <!-- Youtube section loader -->
     <script type="text/javascript">
-      /**
-       * Get HTML asynchronously
-       * @param  {String}   url      The URL to get HTML from
-       * @param  {Function} callback A callback funtion. Pass in "response" variable to use returned HTML.
-       */
-      var getHTML = function (url, callback) {
-        // Feature detection
-        if (!window.XMLHttpRequest) return;
-
-        // Create new request
-        var xhr = new XMLHttpRequest();
-
-        // Setup callback
-        xhr.onload = function () {
-          if (callback && typeof callback === "function") {
-            callback(this.responseXML);
-          }
-        };
-
-        // Get the HTML
-        xhr.open("GET", url);
-        xhr.responseType = "document";
-        xhr.send();
-      };
-
       //TODO probar pueda obtener datos de URLs
       // document.cookie =
       //   "__stripe_mid=fc07ee05-c462-4105-a97f-20dfe441cc60; __stripe_sid=7e628cb8-2bcc-4a80-8e84-e6470f6d8bf3; driftt_aid=bcb64773-ff8c-44c6-8144-b81658c72680; driftt_sid=ad0c28e2-a9d0-4671-bdc2-c02c501f2eb1; DFTT_END_USER_PREV_BOOTSTRAPPED=true; XSRF-TOKEN=eyJpdiI6Ik5ldWxOc25PWXROUHZSSGZkYkZpM3c9PSIsInZhbHVlIjoiUWlnY0JkS09ycWlxNXF6a3VXZVVpMTdob2xqT3ZWekFJZTFVN1NQTlZ4TkFOZ0llNTl0Mnd1aWZ0d1FwdmxveCIsIm1hYyI6IjZmMTBlMmIwMmRlZThiZmFkMmI1MzM3MjE1OTg2NDZlOGMwMmY2NzVlZmZkZWU0ZWIxZDE3OGMxMmY2YWI2MGMifQ%3D%3D; trackmyhashtag_session=eyJpdiI6Im8zS21SdWJLWjRkaXhLMkZHQ2xnR2c9PSIsInZhbHVlIjoidUViR0Zsd3JPNlF6ZjM5c0tiUFwvcWZyWTFDVml5M3E4RWFVb3VkXC8weW42MnRZNEk2WnpRRHRHV202bnpoK3BaIiwibWFjIjoiMmU2NDBiZjhhNmU1Y2ZiZDAxZmQ1YmY0YjMwNTBhNDE4YzEwOWMyNTRhY2Q0MDc5M2FiYTMyYTEwMDY2NDVjNyJ9; driftt_wmd=true";
