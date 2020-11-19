@@ -3839,11 +3839,10 @@
       };
 
       const transformInstagramResponse = async (response) => {
-        const ONLY_VALUE = 0,
-          ITEMS = 4;
+        const ONLY_VALUE = 0;
         // console.log("instagrams before transform: ", response);
-        let instagrams = response.body.children[ITEMS].innerHTML;
-        instagrams = instagrams.match(/{.*}/gm);
+        let instagrams = response.body.innerHTML;
+        instagrams = instagrams.match(/{\"config\"\:.*\"frontend_env\"\:\"prod\"}/gm);
         // console.log("instagrams middle transform: ", instagrams);
         instagrams = JSON.parse(instagrams[ONLY_VALUE]);
         let instagramsTransformed =
