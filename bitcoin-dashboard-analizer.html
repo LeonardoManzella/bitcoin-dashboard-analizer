@@ -3884,23 +3884,35 @@
         setInstagramSlider();
       };
 
+      // This need to be rewritten using promises to effectively retry
       const InstagramInitiator = () => {
         try {
           getHTML(
-            PROXY_URL_WORKER +
-              "https://www.instagram.com/explore/tags/bitcoin/",
+              "https://www.instagram.com/explore/tags/ethereum/",
             updateInstagram
           );
         } catch (error) {
-          console.warn(
-            "!! Failed to fetch using own proxy, using heroku proxy !!"
-          );
-          console.warn("Error detected: ", error);
+          try {
+            console.warn(
+              "!! Failed to fetch using direct, using own proxy !!"
+            );
+            console.warn("Error detected: ", error);
 
-          getHTML(
-            PROXY_URL + "https://www.instagram.com/explore/tags/bitcoin/",
-            updateInstagram
-          );
+            getHTML(
+              PROXY_URL_WORKER + "https://www.instagram.com/explore/tags/bitcoin/",
+              updateInstagram
+            );
+          } catch (error) {
+            console.warn(
+              "!! Failed to fetch using own proxy, using heroku proxy !!"
+            );
+            console.warn("Error detected: ", error);
+
+            getHTML(
+              PROXY_URL + "https://www.instagram.com/explore/tags/bitcoin/",
+              updateInstagram
+            );
+          }
         }
       };
 
