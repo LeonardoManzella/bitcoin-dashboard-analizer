@@ -1673,6 +1673,7 @@
       const CRYPTOS_BITCOIN_AIRTM = "bitcoin_airtm";
       const CRYPTOS_BITCOIN_BUENBIT = "bitcoin_buenbit";
       const CRYPTOS_BITCOIN_FEES = "bitcoin_fees";
+      const CRYPTOS_BITCOIN_GOOGLE = "bitcoin_google";
 
       const getLastCryptoData = () => {
         let cryptoData = window.localStorage.getItem(LAST_CRYPTOS);
@@ -1728,6 +1729,38 @@
           parseFloat(transformValue(lastSourceData[type][day])),
         ];
       };
+
+      const ALGORITHM_METADATA = "ALGORITHM_METADATA";
+
+      const getAlgorithmMetadata = () => {
+        let algorithmData = window.localStorage.getItem(ALGORITHM_METADATA);
+        algorithmData = JSON.parse(algorithmData);
+
+        if (!algorithmData) {
+          algorithmData = {};
+          algorithmData.crashHashtag = {};
+          algorithmData.bubbleHashtag = {};
+          algorithmData.crashHashtag[TODAY] = 0;
+          algorithmData.bubbleHashtag[TODAY] = 0;
+          algorithmData.crashHashtag.maximum = 1;
+          algorithmData.bubbleHashtag.maximum = 1;
+        }
+
+        return algorithmData;
+      };
+
+      const setAlgorithmMetadata = (type, value) => {
+        let sourceData = getAlgorithmMetadata();
+        if (!sourceData[type]) {
+          sourceData[type] = {
+            maximum: 1,
+          };
+        }
+        sourceData[type][TODAY] = value;
+        sourceData[type].maximum = Math.max(sourceData[type].maximum, value);
+        console.log(`setAlgorithmMetadata ${type}: ${value}`);
+        window.localStorage.setItem(ALGORITHM_METADATA, JSON.stringify(sourceData));
+      }
 
       const getSourcesLastData = () => {
         return {
@@ -2816,9 +2849,16 @@
           const UNTIL = fetchedData.indexOf(
             '"><div class="vk_sh c8Zgcf"><span class="DFlfde eNFL1">'
           );
-          const bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
+          let bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
           if (bitcoinPriceUSD.includes("Not found")) return;
-          document.title = `(${parseFloat(bitcoinPriceUSD).toFixed(2)} USD) Bitcoin Dashboard Analizer`;
+          bitcoinPriceUSD = parseFloat(bitcoinPriceUSD).toFixed(2);
+          document.title = `(${bitcoinPriceUSD} USD) Bitcoin Dashboard Analizer`;
+          setHistoricData(
+            CRYPTOS_BITCOIN_GOOGLE,
+            bitcoinPriceUSD,
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
         });
       };
 
@@ -3471,6 +3511,14 @@
       };
 
       const generateHashtagItem = (hashtag) => {
+        const algorithmValue = hashtag.exposure.replace(",","");
+        if(hashtag.name === "#crash"){
+          setAlgorithmMetadata("crashHashtag", algorithmValue);
+
+        } else if( hashtag.name === "#bubble") {
+          setAlgorithmMetadata("bubbleHashtag", algorithmValue);
+        }
+
         let nameElement = document.createElement("div");
         nameElement.appendChild(
           document.createTextNode(decodeHTML(hashtag.name))
@@ -3916,7 +3964,6 @@
         }
       };
 
-      //TODO uncomment
       setTimeout(InstagramInitiator, 5 * 1000);
 
       window.setInterval(() => {
