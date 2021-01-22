@@ -4218,6 +4218,39 @@
 
     <!-- Bitcoin prediction -->
     <script type="text/javascript">
+
+
+const getBadge = (predictionValue) => {
+        let badge = document.createElement("div");
+        badge.classList.add("bitcoin-prediction-widget-badge");
+
+        if(predictionValue >= 20){
+          badge.classList.add("up");
+          badge.innerText = "Muy fuerte subida";
+        } else if (predictionValue >= 10){
+          badge.classList.add("up");
+          badge.innerText = "Fuerte subida";
+        } else if (predictionValue >= 2){
+          badge.classList.add("up");
+          badge.innerText = "Sube";
+        } else if (predictionValue >= -2){
+          badge.classList.add("equal");
+          badge.innerText = "Sigue igual";
+        } else if (predictionValue >= -10){
+          badge.classList.add("down");
+          badge.innerText = "Baja";
+        } else if (predictionValue >= -20){
+          badge.classList.add("down");
+          badge.innerText = "Fuerte bajada";
+        } else if (predictionValue < -20){
+          badge.classList.add("down");
+          badge.innerText = "Muy fuerte bajada";
+        }
+
+        return badge;
+      }
+
+    const updateBitcoinPrediction = () => {
       const REDUCE_FACTOR = 1;
       const AMPLIFY_FACTOR = 1.5;
       const bitcoinPriceNow = getHistoricData(
@@ -4249,36 +4282,6 @@
       const interestNow = getTotalsNow();
       const interestMaximum = getMaximums().total;
 
-      const getBadge = (predictionValue) => {
-        let badge = document.createElement("div");
-        badge.classList.add("bitcoin-prediction-widget-badge");
-
-        if(predictionValue >= 20){
-          badge.classList.add("up");
-          badge.innerText = "Muy fuerte subida";
-        } else if (predictionValue >= 10){
-          badge.classList.add("up");
-          badge.innerText = "Fuerte subida";
-        } else if (predictionValue >= 2){
-          badge.classList.add("up");
-          badge.innerText = "Sube";
-        } else if (predictionValue >= -2){
-          badge.classList.add("equal");
-          badge.innerText = "Sigue igual";
-        } else if (predictionValue >= -10){
-          badge.classList.add("down");
-          badge.innerText = "Baja";
-        } else if (predictionValue >= -20){
-          badge.classList.add("down");
-          badge.innerText = "Fuerte bajada";
-        } else if (predictionValue < -20){
-          badge.classList.add("down");
-          badge.innerText = "Muy fuerte bajada";
-        }
-
-        return badge;
-      }
-
       let bitcoinPrediction = (dailyVariation-REDUCE_FACTOR*((bubbleHashtag + crashHashtag)/(bubbleMaximum + crashMaximum)))*AMPLIFY_FACTOR*(feesNow/feesMaximum)*(interestNow/interestMaximum);
       bitcoinPrediction = bitcoinPrediction * 100;
       
@@ -4293,6 +4296,13 @@
       );
       parentElement.appendChild( titleElement );
       parentElement.appendChild( bitcoinPrediction );
+    }
+
+    updateBitcoinPrediction();
+
+    window.setInterval(() => {
+      updateBitcoinPrediction();
+    }, 4 * 60 * 60 * 1000);
     </script>
   </body>
 </html>
