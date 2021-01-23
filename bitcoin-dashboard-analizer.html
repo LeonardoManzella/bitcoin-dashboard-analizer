@@ -4262,7 +4262,7 @@ const getBadge = (predictionValue) => {
             CRYPTOS_BITCOIN_GOOGLE,
             2,
             getLastCryptoData()
-          )[ONLY_VALUE];
+          )[ONLY_VALUE] || bitcoinPriceNow;
       const dailyVariation = (bitcoinPriceNow/bitcoinPriceYesterday - 1)*100;
       const bubbleHashtag = getAlgorithmMetadata().bubbleHashtag[TODAY] || 0;
       const crashHashtag = getAlgorithmMetadata().crashHashtag[TODAY] || 0;
@@ -4272,14 +4272,14 @@ const getBadge = (predictionValue) => {
             CRYPTOS_BITCOIN_FEES,
             1,
             getLastCryptoData()
-          )[ONLY_VALUE];
+          )[ONLY_VALUE] | 0;
       const feesHistory = getHistoricData(
             CRYPTOS_BITCOIN_FEES,
             365,
             getLastCryptoData()
           ).map( val => val || 0);
       const feesMaximum = Math.max(...feesHistory);
-      const interestNow = getTotalsNow();
+      const interestNow = getTotalsNow() | 0;
       const interestMaximum = getMaximums().total;
 
       let bitcoinPrediction = (dailyVariation-REDUCE_FACTOR*((bubbleHashtag + crashHashtag)/(bubbleMaximum + crashMaximum)))*AMPLIFY_FACTOR*(feesNow/feesMaximum)*(interestNow/interestMaximum);
