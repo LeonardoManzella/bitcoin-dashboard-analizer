@@ -207,7 +207,7 @@
       color: #ec5250;
     }
     .equal {
-      color: #4ba79a;
+      color: #787b86;
     }
     div.financial-section {
       margin-top: 0.5rem;
@@ -631,6 +631,25 @@
       line-height: 1;
       -webkit-font-smoothing: antialiased;
     }
+    .bitcoin-prediction-widget {
+      font-family: Trebuchet MS,roboto,ubuntu,sans-serif;
+      margin: auto;
+      margin-top: -2rem;
+      font-size: 1.25rem;
+      color: #131722;
+      letter-spacing: 0.01875rem;
+      font-weight: 400;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .bitcoin-prediction-widget-badge {
+      background-color: #fff;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+    }
     .tns-outer {
       padding: 0 !important;
       display: flex;
@@ -768,22 +787,13 @@
       >
         <div class="tradingview-widget-container">
           <div class="tradingview-widget-container__widget"></div>
-          <div class="tradingview-widget-copyright">
-            <a
-              href="https://es.tradingview.com/symbols/BITSTAMP-BTCUSD/technicals/"
-              rel="noopener"
-              target="_blank"
-              ><span class="blue-text">Análisis técnico de BTCUSD</span></a
-            >
-            por TradingView
-          </div>
           <script
             type="text/javascript"
             src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js"
             async
           >
             {
-              "interval": "4h",
+              "interval": "1D",
               "width": "425",
               "isTransparent": true,
               "height": "450",
@@ -794,6 +804,7 @@
             }
           </script>
         </div>
+        <div id="bitcoin-prediction" class="bitcoin-prediction-widget">Calculando predicción de precio...</div>
       </div>
       <!-- TradingView Widget END -->
 
@@ -1519,6 +1530,7 @@
     <!-- Common functions and constants -->
     <script type="text/javascript">
       const TODAY = moment().format("YYYY-MM-DD");
+      const ONLY_VALUE = 0;
 
       const splitDo = (contentArray, step, doFunction) => {
         for (let index = 0; index < contentArray.length; index += step) {
@@ -1672,7 +1684,9 @@
       const CRYPTOS_BITCOIN_SATOSHI = "bitcoin_satoshi";
       const CRYPTOS_BITCOIN_AIRTM = "bitcoin_airtm";
       const CRYPTOS_BITCOIN_BUENBIT = "bitcoin_buenbit";
+      const CRYPTOS_BITCOIN_BINANCE = "bitcoin_binance";
       const CRYPTOS_BITCOIN_FEES = "bitcoin_fees";
+      const CRYPTOS_BITCOIN_GOOGLE = "bitcoin_google";
 
       const getLastCryptoData = () => {
         let cryptoData = window.localStorage.getItem(LAST_CRYPTOS);
@@ -1729,6 +1743,38 @@
         ];
       };
 
+      const ALGORITHM_METADATA = "ALGORITHM_METADATA";
+
+      const getAlgorithmMetadata = () => {
+        let algorithmData = window.localStorage.getItem(ALGORITHM_METADATA);
+        algorithmData = JSON.parse(algorithmData);
+
+        if (!algorithmData) {
+          algorithmData = {};
+          algorithmData.crashHashtag = {};
+          algorithmData.bubbleHashtag = {};
+          algorithmData.crashHashtag[TODAY] = 0;
+          algorithmData.bubbleHashtag[TODAY] = 0;
+          algorithmData.crashHashtag.maximum = 1;
+          algorithmData.bubbleHashtag.maximum = 1;
+        }
+
+        return algorithmData;
+      };
+
+      const setAlgorithmMetadata = (type, value) => {
+        let sourceData = getAlgorithmMetadata();
+        if (!sourceData[type]) {
+          sourceData[type] = {
+            maximum: 1,
+          };
+        }
+        sourceData[type][TODAY] = value;
+        sourceData[type].maximum = Math.max(sourceData[type].maximum, value);
+        console.log(`setAlgorithmMetadata ${type}: ${value}`);
+        window.localStorage.setItem(ALGORITHM_METADATA, JSON.stringify(sourceData));
+      }
+
       const getSourcesLastData = () => {
         return {
           searchs: getLastData("searchs", 10),
@@ -1762,6 +1808,11 @@
           ),
           criptoBitcoinBuenBit: getHistoricData(
             CRYPTOS_BITCOIN_BUENBIT,
+            20,
+            getLastCryptoData()
+          ),
+          criptoBitcoinBinance: getHistoricData(
+            CRYPTOS_BITCOIN_BINANCE,
             20,
             getLastCryptoData()
           ),
@@ -2323,6 +2374,11 @@
             color: "#64A12D",
           },
           {
+            name: "Binance",
+            data: sourcesLastData.criptoBitcoinBinance,
+            color: "#FFED00",
+          },
+          {
             name: "BuenBit",
             data: sourcesLastData.criptoBitcoinBuenBit,
             color: "#EB7CA4",
@@ -2330,7 +2386,7 @@
           {
             name: "Ripio",
             data: sourcesLastData.criptoBitcoinRipio,
-            color: "#FFED00",
+            color: "#008AC5",
           },
         ],
       });
@@ -2513,8 +2569,9 @@
 
         summaryBitcoin.series[0].setData(sourcesLastData.criptoBitcoinAirtm);
         summaryBitcoin.series[1].setData(sourcesLastData.criptoBitcoinSatoshi);
-        summaryBitcoin.series[2].setData(sourcesLastData.criptoBitcoinBuenBit);
-        summaryBitcoin.series[3].setData(sourcesLastData.criptoBitcoinRipio);
+        summaryBitcoin.series[2].setData(sourcesLastData.criptoBitcoinBinance);
+        summaryBitcoin.series[3].setData(sourcesLastData.criptoBitcoinBuenBit);
+        summaryBitcoin.series[4].setData(sourcesLastData.criptoBitcoinRipio);
       };
 
       //Update data
@@ -2598,6 +2655,7 @@
       const URL_AIRTM = (day_now) =>
         `https://rates.airtm.com/rates.json?d=${day_now}`;
       const URL_BUEN_BIT = "https://be.buenbit.com/api/market/tickers/";
+      const URL_BINANCE = "https://p2p.binance.com/gateway-api/v2/public/c2c/adv/search";
 
       const updateDolarIndicators = () => {
         console.group("updateDolarIndicators");
@@ -2774,6 +2832,39 @@
           );
         });
 
+        //Binance
+        fetchData(PROXY_URL_WORKER + URL_BINANCE, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              "page": 1,
+              "rows": 10,
+              "payTypeList": [],
+              "asset": "BTC",
+              "tradeType": "BUY",
+              "fiat": "ARS"
+          }),
+
+        }).then((response) => {
+          console.log("Binance data: ", response);
+
+          const binancePrices = response.data.map( item => parseFloat(item.advDetail.price));
+
+          const bitcoinBinace = Math.max(
+            ...binancePrices
+          ).toFixed(2);
+
+          setHistoricData(
+            CRYPTOS_BITCOIN_BINANCE,
+            bitcoinBinace,
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
+        });
+
+
         console.groupEnd();
       };
 
@@ -2816,9 +2907,16 @@
           const UNTIL = fetchedData.indexOf(
             '"><div class="vk_sh c8Zgcf"><span class="DFlfde eNFL1">'
           );
-          const bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
+          let bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
           if (bitcoinPriceUSD.includes("Not found")) return;
-          document.title = `(${parseFloat(bitcoinPriceUSD).toFixed(2)} USD) Bitcoin Dashboard Analizer`;
+          bitcoinPriceUSD = parseFloat(bitcoinPriceUSD).toFixed(2);
+          document.title = `(${bitcoinPriceUSD} USD) Bitcoin Dashboard Analizer`;
+          setHistoricData(
+            CRYPTOS_BITCOIN_GOOGLE,
+            bitcoinPriceUSD,
+            getLastCryptoData(),
+            LAST_CRYPTOS
+          );
         });
       };
 
@@ -3146,7 +3244,6 @@
       };
 
       const obtainRipioPrice = (data) => {
-        const ONLY_VALUE = 0;
         if (
           parseInt(data.buy[ONLY_VALUE].amount) !== 0 ||
           parseInt(data.sell[ONLY_VALUE].amount) !== 0
@@ -3471,6 +3568,14 @@
       };
 
       const generateHashtagItem = (hashtag) => {
+        const algorithmValue = parseInt(hashtag.exposure.replace(",",""));
+        if(hashtag.name === "#crash"){
+          setAlgorithmMetadata("crashHashtag", algorithmValue);
+
+        } else if( hashtag.name === "#bubble") {
+          setAlgorithmMetadata("bubbleHashtag", algorithmValue);
+        }
+
         let nameElement = document.createElement("div");
         nameElement.appendChild(
           document.createTextNode(decodeHTML(hashtag.name))
@@ -3839,7 +3944,6 @@
       };
 
       const transformInstagramResponse = async (response) => {
-        const ONLY_VALUE = 0;
         // console.log("instagrams before transform: ", response);
         let instagrams = response.body.innerHTML;
         instagrams = instagrams.match(/{\"config\"\:.*\"frontend_env\"\:\"prod\"}/gm);
@@ -3916,7 +4020,6 @@
         }
       };
 
-      //TODO uncomment
       setTimeout(InstagramInitiator, 5 * 1000);
 
       window.setInterval(() => {
@@ -4157,6 +4260,95 @@
       window.setInterval(() => {
         updateTikttokAnalytics();
       }, 4 * 60 * 60 * 1000);
+    </script>
+
+    <!-- Bitcoin prediction -->
+    <script type="text/javascript">
+
+
+const getBadge = (predictionValue) => {
+        let badge = document.createElement("div");
+        badge.classList.add("bitcoin-prediction-widget-badge");
+
+        if(predictionValue >= 20){
+          badge.classList.add("up");
+          badge.innerText = "Muy fuerte subida";
+        } else if (predictionValue >= 10){
+          badge.classList.add("up");
+          badge.innerText = "Fuerte subida";
+        } else if (predictionValue >= 2){
+          badge.classList.add("up");
+          badge.innerText = "Sube";
+        } else if (predictionValue >= -2){
+          badge.classList.add("equal");
+          badge.innerText = "Sigue igual";
+        } else if (predictionValue >= -10){
+          badge.classList.add("down");
+          badge.innerText = "Baja";
+        } else if (predictionValue >= -20){
+          badge.classList.add("down");
+          badge.innerText = "Fuerte bajada";
+        } else if (predictionValue < -20){
+          badge.classList.add("down");
+          badge.innerText = "Muy fuerte bajada";
+        }
+
+        return badge;
+      }
+
+    const updateBitcoinPrediction = () => {
+      const REDUCE_FACTOR = 1;
+      const AMPLIFY_FACTOR = 1.5;
+      const bitcoinPriceNow = getHistoricData(
+            CRYPTOS_BITCOIN_GOOGLE,
+            1,
+            getLastCryptoData()
+          )[ONLY_VALUE];
+      const bitcoinPriceYesterday = getHistoricData(
+            CRYPTOS_BITCOIN_GOOGLE,
+            2,
+            getLastCryptoData()
+          )[ONLY_VALUE] || bitcoinPriceNow;
+      const dailyVariation = (bitcoinPriceNow/bitcoinPriceYesterday - 1)*100;
+      const bubbleHashtag = getAlgorithmMetadata().bubbleHashtag[TODAY] || 0;
+      const crashHashtag = getAlgorithmMetadata().crashHashtag[TODAY] || 0;
+      const bubbleMaximum = getAlgorithmMetadata().bubbleHashtag.maximum;
+      const crashMaximum = getAlgorithmMetadata().crashHashtag.maximum;
+      const feesNow = getHistoricData(
+            CRYPTOS_BITCOIN_FEES,
+            1,
+            getLastCryptoData()
+          )[ONLY_VALUE] | 0;
+      const feesHistory = getHistoricData(
+            CRYPTOS_BITCOIN_FEES,
+            365,
+            getLastCryptoData()
+          ).map( val => val || 0);
+      const feesMaximum = Math.max(...feesHistory);
+      const interestNow = getTotalsNow() | 0;
+      const interestMaximum = getMaximums().total;
+
+      let bitcoinPrediction = (dailyVariation-REDUCE_FACTOR*((bubbleHashtag + crashHashtag)/(bubbleMaximum + crashMaximum)))*AMPLIFY_FACTOR*(feesNow/feesMaximum)*(interestNow/interestMaximum);
+      bitcoinPrediction = bitcoinPrediction * 100;
+      
+      console.debug(`bitcoinPrediction: ${bitcoinPrediction}`);
+      bitcoinPrediction = getBadge(bitcoinPrediction);
+
+      let parentElement = document.getElementById("bitcoin-prediction");
+      parentElement.innerHTML = "";
+      let titleElement = document.createElement("div");
+      titleElement.appendChild(
+        document.createTextNode("Predicción por algoritmo:")
+      );
+      parentElement.appendChild( titleElement );
+      parentElement.appendChild( bitcoinPrediction );
+    }
+
+    updateBitcoinPrediction();
+
+    window.setInterval(() => {
+      updateBitcoinPrediction();
+    }, 4 * 60 * 60 * 1000);
     </script>
   </body>
 </html>
