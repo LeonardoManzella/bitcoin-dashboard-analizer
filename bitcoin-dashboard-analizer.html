@@ -3290,7 +3290,7 @@
           console.warn("Ripio WS Error: ", event);
         };
 
-        fetchData(PROXY_URL + SATOSHI_PRICE_URL).then((response) => {
+        fetchData(PROXY_URL_WORKER + SATOSHI_PRICE_URL).then((response) => {
           if (!response) return;
           let satoshiData = {};
           satoshiData.price = response.data.ticker.BTC.ask;
@@ -3315,7 +3315,7 @@
 
       window.setInterval(() => {
         updateExchangePrices();
-      }, 30 * 1000);
+      }, 5 * 60 * 1000);
     </script>
 
     <!-- Youtube section loader -->
@@ -3324,7 +3324,7 @@
       // document.cookie =
       //   "__stripe_mid=fc07ee05-c462-4105-a97f-20dfe441cc60; __stripe_sid=7e628cb8-2bcc-4a80-8e84-e6470f6d8bf3; driftt_aid=bcb64773-ff8c-44c6-8144-b81658c72680; driftt_sid=ad0c28e2-a9d0-4671-bdc2-c02c501f2eb1; DFTT_END_USER_PREV_BOOTSTRAPPED=true; XSRF-TOKEN=eyJpdiI6Ik5ldWxOc25PWXROUHZSSGZkYkZpM3c9PSIsInZhbHVlIjoiUWlnY0JkS09ycWlxNXF6a3VXZVVpMTdob2xqT3ZWekFJZTFVN1NQTlZ4TkFOZ0llNTl0Mnd1aWZ0d1FwdmxveCIsIm1hYyI6IjZmMTBlMmIwMmRlZThiZmFkMmI1MzM3MjE1OTg2NDZlOGMwMmY2NzVlZmZkZWU0ZWIxZDE3OGMxMmY2YWI2MGMifQ%3D%3D; trackmyhashtag_session=eyJpdiI6Im8zS21SdWJLWjRkaXhLMkZHQ2xnR2c9PSIsInZhbHVlIjoidUViR0Zsd3JPNlF6ZjM5c0tiUFwvcWZyWTFDVml5M3E4RWFVb3VkXC8weW42MnRZNEk2WnpRRHRHV202bnpoK3BaIiwibWFjIjoiMmU2NDBiZjhhNmU1Y2ZiZDAxZmQ1YmY0YjMwNTBhNDE4YzEwOWMyNTRhY2Q0MDc5M2FiYTMyYTEwMDY2NDVjNyJ9; driftt_wmd=true";
       // fetchData(
-      //   PROXY_URL + "https://www.alexa.com/siteinfo/tiendamia.com"
+      //   PROXY_URL_WORKER + "https://www.alexa.com/siteinfo/tiendamia.com"
       // ,{
       //   credentials: "same-origin",
       // }
@@ -3346,7 +3346,7 @@
 
       //Probar getHtml
       // getHTML(
-      //   PROXY_URL +
+      //   PROXY_URL_WORKER +
       //     "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
       //   (response) => console.log("fuente html: ", response)
       // );
@@ -3476,9 +3476,10 @@
 
       const getYoutubeWeeklyVideos = () => {
         try {
+          // I don't know if it is neccessary to use PROXY_URL with www.youtube.com instead mobile
           getHTML(
-            PROXY_URL +
-              "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
+            PROXY_URL_WORKER +
+              "https://m.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
             updateYoutubeWeeklyVideos
           );
         } catch (error) {
@@ -3505,8 +3506,8 @@
       const getYoutubeDaylyVideos = () => {
         try {
           getHTML(
-            PROXY_URL +
-              "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgCEAE%253D",
+            PROXY_URL_WORKER +
+              "https://m.youtube.com/results?search_query=bitcoin&sp=CAMSBAgCEAE%253D",
             updateYoutubeDaylyVideos
           );
         } catch (error) {
@@ -3721,10 +3722,10 @@
         addHashtags("twitter-section", hashtagsTransformed);
         setTwitterSlider();
       };
-
+      
       const updateTwitterInitiation = () => {
         getHTML(
-          PROXY_URL + "https://ritetag.com/best-hashtags-for/bitcoin",
+          PROXY_URL_WORKER + "https://ritetag.com/best-hashtags-for/bitcoin",
           updateTwitterHashtags
         );
       };
@@ -3858,7 +3859,7 @@
       const getPosts = async (url) => {
         return new Promise((resolve, reject) => {
           try {
-            getHTML(PROXY_URL + url, resolve);
+            getHTML(PROXY_URL_WORKER + url, resolve);
           } catch (error) {
             console.error(`Fallo al obtener posts de la url: ${url}`);
             console.error(error);
@@ -4239,7 +4240,7 @@
           "https://m.tiktok.com/api/challenge/detail/?challengeName=bitcoin&language=es&verifyFp=verify_kacjmr7r_6Tl4P2yI_WQfs_4Cpp_Bxif_4zuy3Gy4VzSw&_signature=k01BFAAgEBFsC92iA9cO.JNNQAAAM2N";
 
         try {
-          const audienceNow = await fetch(PROXY_URL + TIKTOK_BITCOIN_URL).then(
+          const audienceNow = await fetch(PROXY_URL_WORKER + TIKTOK_BITCOIN_URL).then(
             function (response) {
               return response.json();
             }
