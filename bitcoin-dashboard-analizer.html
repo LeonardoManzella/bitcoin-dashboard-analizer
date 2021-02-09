@@ -2875,7 +2875,7 @@
 
     <!-- Bitcoin price updated -->
     <script type="text/javascript">
-      const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+      const PROXY_URL = "https://dev-leo-cors-anywhere.herokuapp.com/";
       const PROXY_URL_WORKER =
         "https://proxy-worker.leonardo-manzella.workers.dev/corsproxy/?apiurl=";
       const BITCOIN_PRICE_URL =
@@ -2896,23 +2896,31 @@
 
       const updateBitcoinPrice = () => {
         fetchBitcoinData().then((fetchedData) => {
-          if (!fetchedData) return;
           // console.log("fetchedData: ", fetchedData);
-          const textFrom = 'data-exchange-rate="';
-          const FROM = fetchedData.indexOf(textFrom) + textFrom.length;
-          const UNTIL = fetchedData.indexOf(
-            '"><div class="vk_sh c8Zgcf"><span class="DFlfde eNFL1">'
-          );
-          let bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
-          if (bitcoinPriceUSD.includes("Not found")) return;
-          bitcoinPriceUSD = parseFloat(bitcoinPriceUSD).toFixed(2);
-          document.title = `(${bitcoinPriceUSD} USD) Bitcoin Dashboard Analizer`;
-          setHistoricData(
-            CRYPTOS_BITCOIN_GOOGLE,
-            bitcoinPriceUSD,
-            getLastCryptoData(),
-            LAST_CRYPTOS
-          );
+          if (!fetchedData) return;
+          try {
+            const textFrom = 'data-exchange-rate="';
+            const FROM = fetchedData.indexOf(textFrom) + textFrom.length;
+            const UNTIL = fetchedData.indexOf(
+              '"><div class="vk_sh c8Zgcf"><span class="DFlfde eNFL1">'
+            );
+            let bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
+            if (bitcoinPriceUSD.includes("Not found")) return;
+            bitcoinPriceUSD = parseFloat(bitcoinPriceUSD).toFixed(2);
+            document.title = `(${bitcoinPriceUSD} USD) Bitcoin Dashboard Analizer`;
+            if(isNaN(bitcoinPriceUSD)) return;
+            setHistoricData(
+              CRYPTOS_BITCOIN_GOOGLE,
+              bitcoinPriceUSD,
+              getLastCryptoData(),
+              LAST_CRYPTOS
+            );
+          } catch (error) {
+            console.error("=== Error at updating bitcoin price ===");
+            console.error(error);
+            console.trace();
+          }
+          
         });
       };
 
@@ -3372,85 +3380,115 @@
       const transformYoutubeResponse = (youtubeResponse) => {
         // console.log("youtubeVideos before transform: ", youtubeResponse);
         let youtubeVideos = youtubeResponse.body.innerText;
+        youtubeVideos = youtubeVideos.replace(/\\x22/gm,'"');
+        youtubeVideos = youtubeVideos.replace(/\\x27/gm,"'");
+        youtubeVideos = youtubeVideos.replace(/\\x3d/gm,'=');
+        youtubeVideos = youtubeVideos.replace(/\\x7b/gm,'{');
+        youtubeVideos = youtubeVideos.replace(/\\x7d/gm,'}');
+        youtubeVideos = youtubeVideos.replace(/\\x5b/gm,'[');
+        youtubeVideos = youtubeVideos.replace(/\\x5d/gm,']');
+        youtubeVideos = youtubeVideos.replace(/\\u0026/gm,'&');
+        youtubeVideos = youtubeVideos.replace(/\\u003d/gm,'=');
+        youtubeVideos = youtubeVideos.replace(/\\\//gm,'\/');
+        youtubeVideos = youtubeVideos.replace(/\\&/gm,'&');
+        // console.log("youtubeVideos before match: ", youtubeVideos);
         youtubeVideos = youtubeVideos.match(
-          /{"videoRenderer.*?("enableOverlay":true}}}|Reproduciendo"}]}}}]}})/gm
+          /{"videoRenderer.*?thumbnailOverlays.*?}}}}/gm
         );
+        // console.log("youtubeVideos before map: ", youtubeVideos);
         youtubeVideos = youtubeVideos.map((elem) => {
           try {
-            return JSON.parse(elem + "}").videoRenderer;
-          } catch (error) {
             return JSON.parse(elem).videoRenderer;
+          } catch (error) {
+            try {
+              return JSON.parse(elem + "}").videoRenderer;
+            } catch (error) {
+              return null;
+            }
           }
         });
         // console.log("youtubeVideos after transform: ", youtubeVideos);
+        youtubeVideos = youtubeVideos.filter( item => item !== null);
         return youtubeVideos.sort(youtubeVideosComparator);
       };
 
       const generateVideoItem = (video) => {
-        const FIRST = 0;
-        let imageElement = document.createElement("img");
-        imageElement.classList.add("youtube-video-image");
-        imageElement.setAttribute(
-          "data-src",
-          video.thumbnail.thumbnails[video.thumbnail.thumbnails.length - 1].url
-        );
+        // console.log("video to generate item: ", video);
+        let newHtmlElement = null;
+        try {
+          const FIRST = 0;
+          let imageElement = document.createElement("img");
+          imageElement.classList.add("youtube-video-image");
+          imageElement.setAttribute(
+            "data-src",
+            video.thumbnail.thumbnails[video.thumbnail.thumbnails.length - 1].url
+          );
 
-        let titleElement = document.createElement("div");
-        titleElement.classList.add("youtube-video-title");
-        titleElement.appendChild(
-          document.createTextNode(decodeHTML(video.title.runs[FIRST].text))
-        );
+          let titleElement = document.createElement("div");
+          titleElement.classList.add("youtube-video-title");
+          titleElement.appendChild(
+            document.createTextNode(decodeHTML(video.title.runs[FIRST].text))
+          );
 
-        let metaDataElement = document.createElement("div");
-        metaDataElement.classList.add("youtube-video-metadata");
-        metaDataElement.appendChild(
-          document.createTextNode(
-            decodeHTML(
-              `${video.shortBylineText.runs[FIRST].text} • ${
-                video.shortViewCountText.simpleText
-              } • ${getPublishedTime(video)}`
+          let metaDataElement = document.createElement("div");
+          metaDataElement.classList.add("youtube-video-metadata");
+          metaDataElement.appendChild(
+            document.createTextNode(
+              decodeHTML(
+                `${video.shortBylineText.runs[FIRST].text} • ${
+                  video.shortViewCountText.simpleText
+                } • ${getPublishedTime(video)}`
+              )
             )
-          )
-        );
+          );
 
-        let descriptionElement = document.createElement("div");
-        descriptionElement.classList.add("youtube-video-snippet");
-        descriptionElement.appendChild(
-          document.createTextNode(
-            decodeHTML(
-              (video.descriptionSnippet &&
-                video.descriptionSnippet.runs[
-                  video.descriptionSnippet.runs.length - 1
-                ].text) ||
-                ""
+          let descriptionElement = document.createElement("div");
+          descriptionElement.classList.add("youtube-video-snippet");
+          descriptionElement.appendChild(
+            document.createTextNode(
+              decodeHTML(
+                (video.descriptionSnippet &&
+                  video.descriptionSnippet.runs[
+                    video.descriptionSnippet.runs.length - 1
+                  ].text) ||
+                  ""
+              )
             )
-          )
-        );
+          );
 
-        let containerElement = document.createElement("div");
-        containerElement.classList.add("youtube-content-container");
-        containerElement.appendChild(titleElement);
-        containerElement.appendChild(metaDataElement);
-        containerElement.appendChild(descriptionElement);
+          let containerElement = document.createElement("div");
+          containerElement.classList.add("youtube-content-container");
+          containerElement.appendChild(titleElement);
+          containerElement.appendChild(metaDataElement);
+          containerElement.appendChild(descriptionElement);
 
-        let contentRow = document.createElement("div");
-        contentRow.classList.add("youtube-content-row");
-        contentRow.appendChild(imageElement);
-        contentRow.appendChild(containerElement);
+          let contentRow = document.createElement("div");
+          contentRow.classList.add("youtube-content-row");
+          contentRow.appendChild(imageElement);
+          contentRow.appendChild(containerElement);
 
-        let newHtmlElement = document.createElement("a");
-        newHtmlElement.classList.add("video-item");
-        newHtmlElement.setAttribute("augmented-ui", "tl-clip-x br-clip-x exe");
-        newHtmlElement.setAttribute(
-          "href",
-          `https://www.youtube.com/watch?v=${video.navigationEndpoint.watchEndpoint.videoId}`
-        );
-        newHtmlElement.setAttribute("target", "_blank");
-        newHtmlElement.appendChild(contentRow);
+          newHtmlElement = document.createElement("a");
+          newHtmlElement.classList.add("video-item");
+          newHtmlElement.setAttribute("augmented-ui", "tl-clip-x br-clip-x exe");
+          newHtmlElement.setAttribute(
+            "href",
+            `https://www.youtube.com/watch?v=${video.navigationEndpoint.watchEndpoint.videoId}`
+          );
+          newHtmlElement.setAttribute("target", "_blank");
+          newHtmlElement.appendChild(contentRow);
+
+        } catch (error) {
+          console.error(error);
+          console.trace();
+          newHtmlElement = document.createElement("a");
+          newHtmlElement.classList.add("video-item");
+          newHtmlElement.setAttribute("augmented-ui", "tl-clip-x br-clip-x exe");
+        }
         return newHtmlElement;
       };
 
       const addSectionVideos = (sectionID, videosArray) => {
+        // console.log("addSectionVideos videos: ", videosArray);
         let element = null;
         element = document.getElementById(sectionID);
         element.innerHTML = "";
@@ -3472,10 +3510,9 @@
 
       const getYoutubeWeeklyVideos = () => {
         try {
-          // I don't know if it is neccessary to use PROXY_URL with www.youtube.com instead mobile
           getHTML(
-            PROXY_URL_WORKER +
-              "https://m.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
+            PROXY_URL +
+              "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgDEAE%253D",
             updateYoutubeWeeklyVideos
           );
         } catch (error) {
@@ -3502,8 +3539,8 @@
       const getYoutubeDaylyVideos = () => {
         try {
           getHTML(
-            PROXY_URL_WORKER +
-              "https://m.youtube.com/results?search_query=bitcoin&sp=CAMSBAgCEAE%253D",
+            PROXY_URL +
+              "https://www.youtube.com/results?search_query=bitcoin&sp=CAMSBAgCEAE%253D",
             updateYoutubeDaylyVideos
           );
         } catch (error) {
@@ -4236,7 +4273,7 @@
           "https://m.tiktok.com/api/challenge/detail/?challengeName=bitcoin&language=es&verifyFp=verify_kacjmr7r_6Tl4P2yI_WQfs_4Cpp_Bxif_4zuy3Gy4VzSw&_signature=k01BFAAgEBFsC92iA9cO.JNNQAAAM2N";
 
         try {
-          const audienceNow = await fetch(PROXY_URL_WORKER + TIKTOK_BITCOIN_URL).then(
+          const audienceNow = await fetch(PROXY_URL + TIKTOK_BITCOIN_URL).then(
             function (response) {
               return response.json();
             }
