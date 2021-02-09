@@ -2896,23 +2896,31 @@
 
       const updateBitcoinPrice = () => {
         fetchBitcoinData().then((fetchedData) => {
-          if (!fetchedData) return;
           // console.log("fetchedData: ", fetchedData);
-          const textFrom = 'data-exchange-rate="';
-          const FROM = fetchedData.indexOf(textFrom) + textFrom.length;
-          const UNTIL = fetchedData.indexOf(
-            '"><div class="vk_sh c8Zgcf"><span class="DFlfde eNFL1">'
-          );
-          let bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
-          if (bitcoinPriceUSD.includes("Not found")) return;
-          bitcoinPriceUSD = parseFloat(bitcoinPriceUSD).toFixed(2);
-          document.title = `(${bitcoinPriceUSD} USD) Bitcoin Dashboard Analizer`;
-          setHistoricData(
-            CRYPTOS_BITCOIN_GOOGLE,
-            bitcoinPriceUSD,
-            getLastCryptoData(),
-            LAST_CRYPTOS
-          );
+          if (!fetchedData) return;
+          try {
+            const textFrom = 'data-exchange-rate="';
+            const FROM = fetchedData.indexOf(textFrom) + textFrom.length;
+            const UNTIL = fetchedData.indexOf(
+              '"><div class="vk_sh c8Zgcf"><span class="DFlfde eNFL1">'
+            );
+            let bitcoinPriceUSD = fetchedData.substring(FROM, UNTIL);
+            if (bitcoinPriceUSD.includes("Not found")) return;
+            bitcoinPriceUSD = parseFloat(bitcoinPriceUSD).toFixed(2);
+            document.title = `(${bitcoinPriceUSD} USD) Bitcoin Dashboard Analizer`;
+            if(isNaN(bitcoinPriceUSD)) return;
+            setHistoricData(
+              CRYPTOS_BITCOIN_GOOGLE,
+              bitcoinPriceUSD,
+              getLastCryptoData(),
+              LAST_CRYPTOS
+            );
+          } catch (error) {
+            console.error("=== Error at updating bitcoin price ===");
+            console.error(error);
+            console.trace();
+          }
+          
         });
       };
 
