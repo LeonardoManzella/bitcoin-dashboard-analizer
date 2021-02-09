@@ -2652,8 +2652,7 @@
       const URL_SALDO_COM = "https://panel.saldo.com.ar/info/json/"; //"https://saldo.com.ar/info/json/";
       const URL_BLUE = "https://mercados.ambito.com//dolar/informal/variacion";
       const URL_LIQUI = "https://mercados.ambito.com//dolarrava/cl/variacion";
-      const URL_AIRTM = (day_now) =>
-        `https://rates.airtm.com/rates.json?d=${day_now}`;
+      const URL_AIRTM = `https://rates.airtm.com/air-rates-csv?lang=es`;
       const URL_BUEN_BIT = "https://be.buenbit.com/api/market/tickers/";
       const URL_BINANCE = "https://p2p.binance.com/gateway-api/v2/public/c2c/adv/search";
 
@@ -2781,28 +2780,25 @@
         });
 
         //AirTM
-        let now = new Date(Date.now());
-        now.setUTCMinutes(0);
-        now.setUTCSeconds(0);
-        now.setUTCMilliseconds(0);
-        let nowFromEpoch = Date.parse(now).toString();
-        nowFromEpoch = nowFromEpoch.slice(0, nowFromEpoch.length - 3);
+        const findRate = (array, rateCode) => {
+            return array.find( item => item.code === rateCode);
+        }
 
-        fetchData(PROXY_URL_WORKER + URL_AIRTM(nowFromEpoch)).then((data) => {
+        fetchData(PROXY_URL_WORKER + URL_AIRTM).then((data) => {
           console.log("AirTM data: ", data);
 
           const paypalDolarAirtm = (
-            data.today["ARS_E-TRANSFER"].buy * 1.02
+            findRate(data.data, "ARS").buy * 1.02
           ).toFixed(2); //Dont really know if it includes the 5% of paypal or not
           setHistoricData(DOLAR_PAYPAL_AIRTM, paypalDolarAirtm);
 
           const upholdDolarAirtm = (
-            data.today["ARS_E-TRANSFER"].buy * 1.05
+            findRate(data.data, "ARS").buy * 1.05
           ).toFixed(2);
           setHistoricData(DOLAR_UPHOLD_AIRTM, upholdDolarAirtm);
 
           const bitcoinAirtm = (
-            data.today["ARS_E-TRANSFER"].buy * data.today.BTC_CRYPTO.buy
+            findRate(data.data, "ARS").buy * (1 / findRate(data.data, "BTC").buy)
           ).toFixed(2);
           setHistoricData(
             CRYPTOS_BITCOIN_AIRTM,
