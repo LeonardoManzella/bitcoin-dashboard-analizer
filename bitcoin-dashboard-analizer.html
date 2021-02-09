@@ -4273,7 +4273,7 @@
           "https://m.tiktok.com/api/challenge/detail/?challengeName=bitcoin&language=es&verifyFp=verify_kacjmr7r_6Tl4P2yI_WQfs_4Cpp_Bxif_4zuy3Gy4VzSw&_signature=k01BFAAgEBFsC92iA9cO.JNNQAAAM2N";
 
         try {
-          const audienceNow = await fetch(PROXY_URL_WORKER + TIKTOK_BITCOIN_URL).then(
+          const audienceNow = await fetch(PROXY_URL + TIKTOK_BITCOIN_URL).then(
             function (response) {
               return response.json();
             }
