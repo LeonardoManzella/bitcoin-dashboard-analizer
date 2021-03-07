@@ -3802,59 +3802,38 @@
     <script type="text/javascript">
       const transformBolsasResponse = (response) => {
         // console.log("bolsas before transform: ", response);
-        let bolsas = null;
-        try {
-          bolsas =
-            response.body.children[4].children[0].children[2].children[1]
-              .children[1].children[1].children[0].children[5].innerHTML;
-        } catch (error) {
-          bolsas =
-            response.body.children[5].children[0].children[2].children[1]
-              .children[1].children[1].children[0].children[5].innerHTML;
-        }
-
-        bolsas = bolsas.match(/\>[^"]+?\<\/(a>|span)/g);
-        bolsas = bolsas.filter(
-          (elem) => elem !== "></span> </span" && elem !== ">BOLSAS</a>"
-        );
-        bolsas = bolsas.map((elem) => {
-          if (elem.includes("span>")) {
-            const cutFrom = elem.indexOf(">", 1) + 1;
-            const cutUntil = elem.indexOf("<", 5);
-            return elem.substring(cutFrom, cutUntil);
-          } else {
-            const cutFrom = 1;
-            const cutUntil = elem.indexOf("<");
-            return elem.substring(cutFrom, cutUntil);
+        let responseCleaned = response.children[ONLY_VALUE].innerHTML
+        responseCleaned = responseCleaned.replace(/\r?\n/gm, ""); //Eliminate line terminators
+        let markets = responseCleaned.match(/<span class="name col">.*?<\/li>/gm);
+        markets = markets.map( marketData => {
+          let parsedValues = marketData.match(/("name col">.*?<|-?\d[\d\.,ó]+)/gm);
+          parsedValues[0] = parsedValues[0].replace(/("name col">|<)/gm,'');
+          return {
+              name: parsedValues[0],
+              value: parsedValues[1],
+              difference: parsedValues[2],
           }
         });
+        markets = markets.filter( item => item.difference !== undefined);
+        const selectedMarkets = ['MERVAL','BOVESPA','S&P 500 INDEX','FTSE 100','IBEX 35 INDEX','FRANKFURT','HANG SENG INDEX'];
+        markets = markets.filter( market => selectedMarkets.includes(market.name));
 
-        let bolsasTransformed = [];
-        for (let index = 0; index < bolsas.length; index += 3) {
-          const bolsa = {
-            nombre: bolsas[index],
-            variacion: bolsas[index + 1],
-            puntos: bolsas[index + 2],
-          };
-          bolsasTransformed.push(bolsa);
-        }
-
-        // console.log("bolsas after transform: ", bolsasTransformed);
-        return bolsasTransformed;
+        console.log("bolsas after transform: ", markets);
+        return markets;
       };
 
       const generateBolsaItem = (bolsa) => {
         let nameElement = document.createElement("div");
         nameElement.appendChild(
-          document.createTextNode(decodeHTML(bolsa.nombre))
+          document.createTextNode(decodeHTML(bolsa.name))
         );
 
         let variationElement = document.createElement("div");
-        variationElement.classList.add(classByNumber(bolsa.variacion));
+        variationElement.classList.add(classByNumber(bolsa.difference));
         variationElement.appendChild(
           document.createTextNode(
-            addNumSymbol(bolsa.variacion) +
-              decodeHTML(parseFloat(bolsa.variacion).toFixed(2)) +
+            addNumSymbol(bolsa.difference) +
+              decodeHTML(parseFloat(bolsa.difference).toFixed(2)) +
               "%"
           )
         );
@@ -3862,7 +3841,7 @@
         let puntosElement = document.createElement("div");
         puntosElement.appendChild(
           document.createTextNode(
-            parseInt(decodeHTML(bolsa.puntos.replace(".", "")))
+            parseInt(decodeHTML(bolsa.value.replace(".", "")))
           )
         );
 
@@ -3903,7 +3882,7 @@
       const updateBolsasInitiator = () => {
         getHTML(
           PROXY_URL +
-            "https://www.cronista.com/economiapolitica/En-busca-de-dolares-restringen-creditos-a-empresas-del-agro-con-incentivos-para-que-vendan-la-cosecha--20200515-0048.html",
+            "https://www.cronista.com/MercadosOnline/indices.html",
           updateBolsas
         );
       };
@@ -4292,7 +4271,7 @@
           "https://m.tiktok.com/api/challenge/detail/?challengeName=bitcoin&language=es&verifyFp=verify_kacjmr7r_6Tl4P2yI_WQfs_4Cpp_Bxif_4zuy3Gy4VzSw&_signature=k01BFAAgEBFsC92iA9cO.JNNQAAAM2N";
 
         try {
-          const audienceNow = await fetch(PROXY_URL + TIKTOK_BITCOIN_URL).then(
+          const audienceNow = await fetch(PROXY_URL_WORKER + TIKTOK_BITCOIN_URL).then(
             function (response) {
               return response.json();
             }
