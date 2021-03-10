@@ -3604,7 +3604,7 @@
         const FIRST = 0;
         // console.log("tweets before transform: ", twitterResponse);
         let tweets = twitterResponse.body.children[5].innerHTML;
-        tweets = tweets.match(/now\<\/strong\>.*\<strong\>over/s);
+        tweets = tweets.match(/now\<\/strong\>.*\<strong\>only/s);
         tweets = tweets[FIRST].match(/data-tag="[^-]*?">.*?\</g);
 
         tweets = tweets.map((tweet) => {
